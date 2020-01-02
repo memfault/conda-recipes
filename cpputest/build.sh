@@ -11,9 +11,10 @@ done
 
 cd $SRC_DIR
 
+# Alternative to CMake to build the project
 ./autogen.sh
 mkdir tmp_build && cd tmp_build/
-../configure --prefix="$PREFIX"
+../configure --disable-dependency-tracking --prefix="$PREFIX"
 make
 make check
 make install

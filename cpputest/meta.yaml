@@ -16,17 +16,15 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - cmake
-
-test:
-  commands:
-    # TODO
+    - make
+    - autoconf
+    - automake
+    - libtool
 
 about:
-  home: 
-  license: GPL-2.0
-  license_family: GPL
+  home: http://cpputest.github.io/
+  dev_url: https://github.com/cpputest/cpputest
+  doc_url: http://cpputest.github.io/manual.html
+  license: BSD-3-Clause
   license_file: COPYING
-  summary: GDB, the GNU Project debugger, allows you to see what is going on inside another program while it executes -- or what another program was doing at the moment it crashed.
-  description: |
-    asdf
+  summary: CppUTest is a C /C++ based unit xUnit test framework for unit testing and for test-driving your code.
