@@ -1,0 +1,32 @@
+{% set name = "cpputest" %}
+{% set version = "3.8" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/cpputest/cpputest/releases/download/v3.8/cpputest-3.8.tar.gz
+  sha256: c81dccc5a1bfc7fc6511590c0a61def5f78e3fb19cb8e1f889d8d3395a476456
+
+build:
+  number: "0"
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - cmake
+
+test:
+  commands:
+    # TODO
+
+about:
+  home: 
+  license: GPL-2.0
+  license_family: GPL
+  license_file: COPYING
+  summary: GDB, the GNU Project debugger, allows you to see what is going on inside another program while it executes -- or what another program was doing at the moment it crashed.
+  description: |
+    asdf
