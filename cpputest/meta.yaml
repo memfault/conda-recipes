@@ -20,6 +20,9 @@ requirements:
     - autoconf
     - automake
     - libtool
+test:
+  commands:
+    - test -f ${PREFIX}/lib/libCppUTest.a
 
 about:
   home: http://cpputest.github.io/
