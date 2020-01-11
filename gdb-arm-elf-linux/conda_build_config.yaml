@@ -1,0 +1,4 @@
+CONDA_BUILD_SYSROOT:
+  - /opt/MacOSX10.9.sdk        # [osx]
+python: '3.8'
+target_platform: osx-64
