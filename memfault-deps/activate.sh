@@ -1,0 +1,1 @@
+export MEMFAULT_DEPS="$CONDA_PREFIX"

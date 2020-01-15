@@ -1,0 +1,19 @@
+{% set name = "memfault-deps" %}
+{% set version = "1.0.0" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+build:
+  number: '0'
+  skip: True  # [win]
+  noarch: generic
+
+test:
+  commands:
+    - test "$CONDA_PREFIX"
+
+about:
+  home: https://memfault.com
+  summary: A simple recipe to declare environment variables
