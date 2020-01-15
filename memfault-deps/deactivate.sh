@@ -1,1 +1,0 @@
-unset MEMFAULT_DEPS

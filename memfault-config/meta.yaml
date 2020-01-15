@@ -1,4 +1,4 @@
-{% set name = "memfault-deps" %}
+{% set name = "memfault-config" %}
 {% set version = "1.0.0" %}
 
 package:
@@ -6,14 +6,14 @@ package:
   version: {{ version }}
 
 build:
-  number: '0'
+  number: '2'
   skip: True  # [win]
   noarch: generic
 
 test:
   commands:
-    - test "$CONDA_PREFIX"
+    - test "$MEMFAULT_DEPS_ROOT"
 
 about:
   home: https://memfault.com
-  summary: A simple recipe to declare environment variables
+  summary: A simple recipe to configure items for Memfault internal usage

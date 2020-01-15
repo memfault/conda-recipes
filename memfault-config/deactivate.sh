@@ -1,0 +1,1 @@
+unset MEMFAULT_DEPS_ROOT
