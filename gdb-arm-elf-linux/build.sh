@@ -19,11 +19,26 @@ export CPPFLAGS="$CPPFLAGS -I$PREFIX/include"
     --without-babeltrace \
     --with-python \
     --disable-ld \
+    --disable-gprof \
     --disable-gas
 make
 make install
 
+
+shopt -s extglob 
+
+# Delete every binary except addr2line, gdb, gdb-add-index, objdump, and size.
+pushd "${TARGET_PREFIX}"/bin/
+    rm !(arm-elf-linux-addr2line|arm-elf-linux-gdb|arm-elf-linux-gdb-add-index|arm-elf-linux-objdump|arm-elf-linux-size|arm-elf-linux-strings)
+    strip arm-elf-linux-addr2line
+    strip arm-elf-linux-gdb
+    strip arm-elf-linux-objdump
+    strip arm-elf-linux-size
+    strip arm-elf-linux-strings
+popd
+
+
 # Symlink every binary from the build into /bin
 pushd "${PREFIX}"/bin
-    ln -s ../"${TARGET}"/bin/* ./
+    ln -s "${TARGET_PREFIX}"/bin/* ./
 popd

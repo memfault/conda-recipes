@@ -20,6 +20,7 @@ cd binutils-gdb-esp32-src
     --with-lzma \
     --with-expat \
     --with-libexpat-prefix="$PREFIX" \
+    --with-libiconv-prefix="$PREFIX" \
     --without-libunwind-ia64 \
     --with-zlib \
     --without-babeltrace \
