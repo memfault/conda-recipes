@@ -36,18 +36,20 @@ mv "${FAKE_TARGET_PREFIX}" "${REAL_TARGET_PREFIX}"
 # Enable matching with ! (not) bash operator
 shopt -s extglob
 
-# Delete every binary except addr2line, gdb, gdb-add-index, objdump, and size.
+# Delete every binary except addr2line, gdb, gdb-add-index, objcopy, objdump, and size.
 pushd "${REAL_TARGET_PREFIX}"/bin/
-    rm !(arm-elf-linux-addr2line|arm-elf-linux-gdb|arm-elf-linux-gdb-add-index|arm-elf-linux-objdump|arm-elf-linux-size|arm-elf-linux-strings)
+    rm !(arm-elf-linux-addr2line|arm-elf-linux-gdb|arm-elf-linux-gdb-add-index|arm-elf-linux-objdump|arm-elf-linux-objcopy|arm-elf-linux-size|arm-elf-linux-strings)
     mv arm-elf-linux-addr2line addr2line
     mv arm-elf-linux-gdb gdb
     mv arm-elf-linux-gdb-add-index gdb-add-index
+    mv arm-elf-linux-objcopy objcopy
     mv arm-elf-linux-objdump objdump
     mv arm-elf-linux-size size
     mv arm-elf-linux-strings strings
     strip addr2line
     strip gdb
     strip objdump
+    strip objcopy
     strip size
     strip strings
 popd
