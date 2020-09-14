@@ -23,7 +23,7 @@ export CPPFLAGS="$CPPFLAGS -I$PREFIX/include"
     --without-libunwind-ia64 \
     --with-zlib \
     --without-babeltrace \
-    --with-python \
+    --with-python="$PREFIX" \
     --disable-ld \
     --disable-gprof \
     --disable-gas
