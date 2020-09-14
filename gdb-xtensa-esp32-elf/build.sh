@@ -24,7 +24,7 @@ cd binutils-gdb-esp32-src
     --without-libunwind-ia64 \
     --with-zlib \
     --without-babeltrace \
-    --with-python \
+    --with-python="$PREFIX" \
     --disable-threads \
     --disable-sim \
     --disable-nls \
