@@ -1,0 +1,28 @@
+{% set name = "arcanist" %}
+{% set version = "2019" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  - git_url: https://github.com/phacility/arcanist.git
+    git_rev: legacy-2019
+    folder: arcanist
+  - git_url: https://github.com/phacility/libphutil.git
+    git_rev: legacy-2019
+    folder: libphutil
+
+build:
+  string: '0'
+  binary_relocation: False
+  detect_binary_files_with_prefix: False
+
+test:
+  commands:
+    - arc help
+
+about:
+  home: https://github.com/phacility/arcanist
+  license: Apache 2.0
+  summary: Command line interface for Phabricator
