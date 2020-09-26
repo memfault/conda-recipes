@@ -30,3 +30,15 @@ $ conda build -c conda-forge .
 # Successful build prints an upload command
 $ anaconda upload ...
 ```
+
+### Docker for Linux
+
+So you don't want to build on your native machine? That's fine! 
+
+```
+$ docker run -ti -v <path_to_conda-recipes>:/conda-recipes condaforge/miniforge3  /bin/bash
+$ conda create -n build conda-build anaconda-client
+$ conda activate build
+$ cd /conda-recipes/<recipe>
+$ conda build .
+```
