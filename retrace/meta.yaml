@@ -1,0 +1,18 @@
+{% set name = "retrace" %}
+{% set version = "android_10.0.0_r29" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  # no checksum -- server returns different tarball every time...
+  url: https://android.googlesource.com/platform/prebuilts/r8/+archive/3769a499a855cfc4d0d1039eb2a0ea72ecdf7070.tar.gz
+
+build:
+  string: '0'
+
+about:
+  home: https://android.googlesource.com/platform/prebuilts/r8
+  license: https://android.googlesource.com/platform/prebuilts/r8
+  summary: retrace
