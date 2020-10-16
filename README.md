@@ -13,6 +13,8 @@ channels:
   - nodefaults
 ```
 
+Since all of these packages are built using Conda Forge's package pinnings (https://github.com/conda-forge/conda-forge-pinning-feedstock/blob/master/recipe/conda_build_config.yaml), using Conda Forge as the base is heavily suggested.
+
 ## Building
 
 To build any of the following packages (macOS and Linux Ubuntu 18.04 tested):
@@ -41,4 +43,7 @@ $ conda create -n build conda-build anaconda-client
 $ conda activate build
 $ cd /conda-recipes/<recipe>
 $ conda build .
+
+# Successful build prints an upload command
+$ anaconda upload ...
 ```
