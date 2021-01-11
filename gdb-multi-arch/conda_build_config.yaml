@@ -1,5 +1,5 @@
 CONDA_BUILD_SYSROOT:
-  - /opt/MacOSX10.9.sdk        # [osx]
+  - /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk
 
 # This differs from target_platform in that it determines what subdir the compiler
 #    will target, not what subdir the compiler package will be itself.
@@ -102,7 +102,7 @@ rust_compiler_version:
 
 
 macos_machine:                 # [osx]
-  - x86_64-apple-darwin13.4.0  # [osx and x86_64]
+  - x86_64-apple-darwin20.2.0  # [osx and x86_64]
   - arm64-apple-darwin20.0.0   # [osx and arm64]
 MACOSX_DEPLOYMENT_TARGET:      # [osx]
   - 11.0                       # [osx and arm64]
