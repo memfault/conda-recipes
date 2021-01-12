@@ -1,6 +1,6 @@
 {% set name = "multi-arch-gdb" %}
-{% set version = "8.3.1" %}
-{% set sha256 = "f3c34975d113117115bd6d20e2d36b16c27331b100d1b6389e0d9b50a765ea00" %}
+{% set version = "10.1" %}
+{% set sha256 = "59e24cece979c5fd9b7635dff4123f9a7e568d8ca6b8a2ad7887fc2f9f5b4d5a" %}
 
 package:
   name: {{ name }}
@@ -11,7 +11,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: '4'
+  number: '0'
   skip: True  # [win]
 
 requirements:

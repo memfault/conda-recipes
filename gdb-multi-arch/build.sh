@@ -15,6 +15,7 @@ export CPPFLAGS="$CPPFLAGS -I$PREFIX/include"
 ./configure \
     --prefix="$FAKE_TARGET_PREFIX" \
     --target="$FAKE_TARGET" \
+    --enable-targets=all \
     --with-separate-debug-dir="${FAKE_TARGET_PREFIX}/lib/debug:/usr/lib/debug" \
     --with-lzma \
     --with-expat \
