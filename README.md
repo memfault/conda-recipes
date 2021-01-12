@@ -47,3 +47,20 @@ $ conda build .
 # Successful build prints an upload command
 $ anaconda upload ...
 ```
+
+### Building on macOS
+
+We follow [Conda Build's (and Conda Forge's) strategy](https://docs.conda.io/projects/conda-build/en/latest/resources/compiler-tools.html#macos-sdk) for building macOS packages.
+
+As noted in the `conda_build_config.yaml` of each recipe, we use the MacOS 10.9 SDK.
+
+```
+CONDA_BUILD_SYSROOT:
+  - /opt/MacOSX10.9.sdk        # [osx]
+```
+
+To download and install this SDK, you can find the package here: https://github.com/phracker/MacOSX-SDKs/releases
+
+```
+$ sudo mv <10.9 SDK> /opt/MacOSX10.9.sdk
+```
