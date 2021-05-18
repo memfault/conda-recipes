@@ -39,7 +39,8 @@ So you don't want to build on your native machine? That's fine!
 
 ```
 $ docker run -ti -v <path_to_conda-recipes>:/conda-recipes condaforge/miniforge3  /bin/bash
-$ conda create -n build conda-build anaconda-client
+$ apt update && apt install build-essential
+$ conda create -n build conda-build anaconda-client python=3.8
 $ conda activate build
 $ cd /conda-recipes/<recipe>
 $ conda build -c conda-forge .
