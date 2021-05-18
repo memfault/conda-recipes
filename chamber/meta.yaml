@@ -1,5 +1,5 @@
 {% set name = "chamber" %}
-{% set version = "2.8.0" %}
+{% set version = "2.10.0" %}
 
 package:
   name: {{ name }}
@@ -7,9 +7,9 @@ package:
 
 source:
   url: https://github.com/segmentio/chamber/releases/download/v{{ version }}/chamber-v{{ version }}-darwin-amd64 # [osx]
-  sha256: cfe1eeee927aa3ada550ba978640afbaaa91475ef8106dafb6285b8474de28eb # [osx]
+  sha256: 9b2a937f4221890563855709ef3b989922930d6e2b1097dd13f2bcfc6903e1ac # [osx]
   url: https://github.com/segmentio/chamber/releases/download/v{{ version }}/chamber-v{{ version }}-linux-amd64 # [linux64]
-  sha256: 4a47bd9f7fb46ba4a3871efbb60931592defe7c954bd10b4e92323aa30874fc1 # [linux64]
+  sha256: d7991809838c38c3434b8ff853074086cae0cb0d49f2012bf293e7c0b229702a # [linux64]
 
 build:
   string: '0'
