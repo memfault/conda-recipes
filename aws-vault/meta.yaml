@@ -1,0 +1,25 @@
+{% set name = "aws-vault" %}
+{% set version = "6.3.1" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/99designs/aws-vault/releases/download/v{{ version }}/aws-vault-darwin-amd64.dmg # [osx]
+  sha256: cc97c451847db718d674a46c3b755e20247403d686b4e4c590c6e902f4e15ba9 # [osx]
+  url: https://github.com/99designs/aws-vault/releases/download/v{{ version }}/aws-vault-linux-amd64 # [linux64]
+  sha256: 84cfab75012eb272add8b09cb2d295941b977cf2bf58b3fb3caa4c4adac6f17f # [linux64]
+
+build:
+  string: '1'
+  binary_relocation: False
+
+test:
+  commands:
+    - aws-vault --version
+
+about:
+  home: https://github.com/99designs/aws-vault
+  license: MIT
+  summary: AWS Vault is a tool to securely store and access AWS credentials in a development environment
