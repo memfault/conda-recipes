@@ -1,4 +1,4 @@
-{% set name = "xtensa-esp8266-elf-gdb" %}
+{% set name = "xtensa-lx106-elf-gdb" %}
 {% set version = "2019r1.gdb.8.1" %}
 
 package:
@@ -8,7 +8,7 @@ package:
 source:
   - git_url: https://github.com/espressif/binutils-gdb.git
     git_rev: esp32-2019r1_gdb-8_1
-    folder: binutils-gdb-esp8266-src
+    folder: binutils-gdb-lx106-src
   - git_url: https://github.com/espressif/xtensa-overlays.git
     git_rev: cc893dc572ff4d2e22aa5a55188fea4722a58027
     folder: xtensa-overlays
@@ -46,13 +46,13 @@ requirements:
 
 test:
   commands:
-    - xtensa-esp8266-elf-gdb -ex "print 1" --batch
+    - xtensa-lx106-elf-gdb -ex "print 1" --batch
 
 about:
   home: https://www.gnu.org/software/gdb/
   license: GPL-2.0
   license_family: GPL
-  license_file: binutils-gdb-esp8266-src/COPYING
+  license_file: binutils-gdb-lx106-src/COPYING
   summary: GDB, the GNU Project debugger, allows you to see what is going on inside another program while it executes -- or what another program was doing at the moment it crashed.
   description: |
     GDB, the GNU Project debugger, allows you to see what is going on `inside'

@@ -1,17 +1,17 @@
 #!/bin/bash
 
 # Copy the ESP8266 "overlay" files:
-cp -av $SRC_DIR/xtensa-overlays/xtensa_lx106/binutils/. $SRC_DIR/binutils-gdb-esp8266-src/
-cp -av $SRC_DIR/xtensa-overlays/xtensa_lx106/gdb/. $SRC_DIR/binutils-gdb-esp8266-src/
+cp -av $SRC_DIR/xtensa-overlays/xtensa_lx106/binutils/. $SRC_DIR/binutils-gdb-lx106-src/
+cp -av $SRC_DIR/xtensa-overlays/xtensa_lx106/gdb/. $SRC_DIR/binutils-gdb-lx106-src/
 
-export TARGET=xtensa-esp8266-elf
+export TARGET=xtensa-lx106-elf
 export TARGET_PREFIX="${PREFIX}/${TARGET}"
 
 export CPPFLAGS="$CPPFLAGS -I$PREFIX/include"
 # Setting /usr/lib/debug as debug dir makes it possible to debug the system's
 # python on most Linux distributions
 
-cd binutils-gdb-esp8266-src
+cd binutils-gdb-lx106-src
 
 ./configure \
     --prefix="${TARGET_PREFIX}" \
@@ -36,10 +36,10 @@ make install
 
 shopt -s extglob
 
-# Delete every binary except addr2line, gdb, gdb-add-index, objdump, and size.
+# Delete every binary except gdb
 pushd "${TARGET_PREFIX}"/bin/
-    rm !(xtensa-esp8266-elf-gdb)
-    strip xtensa-esp8266-elf-gdb
+    rm !(xtensa-lx106-elf-gdb)
+    strip xtensa-lx106-elf-gdb
 popd
 
 
