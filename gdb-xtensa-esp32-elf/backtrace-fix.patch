@@ -1,0 +1,134 @@
+From 9a47478fa686eae204b905bbe0e6833965f207bd Mon Sep 17 00:00:00 2001
+From: Ivan Grokhotkov <ivan@espressif.com>
+Date: Sun, 15 Aug 2021 13:38:51 +0500
+Subject: [PATCH] gdb: xtensa: fix backtrace interrupted by a noreturn call
+
+This commit fixes an issue that the backtrace will be interrupted on a
+frame where a noreturn function is called. This issue doesn't occur
+for every call to noreturn functions, but only for calls such that:
+- the call is the last instruction of the caller function
+- the next function starts immediately after this call instruction;
+  in most cases this means that the caller function size is divisible
+  by 4 bytes, so no padding is added between the last instruction and
+  the next function.
+
+For example, the following generated code will exhibit this issue:
+
+    esp_system_abort:
+        entry  a1, 32
+        movi.n  a10, a2
+        call8  panic_abort
+
+    some_other_function:
+        entry a1, 32
+        ...
+
+In this case, esp_system_abort function is 3 + 2 + 3 = 8 bytes long,
+so no padding is required before "some_other_function". When the call
+to panic_abort happens, the return address is set to the next
+instruction, i.e. the "entry" instruction of "some_other_function".
+
+The observed behavior is that the backtrace is interrupted:
+
+    #0  panic_abort (details=0x3ffb5c3b "abort() was called at PC 0x400d485f on core 0")
+        at $IDF_PATH/components/esp_system/panic.c:389
+    #1  0x40084fb0 in esp_system_abort (
+        details=0x3ffb5c3b "abort() was called at PC 0x400d485f on core 0")
+        at $IDF_PATH/components/esp_system/esp_system.c:129
+    Backtrace stopped: previous frame identical to this frame (corrupt stack?)
+
+The reason is that when the unwinder inspects the instruction at the
+return address in the caller frame, the instruction is an ENTRY,
+which is part of the next function. Previously it was considered that
+the only case when this can happen is if the frame is the outermost
+frame and the entry instruction hasn't executed yet.
+
+This commit fixes that assumption, by checking additionally if the
+instruction preceding ENTRY is a call. If it is, the frame is handled
+as usual.
+---
+ gdb/xtensa-tdep.c | 51 ++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 46 insertions(+), 5 deletions(-)
+
+diff --git a/gdb/xtensa-tdep.c b/gdb/xtensa-tdep.c
+index e18f7a18a5f..d318cfa551b 100644
+--- a/gdb/xtensa-tdep.c
++++ b/gdb/xtensa-tdep.c
+@@ -1239,6 +1239,49 @@ xtensa_window_interrupt_frame_cache (struct frame_info *this_frame,
+ 				     xtensa_frame_cache_t *cache,
+ 				     CORE_ADDR pc);
+ 
++/* Check if the frame should be decoded as if it is the outermost frame,
++   where the ENTRY instruction is about to be executed. */
++static bool
++xtensa_is_frame_entry (struct gdbarch *gdbarch, CORE_ADDR pc)
++{
++  gdb_byte buf[4];
++  int insn;
++  enum bfd_endian byte_order = gdbarch_byte_order (gdbarch);
++
++  LONGEST op1;
++  if (!(safe_read_memory_integer (pc, 1, byte_order, &op1)
++        && XTENSA_IS_ENTRY (gdbarch, op1)))
++    return false;
++
++  /* PC points to the ENTRY instruction. However this might be
++     because the previous instruction belonged to another function,
++     and that function was a call to "noreturn" function, e.g.:
++
++       some_func:
++         entry sp, 32
++         mov.n a10, a2
++         call8 panic
++         // no retw.n because "panic" has noreturn attribute
++       next_func:
++         entry sp, 32     // <-  return address
++         ...
++
++     In such case, we need to decode the frame as usual.
++     The code below checks if the instruction at PC-3 is a call/callx. */
++
++  read_memory(pc - 3, buf, 3);
++  insn = extract_unsigned_integer (buf, 3, byte_order);
++
++  /* Decode call instruction. See comment in extract_call_winsize */
++  if ((byte_order == BFD_ENDIAN_LITTLE &&
++       (((insn & 0xf) == 0x5) || ((insn & 0xcf) == 0xc0))) ||
++      (byte_order == BFD_ENDIAN_BIG &&
++       (((insn >> 20) == 0x5) || (((insn >> 16) & 0xf3) == 0x03))))
++	return false;
++
++  return true;
++}
++
+ static struct xtensa_frame_cache *
+ xtensa_frame_cache (struct frame_info *this_frame, void **this_cache)
+ {
+@@ -1265,16 +1308,13 @@ xtensa_frame_cache (struct frame_info *this_frame, void **this_cache)
+ 
+   if (windowed)
+     {
+-      LONGEST op1;
+-
+       /* Get WINDOWBASE, WINDOWSTART, and PS registers.  */
+       wb = get_frame_register_unsigned (this_frame, 
+ 					gdbarch_tdep (gdbarch)->wb_regnum);
+       ws = get_frame_register_unsigned (this_frame,
+ 					gdbarch_tdep (gdbarch)->ws_regnum);
+ 
+-      if (safe_read_memory_integer (pc, 1, byte_order, &op1)
+-	  && XTENSA_IS_ENTRY (gdbarch, op1))
++      if (xtensa_is_frame_entry(gdbarch, pc))
+ 	{
+ 	  int callinc = CALLINC (ps);
+ 	  ra = get_frame_register_unsigned
+@@ -1287,7 +1327,8 @@ xtensa_frame_cache (struct frame_info *this_frame, void **this_cache)
+ 	  cache->prev_sp = get_frame_register_unsigned
+ 			     (this_frame, gdbarch_tdep (gdbarch)->a0_base + 1);
+ 
+-	  /* This only can be the outermost frame since we are
++	  /* xtensa_is_frame_entry has checked that the previous instruction
++	     is not a call, so this only can be the outermost frame where we are
+ 	     just about to execute ENTRY.  SP hasn't been set yet.
+ 	     We can assume any frame size, because it does not
+ 	     matter, and, let's fake frame base in cache.  */
