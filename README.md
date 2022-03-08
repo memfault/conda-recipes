@@ -15,7 +15,7 @@ channels:
 
 Since all of these packages are built using Conda Forge's package pinnings (https://github.com/conda-forge/conda-forge-pinning-feedstock/blob/master/recipe/conda_build_config.yaml), using Conda Forge as the base is heavily suggested.
 
-## Building
+## Building Locally
 
 To build any of the following packages (macOS and Linux Ubuntu 18.04 tested):
 
@@ -35,7 +35,7 @@ $ anaconda upload ...
 
 ### Docker for Linux
 
-So you don't want to build on your native machine? That's fine! 
+So you don't want to build on your native machine? That's fine!
 
 ```
 $ docker run -ti -v <path_to_conda-recipes>:/conda-recipes condaforge/miniforge3  /bin/bash
@@ -65,3 +65,14 @@ To download and install this SDK, you can find the package here: https://github.
 ```
 $ sudo mv <10.9 SDK> /opt/MacOSX10.9.sdk
 ```
+
+## Building via GitHub Action
+
+Not heavily tested, but it's possible to build packages from github actions, see
+[`.github/workflows/build.yml`](.github/workflows/build.yml).
+
+To trigger it, set the appropriate `PACKAGE_DIR` when making a pull request.
+
+Note that this may not work if the above `CONDA_BUILD_SYSROOT` is set; you'll
+have to add a step to install the appropriate tools into that location if you
+want to go that route.

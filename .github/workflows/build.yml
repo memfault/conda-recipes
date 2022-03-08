@@ -1,0 +1,36 @@
+on: pull_request
+
+env:
+  # set package dir to build and archive your package
+  PACKAGE_DIR: ''
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        platform: [ubuntu-20.04, macos-11]
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - uses: actions/checkout@v2
+      # sadly, can't use env at the 'job' level, so have to gate each step
+      # individually 🙄
+      # https://github.community/t/how-to-set-and-access-a-workflow-variable/17335
+      if: ${{ env.PACKAGE_DIR != '' }}
+
+    - name: Install conda-build
+      if: ${{ env.PACKAGE_DIR != '' }}
+      run: |
+        conda install conda-build=3.21.4
+
+    - name: Build package
+      if: ${{ env.PACKAGE_DIR != '' }}
+      run: |
+        mkdir -p ${{ env.PACKAGE_DIR }}/output
+        conda build -c conda-forge --output-folder ${{ env.PACKAGE_DIR }}/output ${{ env.PACKAGE_DIR }}
+
+    # upload-artifact to save the output files
+    - uses: actions/upload-artifact@v2
+      if: ${{ env.PACKAGE_DIR != '' }}
+      with:
+        name: packages
+        path: ${{ env.PACKAGE_DIR }}/output
