@@ -1,0 +1,58 @@
+CI: azure
+bzip2: '1'
+c_compiler: gcc
+c_compiler_version: '9'
+cdt_name: cos6
+channel_sources: conda-forge,defaults
+channel_targets: conda-forge main
+cpu_optimization_target: nocona
+cran_mirror: https://cran.r-project.org
+cxx_compiler: gxx
+cxx_compiler_version: '9'
+docker_image: quay.io/condaforge/linux-anvil-comp7
+
+# specify an expat version compatible with our other recipes with expat: '2.2'
+expat: '2.2'
+
+extend_keys:
+- ignore_build_only_deps
+- extend_keys
+- ignore_version
+- pin_run_as_build
+fortran_compiler: gfortran
+ignore_build_only_deps:
+- numpy
+- python
+libcurl: '7'
+lua: '5'
+ncurses: '6.2'
+numpy: '1.16'
+perl: 5.26.2
+pin_run_as_build:
+  python:
+    min_pin: x.x
+    max_pin: x.x
+  r-base:
+    min_pin: x.x
+    max_pin: x.x
+  bzip2:
+    max_pin: x
+  libcurl:
+    max_pin: x
+  ncurses:
+    max_pin: x.x
+  xz:
+    max_pin: x.x
+  zlib:
+    max_pin: x.x
+python: '3.8'
+r_base: '3.5'
+target_platform: linux-64
+xz: '5.2'
+zip_keys:
+- - cdt_name
+  - docker_image
+- - c_compiler_version
+  - cxx_compiler_version
+zlib: '1.2'
+zstd: '1.5'
