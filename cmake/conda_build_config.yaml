@@ -1,14 +1,25 @@
 CI: azure
 bzip2: '1'
-c_compiler: gcc
-c_compiler_version: '9'
+
+# override the defaults here so we can build for osx too.
+c_compiler:
+  - gcc                        # [linux]
+  - clang                      # [osx]
+c_compiler_version:            # [unix]
+  - 12                         # [osx]
+  - 10                         # [linux]
+cxx_compiler:
+  - gxx                        # [linux]
+  - clangxx                    # [osx]
+cxx_compiler_version:          # [unix]
+  - 12                         # [osx]
+  - 10                         # [linux]
+
 cdt_name: cos6
 channel_sources: conda-forge,defaults
 channel_targets: conda-forge main
 cpu_optimization_target: nocona
 cran_mirror: https://cran.r-project.org
-cxx_compiler: gxx
-cxx_compiler_version: '9'
 docker_image: quay.io/condaforge/linux-anvil-comp7
 
 # specify an expat version compatible with our other recipes with expat: '2.2'
@@ -47,7 +58,6 @@ pin_run_as_build:
     max_pin: x.x
 python: '3.8'
 r_base: '3.5'
-target_platform: linux-64
 xz: '5.2'
 zip_keys:
 - - cdt_name
