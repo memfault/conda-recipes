@@ -136,8 +136,6 @@ docker_image:                           # [os.environ.get("BUILD_PLATFORM", "").
   - condaforge/linux-anvil-cuda:10.2    # [linux64 and (os.environ.get("BUILD_PLATFORM") == "linux-64" or os.environ.get("CONFIG_VERSION", "1") == "1")]
 
 zip_keys:
-  -
-    - python
   -                             # [(os.environ.get("CONFIG_VERSION", "1") == "1" and linux64) or os.environ.get("BUILD_PLATFORM") == "linux-64"]
     - cuda_compiler_version     # [(os.environ.get("CONFIG_VERSION", "1") == "1" and linux64) or os.environ.get("BUILD_PLATFORM") == "linux-64"]
     - docker_image              # [(os.environ.get("CONFIG_VERSION", "1") == "1" and linux64) or os.environ.get("BUILD_PLATFORM") == "linux-64"]
@@ -575,9 +573,9 @@ poppler:
 proj:
   - 7.1.0
 python:
-  - 3.6.* *_cpython    # [not (osx and arm64)]
-  - 3.7.* *_cpython    # [not (osx and arm64)]
-  - 3.8.* *_cpython
+  - 3.8
+  - 3.9
+  - 3.10
 python_impl:
   - cpython
 qt:

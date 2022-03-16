@@ -1,6 +1,6 @@
 {% set name = "multi-arch-gdb" %}
-{% set version = "10.1" %}
-{% set sha256 = "59e24cece979c5fd9b7635dff4123f9a7e568d8ca6b8a2ad7887fc2f9f5b4d5a" %}
+{% set version = "11.2" %}
+{% set sha256 = "a47afff8c0cb54d12b2f3066ef200e1014c89e94470dea74d9aa53ee20d1d6d3" %}
 
 package:
   name: {{ name }}
@@ -9,6 +9,9 @@ package:
 source:
   url: https://github.com/bminor/binutils-gdb/archive/gdb-{{ version }}-release.tar.gz
   sha256: {{ sha256 }}
+
+  patches:
+  - 0001-Modernise-yyerror.patch # [not win]
 
 build:
   number: '0'

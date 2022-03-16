@@ -9,7 +9,8 @@ export REAL_TARGET=multi-arch
 export FAKE_TARGET_PREFIX="${PREFIX}/${FAKE_TARGET}"
 export REAL_TARGET_PREFIX="${PREFIX}/${REAL_TARGET}"
 
-export CPPFLAGS="$CPPFLAGS -I$PREFIX/include"
+export CPPFLAGS="$CPPFLAGS -fcommon -I$PREFIX/include -Wno-constant-logical-operand"
+export CFLAGS="$CFLAGS -Wno-constant-logical-operand -Wno-format-nonliteral -Wno-self-assign"
 # Setting /usr/lib/debug as debug dir makes it possible to debug the system's
 # python on most Linux distributions
 ./configure \
