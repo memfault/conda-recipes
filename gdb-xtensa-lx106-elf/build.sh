@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Copy the ESP8266 "overlay" files:
-cp -av $SRC_DIR/xtensa-overlays/xtensa_lx106/binutils/. $SRC_DIR/binutils-gdb-lx106-src/
-cp -av $SRC_DIR/xtensa-overlays/xtensa_lx106/gdb/. $SRC_DIR/binutils-gdb-lx106-src/
+cp -av $SRC_DIR/crosstool-NG-esp32/overlays/xtensa_lx106/binutils/. $SRC_DIR/binutils-gdb-lx106-src/
+cp -av $SRC_DIR/crosstool-NG-esp32/overlays/xtensa_lx106/gdb/. $SRC_DIR/binutils-gdb-lx106-src/
 
 export TARGET=xtensa-lx106-elf
 export TARGET_PREFIX="${PREFIX}/${TARGET}"
@@ -34,14 +34,13 @@ cd binutils-gdb-lx106-src
 make
 make install
 
-shopt -s extglob
+# shopt -s extglob
 
-# Delete every binary except gdb
-pushd "${TARGET_PREFIX}"/bin/
-    rm !(xtensa-lx106-elf-gdb)
-    strip xtensa-lx106-elf-gdb
-popd
-
+# # Delete every binary except gdb
+# pushd "${TARGET_PREFIX}"/bin/
+#     rm !(xtensa-lx106-elf-gdb)
+#     strip xtensa-lx106-elf-gdb
+# popd
 
 # Symlink every binary from the build into /bin
 pushd "${PREFIX}"/bin

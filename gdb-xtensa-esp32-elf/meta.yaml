@@ -1,18 +1,16 @@
 {% set name = "xtensa-esp32-elf-gdb" %}
-{% set version = "2019r1.gdb.8.1.memfault1" %}
+{% set version = "11.1.memfault1" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  - git_url: https://github.com/espressif/binutils-gdb.git
-    git_rev: esp32-2019r1_gdb-8_1
+  - url: https://github.com/espressif/binutils-gdb/archive/refs/tags/esp-gdb-v11.1_20220225.tar.gz
+    sha256: cec32fe4c5843e02337b726bf0ca611249f1b128fd29dc4fb0e80f3812fb825b
     folder: binutils-gdb-esp32-src
-    patches:
-      - backtrace-fix.patch
   - git_url: https://github.com/espressif/crosstool-NG.git
-    git_rev: esp32-2019r1-rc2
+    git_rev: esp-gdb-v11.1_20220221
     folder: crosstool-NG-esp32
 
 build:
