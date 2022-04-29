@@ -1,15 +1,17 @@
 {% set name = "gitleaks" %}
-{% set version = "8.7.1" %}
+{% set version = "8.8.4" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
+  # bash for getting the sigs:
+  # ❯ (GITLEAKS_VER=8.8.4; for _arch in darwin_x64 linux_x64; do curl -sSL https://github.com/zricethezav/gitleaks/releases/download/v${GITLEAKS_VER}/gitleaks_${GITLEAKS_VER}_${_arch}.tar.gz | sha256sum; done)
   url: https://github.com/zricethezav/gitleaks/releases/download/v{{ version }}/gitleaks_{{ version }}_darwin_x64.tar.gz # [osx]
-  sha256: 73a51a817e3784b9a353cec8bce09270c35eab3c7cdc2dbe564e4a27786df1df # [osx]
+  sha256: 509430dada69ee4314068847a8a424d4102defc23fd5714330d36366796feef7 # [osx]
   url: https://github.com/zricethezav/gitleaks/releases/download/v{{ version }}/gitleaks_{{ version }}_linux_x64.tar.gz # [linux64]
-  sha256: 031dc0da028228fa1ffd501680e4e262669b02592101fda2a1b3d1d94f6cdf67 # [linux64]
+  sha256: f8d4b82a14141427af1f89de1b24ed7fe2e1c6542ed91acde9618d04c068ecbd # [linux64]
 
 build:
   string: '1'
