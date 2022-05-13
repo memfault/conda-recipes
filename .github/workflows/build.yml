@@ -1,4 +1,4 @@
-on: pull_request
+on: workflow_dispatch
 
 env:
   # set package dir to build and archive your package
