@@ -1,14 +1,14 @@
 package:
   name: gcc-arm-none-eabi
-  version: 8.2019.q3.update
+  version: 10.3.2021.10
 
 source:
-  url: https://developer.arm.com/-/media/Files/downloads/gnu-rm/8-2019q3/RC1.1/gcc-arm-none-eabi-8-2019-q3-update-mac.tar.bz2 # [osx]
-  sha256: fc235ce853bf3bceba46eff4b95764c5935ca07fc4998762ef5e5b7d05f37085 # [osx]
-  url: https://developer.arm.com/-/media/Files/downloads/gnu-rm/8-2019q3/RC1.1/gcc-arm-none-eabi-8-2019-q3-update-linux.tar.bz2 # [linux64]
-  sha256: b50b02b0a16e5aad8620e9d7c31110ef285c1dde28980b1a9448b764d77d8f92 # [linux64]
-  url: https://developer.arm.com/-/media/Files/downloads/gnu-rm/8-2019q3/RC1.1/gcc-arm-none-eabi-8-2019-q3-update-win32.zip # [win]
-  sha256: 94913fe2414b424d81cd53fbf906f1865444c634260b7544b6098eb2a74dae1c # [win]
+  url: https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-mac.tar.bz2 # [osx]
+  sha256: fb613dacb25149f140f73fe9ff6c380bb43328e6bf813473986e9127e2bc283b # [osx]
+  url: https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2 # [linux64]
+  sha256: 97dbb4f019ad1650b732faffcc881689cedc14e2b7ee863d390e0a41ef16c9a3 # [linux64]
+  url: https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-win32.zip # [win]
+  sha256: d287439b3090843f3f4e29c7c41f81d958a5323aecefcf705c203bfd8ae3f2e7 # [win]
 
 build:
   string: '0'
