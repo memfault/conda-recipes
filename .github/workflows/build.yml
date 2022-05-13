@@ -1,5 +1,10 @@
 on: workflow_dispatch
 
+inputs:
+  PACKAGE_DIR:
+    description: "set package dir to build and archive your package"
+    required: true
+
 env:
   # set package dir to build and archive your package
   PACKAGE_DIR: ''
