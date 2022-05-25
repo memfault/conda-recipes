@@ -8,7 +8,7 @@ package:
 source:
   url: https://github.com/segmentio/chamber/releases/download/v{{ version }}/chamber-v{{ version }}-darwin-amd64 # [osx and x86_64]
   sha256: e095712661629765902afb64c2f84d0bbe076847d83680385f55edf72b50a1d3 # [osx and x86_64]
-  url: https://github.com/segmentio/chamber/releases/download/v{{ version }}/chamber-v{{ version }}-darwin-amd64 # [osx and arm64]
+  url: https://github.com/segmentio/chamber/releases/download/v{{ version }}/chamber-v{{ version }}-darwin-arm64 # [osx and arm64]
   sha256: ee9bf24bb043937a448a620117044529906945695f6dd687f38341700e1f063c # [osx and arm64]
   url: https://github.com/segmentio/chamber/releases/download/v{{ version }}/chamber-v{{ version }}-linux-amd64 # [linux64 and x86_64]
   sha256: 679e4347abaa1f7fe236a159c570eeb4c2d7bd450cc478db6171a4e461e78a91 # [linux64 and x86_64]
