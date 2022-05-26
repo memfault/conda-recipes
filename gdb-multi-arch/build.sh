@@ -28,7 +28,9 @@ export CFLAGS="$CFLAGS -Wno-constant-logical-operand -Wno-format-nonliteral -Wno
     --with-python="$PREFIX" \
     --disable-ld \
     --disable-gprof \
-    --disable-gas
+    --disable-gas \
+    --disable-sim \
+    --disable-gold
 make
 make install
 

@@ -30,7 +30,9 @@ cd binutils-gdb-esp32-src
     --disable-nls \
     --disable-binutils \
     --disable-ld \
-    --disable-gas
+    --disable-gas \
+    --disable-sim \
+    --disable-gold
 make
 make install
 

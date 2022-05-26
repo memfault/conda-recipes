@@ -30,7 +30,9 @@ cd binutils-gdb-lx106-src
     --disable-nls \
     --disable-binutils \
     --disable-ld \
-    --disable-gas
+    --disable-gas \
+    --disable-sim \
+    --disable-gold
 make
 make install
 
