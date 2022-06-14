@@ -1,17 +1,17 @@
 {% set name = "multi-arch-gdb" %}
-{% set version = "11.2" %}
-{% set sha256 = "a47afff8c0cb54d12b2f3066ef200e1014c89e94470dea74d9aa53ee20d1d6d3" %}
+{% set version = "12.1" %}
+{% set sha256 = "417718b5348fe026f3e4d9c36bf4c6645083e58cb6ac2b8ffc467030be2d6b88" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://github.com/bminor/binutils-gdb/archive/gdb-{{ version }}-release.tar.gz
-  sha256: {{ sha256 }}
-
-  patches:
-  - 0001-Modernise-yyerror.patch # [not win]
+  - url: https://github.com/bminor/binutils-gdb/archive/gdb-{{ version }}-release.tar.gz
+    sha256: {{ sha256 }}
+    patches:
+      # mac doesn't build without this patch
+      - mac-build-fix.patch  # [osx]
 
 build:
   number: '0'
