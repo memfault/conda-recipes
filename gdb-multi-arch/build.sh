@@ -22,6 +22,7 @@ export CFLAGS="$CFLAGS -Wno-constant-logical-operand -Wno-format-nonliteral -Wno
     --with-expat \
     --with-libexpat-prefix="$PREFIX" \
     --with-libiconv-prefix="$PREFIX" \
+    --without-guile \
     --without-libunwind-ia64 \
     --with-zlib \
     --without-babeltrace \
