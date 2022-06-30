@@ -66,6 +66,19 @@ To download and install this SDK, you can find the package here: https://github.
 $ sudo mv <10.9 SDK> /opt/MacOSX10.9.sdk
 ```
 
+### Building for Apple Silicon
+
+Based on a [GitHub comment](https://github.com/conda-forge/miniforge/issues/165#issuecomment-860233092):
+
+```
+CONDA_SUBDIR=osx-arm64 conda create -n build-silicon conda-build anaconda-client python=3.8
+conda activate build-silicon
+python -c "import platform;print(platform.machine())"
+conda config --env --set subdir osx-arm64
+```
+
+Then follow the *Building Locally* instructions at the top.
+
 ## Building via GitHub Action
 
 Not heavily tested, but it's possible to build packages from github actions, see
