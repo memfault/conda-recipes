@@ -1,0 +1,26 @@
+{% set name = "docker-compose" %}
+{% set version = "2.6.1" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/docker/compose/releases/download/v{{ version }}/docker-compose-darwin-x86_64 # [osx and x86_64]
+  sha256: 38c180a1a8c258173861c2adba99c4bd50510261d2d2407421174b096ed098f0 # [osx and x86_64]
+  url: https://github.com/docker/compose/releases/download/v{{ version }}/docker-compose-darwin-aarch64 # [osx and arm64]
+  sha256: 54a4003be4d1ae026a50766edd1531c9d9e5e5209e01957c4242199789b39187 # [osx and arm64]
+  url: https://github.com/docker/compose/releases/download/v{{ version }}/docker-compose-linux-x86_64 # [linux64 and x86_64]
+  sha256: ed79398562f3a80a5d8c068fde14b0b12101e80b494aabb2b3533eaa10599e0f # [linux64 and x86_64]
+
+build:
+  string: '0'
+
+test:
+  commands:
+    - docker-compose version
+
+about:
+  home: https://github.com/docker/compose
+  license: Apache 2.0
+  summary: Define and run multi-container applications with Docker
