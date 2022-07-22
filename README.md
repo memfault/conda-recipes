@@ -95,3 +95,8 @@ PACKAGE=<package_name> anaconda upload **/$PACKAGE*.tar.bz2 --user memfault
 
 > Note: [Github actions cannot be run on Apple ARM VMs](https://github.com/actions/virtual-environments/issues/2187)
 > so building the package for darwin-aarch64 still needs to be done "manually"...
+
+
+## Useful Resources
+
+- Creating patch files for fixing builds: https://www.anaconda.com/blog/patching-source-code-to-conda-build-recipes
