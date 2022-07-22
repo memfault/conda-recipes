@@ -11,12 +11,13 @@ source:
     folder: binutils-gdb-lx106-src
     patches:
       - backtrace-fix.patch
+      - fix-disassemble-segfault.patch
   - git_url: https://github.com/espressif/xtensa-overlays.git
     git_rev: cc893dc572ff4d2e22aa5a55188fea4722a58027
     folder: xtensa-overlays
 
 build:
-  number: '0'
+  number: '2'
   skip: True  # [win]
 
 requirements:
