@@ -1,32 +1,31 @@
 {% set name = "xtensa-esp32-elf-gdb" %}
-{% set version = "11.1_20220318.memfault0" %}
+{% set version = "11.1_20220318" %}
+{% set release_url = "https://github.com/espressif/binutils-gdb/releases/download/esp-gdb-v{{ version }}" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  - url: https://github.com/espressif/binutils-gdb/archive/refs/tags/esp-gdb-v11.1_20220318.tar.gz
-    sha256: 087e4ac9902da6ba894f22e7eb467a068256fff1b554095c6884adc9bdd701b7
-    folder: binutils-gdb-esp32-src
-    patches:
-      - backtrace-fix.patch
-      - fix-disassemble-segfault.patch
-  - git_url: https://github.com/espressif/crosstool-NG.git
-    git_rev: esp32-2019r1-rc2
-    folder: crosstool-NG-esp32
+  - url: {{ release_url }}/xtensa-esp-elf-gdb-{{ version }}-x86_64-apple-darwin14.tar.gz # [osx and x86_64]
+    sha256: 18324682734ca2a23a45c5505f7bc1824336f88a4d59327d545083dc8a633bba # [osx and x86_64]
+
+  # not available as of 2022-07-26
+  # - url: {{ release_url }}/xtensa-esp-elf-gdb-{{ version }}-x86_64-apple-darwin14.tar.gz # [osx and arm64]
+  #   sha256: fb613dacb25149f140f73fe9ff6c380bb43328e6bf813473986e9127e2bc283b # [osx and arm64]
+
+  - url: {{ release_url }}/xtensa-esp-elf-gdb-{{ version }}-x86_64-linux-gnu.tar.gz # [linux64]
+    sha256: c2bfb97c61fa3d2e3720aa1cc8163806a8bc712a173a374b60f6f5c061d33d3f # [linux64]
+
+  - url: {{ release_url }}/xtensa-esp-elf-gdb-{{ version }}-x86_64-w64-mingw32.zip # [win]
+    sha256: b1bff9ee6b2a0025f33a9ddc97b92bab7578c11172c06e38a7483f98e157fb93 # [win]
+
 
 build:
-  number: '2'
+  number: '3'
   skip: True  # [win]
 
 requirements:
-  build:
-    - {{ compiler('fortran') }}
-    - {{ compiler('c') }}  # [linux]
-    - {{ compiler('cxx') }}  # [linux]
-    - make
-    - bison # [linux]
   host:
     - python {{ python }}
     - texinfo
@@ -55,7 +54,7 @@ about:
   home: https://www.gnu.org/software/gdb/
   license: GPL-2.0
   license_family: GPL
-  license_file: binutils-gdb-esp32-src/COPYING
+  # license_file: binutils-gdb-esp32-src/COPYING
   summary: GDB, the GNU Project debugger, allows you to see what is going on inside another program while it executes -- or what another program was doing at the moment it crashed.
   description: |
     GDB, the GNU Project debugger, allows you to see what is going on `inside'
