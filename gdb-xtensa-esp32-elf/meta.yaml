@@ -20,35 +20,54 @@ source:
   - url: {{ release_url }}/xtensa-esp-elf-gdb-{{ version }}-x86_64-w64-mingw32.zip # [win]
     sha256: b1bff9ee6b2a0025f33a9ddc97b92bab7578c11172c06e38a7483f98e157fb93 # [win]
 
+  - path: xtensa-esp32-elf-gdb
+  - path: xtensa-esp32s2-elf-gdb
+  - path: xtensa-esp32s3-elf-gdb
+
 
 build:
   number: '3'
   skip: True  # [win]
 
+  ignore_run_exports:
+
+    - expat* # [linux]
+
+  missing_dso_whitelist:
+    - $RPATH/libdl.so.2
+    - $RPATH/libm.so.6
+    - $RPATH/libpthread.so.0
+    - $RPATH/libc.so.6
+    - /lib64/ld-linux-x86-64.so.2
+
+
+
 requirements:
   host:
     - python {{ python }}
-    - texinfo
-    - ncurses {{ ncurses }}
-    - xz {{ xz }}
+    # - ncurses {{ ncurses }}
+    # - xz {{ xz }}
     - zlib {{ zlib }}
-    - libiconv {{ libiconv }}
-    - mpfr {{ mpfr }}
-    - gmp {{ gmp }}
+    # - libiconv {{ libiconv }}
+    # - mpfr {{ mpfr }}
+    # - gmp {{ gmp }}
     - expat {{ expat }} # [linux]
   run:
     - python {{ python }}
-    - ncurses {{ ncurses }}
-    - xz {{ xz }}
+    # - ncurses {{ ncurses }}
+    # - xz {{ xz }}
     - zlib {{ zlib }}
-    - libiconv {{ libiconv }}
-    - mpfr {{ mpfr }}
-    - gmp {{ gmp }}
+    # - libiconv {{ libiconv }}
+    # - mpfr {{ mpfr }}
+    # - gmp {{ gmp }}
     - expat {{ expat }} # [linux]
 
 test:
   commands:
+    # test the wrappers
     - xtensa-esp32-elf-gdb -ex "print 1" --batch
+    - xtensa-esp32s2-elf-gdb -ex "print 1" --batch
+    - xtensa-esp32s3-elf-gdb -ex "print 1" --batch
 
 about:
   home: https://www.gnu.org/software/gdb/
