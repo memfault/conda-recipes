@@ -1,23 +1,23 @@
 {% set name = "xtensa-esp32-elf-gdb" %}
 {% set version = "11.1_20220318" %}
-{% set release_url = "https://github.com/espressif/binutils-gdb/releases/download/esp-gdb-v{{ version }}" %}
+{% set release_url = "https://github.com/espressif/binutils-gdb/releases/download" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  - url: {{ release_url }}/xtensa-esp-elf-gdb-{{ version }}-x86_64-apple-darwin14.tar.gz # [osx and x86_64]
+  - url: {{ release_url }}/esp-gdb-v{{ version }}/xtensa-esp-elf-gdb-{{ version }}-x86_64-apple-darwin14.tar.gz # [osx and x86_64]
     sha256: 18324682734ca2a23a45c5505f7bc1824336f88a4d59327d545083dc8a633bba # [osx and x86_64]
 
   # not available as of 2022-07-26
-  # - url: {{ release_url }}/xtensa-esp-elf-gdb-{{ version }}-x86_64-apple-darwin14.tar.gz # [osx and arm64]
+  # - url: {{ release_url }}/esp-gdb-v{{ version }}/xtensa-esp-elf-gdb-{{ version }}-x86_64-apple-darwin14.tar.gz # [osx and arm64]
   #   sha256: fb613dacb25149f140f73fe9ff6c380bb43328e6bf813473986e9127e2bc283b # [osx and arm64]
 
-  - url: {{ release_url }}/xtensa-esp-elf-gdb-{{ version }}-x86_64-linux-gnu.tar.gz # [linux64]
+  - url: {{ release_url }}/esp-gdb-v{{ version }}/xtensa-esp-elf-gdb-{{ version }}-x86_64-linux-gnu.tar.gz # [linux64]
     sha256: c2bfb97c61fa3d2e3720aa1cc8163806a8bc712a173a374b60f6f5c061d33d3f # [linux64]
 
-  - url: {{ release_url }}/xtensa-esp-elf-gdb-{{ version }}-x86_64-w64-mingw32.zip # [win]
+  - url: {{ release_url }}/esp-gdb-v{{ version }}/xtensa-esp-elf-gdb-{{ version }}-x86_64-w64-mingw32.zip # [win]
     sha256: b1bff9ee6b2a0025f33a9ddc97b92bab7578c11172c06e38a7483f98e157fb93 # [win]
 
   - path: xtensa-esp32-elf-gdb
