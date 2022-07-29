@@ -1,0 +1,34 @@
+{% set version = "11.2.1-1.2" %}
+
+package:
+  name: xpack-gcc-arm-none-eabi
+  # conda package versions do not permit hyphens, replace with '.'
+  version: {{ version|replace('-', '.') }}
+
+source:
+  - url: https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack/releases/download/v{{ version }}/xpack-arm-none-eabi-gcc-{{ version }}-darwin-x64.tar.gz # [osx and x86_64]
+    sha256: f2910d5ec4971baee9cd9cd3efe13fc8573b2f1c8185a6f18a7bb7fb3787a60d # [osx and x86_64]
+
+  - url: https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack/releases/download/v{{ version }}/xpack-arm-none-eabi-gcc-{{ version }}-darwin-arm64.tar.gz # [osx and arm64]
+    sha256: 85afae936d84b5ed94ad15300d2333d4b0af34b53bbf92283e558a96209d0dd7 # [osx and arm64]
+
+  - url: https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack/releases/download/v{{ version }}/xpack-arm-none-eabi-gcc-{{ version }}-linux-x64.tar.gz # [linux64]
+    sha256: 7479becc1ea98fbceecadf1f036ddaba8dc39c9cce5cb45f0a7a36e923d33c9a # [linux64]
+
+  - url: https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack/releases/download/v{{ version }}/xpack-arm-none-eabi-gcc-{{ version }}-linux-arm64.tar.gz # [linux and aarch64]
+    sha256: e5bd60f5aaaf498e01d7fa4e2d2bd64671330217f8c6b0437208be42eac4c837 # [linux and aarch64]
+
+  - url: https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack/releases/download/v{{ version }}/xpack-arm-none-eabi-gcc-{{ version }}-win32-x64.zip # [win]
+    sha256: 4a45e1df1c621f0a97a2bcb63977a3745ffcff7afc0e31ad2f3d5cc1272acf4b # [win]
+
+build:
+  string: '0'
+
+test:
+  commands:
+    - arm-none-eabi-gcc --version
+
+about:
+  home: https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack
+  license: MIT
+  summary: The xPack GNU Arm Embedded GCC
