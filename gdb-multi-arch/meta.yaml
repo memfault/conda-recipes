@@ -15,7 +15,7 @@ source:
       - mac-build-fix.patch  # [osx]
 
 build:
-  number: '2'
+  number: '3'
   skip: True  # [win]
 
 requirements:

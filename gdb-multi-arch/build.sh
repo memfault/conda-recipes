@@ -31,7 +31,8 @@ export CFLAGS="$CFLAGS -Wno-constant-logical-operand -Wno-format-nonliteral -Wno
     --disable-gprof \
     --disable-gas \
     --disable-sim \
-    --disable-gold
+    --disable-gold \
+    --enable-64-bit-bfd
 make
 make install
 
