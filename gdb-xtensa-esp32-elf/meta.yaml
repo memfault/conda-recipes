@@ -12,9 +12,10 @@ source:
     patches:
       - backtrace-fix.patch
       - fix-disassemble-segfault.patch
-  - git_url: https://github.com/espressif/crosstool-NG.git
-    git_rev: esp32-2019r1-rc2
-    folder: crosstool-NG-esp32
+
+  - path: xtensa-esp32-elf-gdb
+  - path: xtensa-esp32s2-elf-gdb
+  - path: xtensa-esp32s3-elf-gdb
 
 build:
   number: '2'

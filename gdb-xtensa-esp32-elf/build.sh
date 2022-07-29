@@ -1,10 +1,6 @@
 #!/bin/bash
 
-# Copy the ESP32 "overlay" files:
-cp -av $SRC_DIR/crosstool-NG-esp32/overlays/xtensa_esp32/binutils/. $SRC_DIR/binutils-gdb-esp32-src/
-cp -av $SRC_DIR/crosstool-NG-esp32/overlays/xtensa_esp32/gdb/. $SRC_DIR/binutils-gdb-esp32-src/
-
-export TARGET=xtensa-esp32-elf
+export TARGET=xtensa-esp-elf
 export TARGET_PREFIX="${PREFIX}/${TARGET}"
 
 export CPPFLAGS="$CPPFLAGS -I$PREFIX/include"
@@ -32,9 +28,14 @@ cd binutils-gdb-esp32-src
     --disable-ld \
     --disable-gas \
     --disable-sim \
-    --disable-gold
+    --disable-gold \
+    --with-xtensaconfig
 make
 make install
+
+# Wrapper scripts for esp32* variants
+cp "$SRC_DIR"/xtensa-esp32*-elf-gdb            "$TARGET_PREFIX"/bin/
+chmod +x "$TARGET_PREFIX"/bin/*
 
 # Symlink every binary from the build into /bin
 pushd "${PREFIX}"/bin
