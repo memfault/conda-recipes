@@ -9,26 +9,14 @@ source:
   - url: https://github.com/CircleCI-Public/circleci-cli/archive/refs/tags/v{{ version }}.tar.gz
     sha256: b4dbf610860d8acd5f8a85a8b5f7b530392fc32121805a42276c4c715ccbb453
 
-  # to workaround the lack of a conda-forge go compiler for osx-arm64, we're
-  # going to download our own go compiler and install it in build.sh. what could
-  # go wrong!
-
-  - url: https://go.dev/dl/go1.18.4.darwin-amd64.tar.gz # [osx and x86_64]
-    sha256: 315e1a2b21a827c68da1b7f492b5dcbe81d8df8a79ebe50922df9588893f87f0 # [osx and x86_64]
-  - url: https://go.dev/dl/go1.18.4.darwin-arm64.tar.gz # [osx and arm64]
-    sha256: 04eed623d5143ffa44965b618b509e0beccccfd3a4a1bfebc0cdbcf906046769 # [osx and arm64]
-  - url: https://go.dev/dl/go1.18.4.linux-amd64.tar.gz # [linux64]
-    sha256: c9b099b68d93f5c5c8a8844a89f8db07eaa58270e3a1e01804f17f4cf8df02f5 # [linux64]
-  - url: https://go.dev/dl/go1.18.4.linux-arm64.tar.gz # [linux and aarch64]
-    sha256: 35014d92b50d97da41dade965df7ebeb9a715da600206aa59ce1b2d05527421f # [linux and aarch64]
-  - url: https://go.dev/dl/go1.18.4.windows-amd64.zip # [win]
-    sha256: dfb93c517e050ba0cfc066802b38a8e7cda2ef666efd634859356b33f543cc49 # [win]
-    folder: gocompiler
-
 build:
   string: '0'
   binary_relocation: False
   detect_binary_files_with_prefix: False
+
+requirements:
+  build:
+    - go-nocgo
 
 test:
   commands:
