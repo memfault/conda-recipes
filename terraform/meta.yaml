@@ -1,0 +1,38 @@
+# base recipe sourced from here:
+# https://github.com/conda-forge/terraform-feedstock/tree/a4cc349e5f058d77c7f890e7df676e0de550fa4b/recipe
+
+{% set name = "terraform" %}
+{% set version = "1.1.7" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}.memfault0
+
+source:
+  - url: https://github.com/hashicorp/{{ name }}/archive/v{{ version }}.tar.gz
+    sha256: 7651b69a2196de4393195cef4a03171c83aa50581f1019bca3f17cf05db5335b
+
+build:
+  number: 0
+
+  # conda binary relocation breaks the binaries, disable it
+  binary_relocation: False
+
+requirements:
+  build:
+    - go-nocgo=1.18.3
+
+test:
+  commands:
+    - terraform -v
+
+about:
+  home: https://www.terraform.io
+  license: MPL-2.0
+  summary: Terraform is a tool for building, changing, and combining infrastructure safely and efficiently.
+  description: |
+    Terraform is a tool for building, changing, and versioning infrastructure safely and
+    efficiently. Terraform can manage existing and popular service providers as well as custom in-house
+    solutions.
+  doc_url: https://www.terraform.io/docs/index.html
+  dev_url: https://github.com/hashicorp/terraform.git
