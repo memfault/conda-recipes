@@ -1,13 +1,17 @@
 {% set name = "cpputest" %}
-{% set version = "3.8" %}
+{% set version = "4.0" %}
 
 package:
   name: {{ name }}
-  version: {{ version }}
+  version: {{ version }}.memfault0
 
 source:
-  url: https://github.com/cpputest/cpputest/releases/download/v3.8/cpputest-3.8.tar.gz
-  sha256: c81dccc5a1bfc7fc6511590c0a61def5f78e3fb19cb8e1f889d8d3395a476456
+  url: https://github.com/cpputest/cpputest/releases/download/v{{ version }}/cpputest-{{ version }}.tar.gz
+  sha256: 21c692105db15299b5529af81a11a7ad80397f92c122bd7bf1e4a4b0e85654f7
+
+  patches:
+    # as of v4.0, cpputest's config.sub needs patching to build on osx-arm64
+    - 0001-Re-run-autogen.sh.patch
 
 build:
   number: "0"
