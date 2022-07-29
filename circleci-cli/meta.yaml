@@ -1,20 +1,22 @@
 {% set name = "circleci-cli" %}
-{% set version = "0.1.9578" %}
+{% set version = "0.1.20397" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://github.com/CircleCI-Public/circleci-cli/releases/download/v{{ version }}/circleci-cli_{{ version }}_darwin_amd64.tar.gz # [osx]
-  sha256: a11dc16f8b10082a038e59801c7ca36f498453fd25c1dd5fac7d63be68910ef2 # [osx]
-  url: https://github.com/CircleCI-Public/circleci-cli/releases/download/v{{ version }}/circleci-cli_{{ version }}_linux_amd64.tar.gz # [linux64]
-  sha256: b8048babccc98f47713812af63193f67fbba2d03c10e186b433d0732a594f478 # [linux64]
+  - url: https://github.com/CircleCI-Public/circleci-cli/archive/refs/tags/v{{ version }}.tar.gz
+    sha256: b4dbf610860d8acd5f8a85a8b5f7b530392fc32121805a42276c4c715ccbb453
 
 build:
   string: '0'
   binary_relocation: False
   detect_binary_files_with_prefix: False
+
+requirements:
+  build:
+    - go-nocgo=1.18.3
 
 test:
   commands:
