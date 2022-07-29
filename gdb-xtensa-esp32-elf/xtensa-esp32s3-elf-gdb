@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+xtensa-esp-elf-gdb --mcpu=esp32s2 "$@"

@@ -1,42 +1,32 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Copy the ESP32 "overlay" files:
-cp -av $SRC_DIR/crosstool-NG-esp32/overlays/xtensa_esp32/binutils/. $SRC_DIR/binutils-gdb-esp32-src/
-cp -av $SRC_DIR/crosstool-NG-esp32/overlays/xtensa_esp32/gdb/. $SRC_DIR/binutils-gdb-esp32-src/
+set -ex
 
+TARGET=xtensa-esp32-elf
+
+# Copy everything into a TARGET-namespaced directory. This is so we don't
+# overwrite other GDB versions' bin/lib/include/share etc. files, which might
+# not be target-prefixed!
 export TARGET=xtensa-esp32-elf
 export TARGET_PREFIX="${PREFIX}/${TARGET}"
 
-export CPPFLAGS="$CPPFLAGS -I$PREFIX/include"
-# Setting /usr/lib/debug as debug dir makes it possible to debug the system's
-# python on most Linux distributions
+mkdir -p "${PREFIX}"/bin
+mkdir -p "${TARGET_PREFIX}"/bin
 
-cd binutils-gdb-esp32-src
+# Only copy what is necessary or else we'll copy a bunch of internal Conda stuff.
 
-./configure \
-    --prefix="${TARGET_PREFIX}" \
-    --target=$TARGET \
-    --with-separate-debug-dir="${TARGET_PREFIX}/lib/debug:/usr/lib/debug" \
-    --with-lzma \
-    --with-expat \
-    --with-libexpat-prefix="$PREFIX" \
-    --with-libiconv-prefix="$PREFIX" \
-    --without-libunwind-ia64 \
-    --with-zlib \
-    --without-babeltrace \
-    --with-python="$PREFIX" \
-    --disable-threads \
-    --disable-sim \
-    --disable-nls \
-    --disable-binutils \
-    --disable-ld \
-    --disable-gas \
-    --disable-sim \
-    --disable-gold
-make
-make install
+# Wrapper scripts for esp32* variants
+cp "$SRC_DIR"/xtensa-esp32*-elf-gdb            "$TARGET_PREFIX"/bin/
+chmod +x "$TARGET_PREFIX"/bin/*
+# This is the actual, python-version-specific gdb binary.
+cp "$SRC_DIR"/bin/xtensa-esp-elf-gdb-${PY_VER} "$TARGET_PREFIX"/bin/xtensa-esp-elf-gdb
+cp --recursive "$SRC_DIR"/include              "$TARGET_PREFIX"
+cp --recursive "$SRC_DIR"/lib                  "$TARGET_PREFIX"
+cp --recursive "$SRC_DIR"/share                "$TARGET_PREFIX"
 
 # Symlink every binary from the build into /bin
-pushd "${PREFIX}"/bin
+(
+    # cd so we can use relative paths + wildcard for the symlink
+    cd "${PREFIX}/bin"
     ln -s ../"${TARGET}"/bin/* ./
-popd
+)
