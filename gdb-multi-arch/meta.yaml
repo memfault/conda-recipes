@@ -12,6 +12,9 @@ source:
     patches:
       # mac doesn't build without this patch
       - mac-build-fix.patch  # [osx]
+      # Loading symbols by build id for loaded .so's had not yet been released in v12.1
+      # https://github.com/bminor/binutils-gdb/commit/39f53acb410c3e303fb25ff823de57eb316515ca
+      - gdb-Add-soname-to-build-id-mapping-for-core-files.patch
 
 build:
   number: '1'
