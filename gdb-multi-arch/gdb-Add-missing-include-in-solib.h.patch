@@ -1,0 +1,32 @@
+From fcb335b0a23f7c2871a04ac181c258f3c1a915f3 Mon Sep 17 00:00:00 2001
+From: Roland McGrath <mcgrathr@google.com>
+Date: Mon, 21 Mar 2022 12:04:48 -0700
+Subject: [PATCH] gdb: Add missing #include in solib.h
+
+The gdb_bfd_ref_ptr type is used in solib.h declarations.
+---
+ gdb/solib.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/gdb/solib.h b/gdb/solib.h
+index cd6c8a81104..f9b4d3566d7 100644
+--- a/gdb/solib.h
++++ b/gdb/solib.h
+@@ -1,5 +1,5 @@
+ /* Shared library declarations for GDB, the GNU Debugger.
+-   
++
+    Copyright (C) 1992-2022 Free Software Foundation, Inc.
+ 
+    This file is part of GDB.
+@@ -26,6 +26,7 @@ struct target_ops;
+ struct target_so_ops;
+ struct program_space;
+ 
++#include "gdb_bfd.h"
+ #include "symfile-add-flags.h"
+ 
+ /* Called when we free all symtabs, to free the shared library information
+-- 
+2.25.1
+
