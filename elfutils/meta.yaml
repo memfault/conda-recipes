@@ -1,4 +1,4 @@
-{% set version = "0.187" %}
+{% set version = "0.176" %}
 
 package:
   name: elfutils
@@ -7,7 +7,7 @@ package:
 source:
   fn: elfutils-{{ version }}.tar.bz2
   url: https://fedorahosted.org/releases/e/l/elfutils/{{ version }}/elfutils-{{ version }}.tar.bz2
-  sha256: e70b0dfbe610f90c4d1fe0d71af142a4e25c3c4ef9ebab8d2d72b65159d454c8
+  sha256: eb5747c371b0af0f71e86215a5ebb88728533c3a104a43d4231963f308cd1023
 
 build:
   number: 0
