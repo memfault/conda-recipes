@@ -34,7 +34,7 @@ requirements:
     - libiconv {{ libiconv }}
     - mpfr {{ mpfr }}
     - gmp {{ gmp }}
-    - expat {{ expat }} # [linux]
+    - expat {{ expat }}
   run:
     - python {{ python }}
     - ncurses {{ ncurses }}
@@ -43,7 +43,7 @@ requirements:
     - libiconv {{ libiconv }}
     - mpfr {{ mpfr }}
     - gmp {{ gmp }}
-    - expat {{ expat }} # [linux]
+    - expat {{ expat }}
 
 test:
   commands:
