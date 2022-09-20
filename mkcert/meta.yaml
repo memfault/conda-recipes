@@ -1,0 +1,34 @@
+{% set name = "mkcert" %}
+{% set version = "1.4.4" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}.memfault0
+
+source:
+  - url: https://github.com/FiloSottile/{{ name }}/archive/v{{ version }}.tar.gz
+    sha256: 32bd5519581bf0b03f53e5b22721692b99f39ab5b161dc27532c51eafa512ca9
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - go-nocgo=1.18.3
+  run:
+    # mkcert uses 'certutil', available from this conda package
+    - nss
+
+test:
+  commands:
+    - mkcert --version
+
+about:
+  home: https://mkcert.dev/
+  license_family: BSD
+  license: BSD-3-Clause
+  summary: mkcert is a simple tool for making locally-trusted development certificates
+  description: |
+    A simple zero-config tool to make locally trusted development certificates with any names you'd like.
+  doc_url: https://github.com/FiloSottile/mkcert
+  dev_url: https://github.com/FiloSottile/mkcert

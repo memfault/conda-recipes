@@ -41,5 +41,5 @@ jobs:
       # upload-artifact to save the output files
       - uses: actions/upload-artifact@v2
         with:
-          name: packages
+          name: ${{ github.event.inputs.PACKAGE_DIR }}.packages
           path: ${{ github.event.inputs.PACKAGE_DIR }}.output
