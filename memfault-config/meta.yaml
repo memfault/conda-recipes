@@ -13,6 +13,7 @@ build:
 test:
   commands:
     - test "$MEMFAULT_DEPS_ROOT"
+    - test "$PYTHON_KEYRING_BACKEND"
 
 about:
   home: https://memfault.com
