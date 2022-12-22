@@ -1,21 +1,18 @@
 {% set name = "multi-arch-gdb" %}
-{% set version = "12.1" %}
-{% set sha256 = "417718b5348fe026f3e4d9c36bf4c6645083e58cb6ac2b8ffc467030be2d6b88" %}
+{% set version = "13.0.branch" %}
 
 package:
   name: {{ name }}
-  version: {{ version }}
+  version: "{{ version }}"
 
 source:
-  - url: https://github.com/bminor/binutils-gdb/archive/gdb-{{ version }}-release.tar.gz
-    sha256: {{ sha256 }}
+  - url: https://github.com/bminor/binutils-gdb/archive/refs/tags/gdb-13-branchpoint.tar.gz
     patches:
-      - fix-disassemble-segfault.patch
       # mac doesn't build without this patch
       - mac-build-fix.patch  # [osx]
 
 build:
-  number: '3'
+  number: '0'
   skip: True  # [win]
 
 requirements:
@@ -24,7 +21,7 @@ requirements:
     - {{ compiler('c') }}  # [linux]
     - {{ compiler('cxx') }}  # [linux]
     - make
-    - bison # [linux]
+    - bison
   host:
     - python {{ python }}
     - texinfo
