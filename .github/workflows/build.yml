@@ -9,28 +9,52 @@ jobs:
   build:
     name: 🛠️ build on ${{ matrix.platform }}
 
-    # use the setup-miniconda helper, see
-    # https://github.com/marketplace/actions/setup-miniconda for details
     strategy:
       fail-fast: true
       matrix:
         platform: [ubuntu-20.04, macos-11,]  #  windows-2022] windows is a bit sad :'(
     runs-on: ${{ matrix.platform }}
+
+    # set bash to be a login shell, so that /etc/profile is sourced and conda
+    # works
+    defaults:
+      run:
+        shell: bash -l {0}
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - uses: conda-incubator/setup-miniconda@v2
-        with:
-          # miniconda-version: "4.11.0"
-          mamba-version: "0.22.1"
-          channels: conda-forge,defaults
+      # it might be worth switching to micromamba instead someday
+      # https://mamba.readthedocs.io/en/latest/installation.html#micromamba
+      - name: Install mambaforge
+        run: |
+          wget -q -O Mambaforge.sh  "https://github.com/conda-forge/miniforge/releases/download/22.9.0-3/Mambaforge-$(uname)-$(uname -m).sh"
+          bash Mambaforge.sh -b -p "${HOME}/mambaforge" > /dev/null
 
-      - name: Conda info
-        run: conda info
+          # very trashy- shove in the conda init crap into /etc/profile.
+          # /etc/profile on mac doesn't auto-source /etc/profile.d files, so add
+          # them explicitly
+          echo source "${HOME}/mambaforge/etc/profile.d/conda.sh" | sudo tee -a /etc/profile
+          echo source "${HOME}/mambaforge/etc/profile.d/mamba.sh" | sudo tee -a /etc/profile
+          echo 'mamba activate base' | sudo tee -a /etc/profile
+
+      - name: Mamba info
+        run: mamba info
 
       - name: Install mambabuild
         run: |
-          mamba install --channel conda-forge boa==0.11.0
+          # install mambabuild for faster builds
+          mamba install --yes --channel conda-forge boa==0.14.0
+
+      # Conda build relies on using the 'file' protocol when manipulating
+      # submodules that use a _relative_ ref (eg `../foo`), but this breaks due
+      # to a recent patch to git for a CVE. This workaround is required right
+      # now.
+      #
+      # https://vielmetti.typepad.com/logbook/2022/10/git-security-fixes-lead-to-fatal-transport-file-not-allowed-error-in-ci-systems-cve-2022-39253.html
+      - name: Work around git CVE fix
+        run: |
+          git config --global protocol.file.allow always
 
       - name: Build package
         run: |
