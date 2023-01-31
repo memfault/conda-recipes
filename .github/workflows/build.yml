@@ -58,6 +58,15 @@ jobs:
 
       - name: Build package
         run: |
+          # mac-only, we need to inject the macos sdk so conda can link against it
+          # https://github.com/actions/runner-images/blob/main/images/macos/macos-11-Readme.md
+          if command -v xcode-select; then
+            export MACOSX_DEPLOYMENT_TARGET="10.15"
+            export CONDA_BUILD_SYSROOT="$(xcode-select -p)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX${MACOSX_DEPLOYMENT_TARGET}.sdk"
+
+            echo mac sysroot: ${CONDA_BUILD_SYSROOT}
+          fi
+
           # store the output in an out of tree location
           mkdir -p ${{ github.event.inputs.PACKAGE_DIR }}.output
           conda mambabuild -c conda-forge --output-folder ${{ github.event.inputs.PACKAGE_DIR }}.output ${{ github.event.inputs.PACKAGE_DIR }}
