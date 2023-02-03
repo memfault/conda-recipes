@@ -1,0 +1,37 @@
+From 4c31d765c29e0d2b3f085df27e9ab92b617fbcd6 Mon Sep 17 00:00:00 2001
+From: Memfault Inc <hello@memfault.com>
+Date: Fri, 3 Feb 2023 16:07:07 -0500
+Subject: [PATCH] Mac OSx build patch
+
+---
+ Makefile | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 5cd586f..30fe548 100644
+--- a/Makefile
++++ b/Makefile
+@@ -45,7 +45,19 @@ COMMON_INCLUDE = -Ilib_include -Iinclude
+ # Include chip depended directory first
+ LIB_INCLUDE = -Iconfig/xtensa_$*/binutils/include ${COMMON_INCLUDE}
+ 
+-LIB_FLAGS = -nostdlib -shared -fPIC $(RELEASE_FLAGS) $(CFLAGS)
++# find the OS
++uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
++# -fPIC fails on Mac, annoyingly, so only include it on Linux (it's probably not
++# really required there either):
++#
++#   ld: warning: -pie being ignored. It is only used when linking a main executable
++#   ld: dynamic main executables must link with libSystem.dylib for architecture x86_64
++#   clang: error: linker command failed with exit code 1 (use -v to see invocation)
++ifneq ($(uname_S),Darwin)
++PIC_FLAGS = -fPIC
++endif
++
++LIB_FLAGS = -nostdlib -shared $(PIC_FLAGS) $(RELEASE_FLAGS) $(CFLAGS)
+ 
+ libxtensaconfig-default.a: $(patsubst %.c,$(OBJ_DIR)/%.o,$(LIBCONFIG-DEFAULT_SOURCES))
+ 	$(AR) rcs $@ $^
+-- 
+2.39.1
+

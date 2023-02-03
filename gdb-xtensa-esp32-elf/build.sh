@@ -36,9 +36,13 @@ unset PREFIX
 # Build xtensa-config libs
 mkdir -p "${GDB_DIST}"/lib
 pushd xtensaconfig
+
+# this is needed to make xtensaconfig build on mac
+patch -p1 < ${RECIPE_DIR}/0001-Mac-OSx-build-patch.patch
+
 make clean
 # AR="$TARGET_HOST-ar" CC="$TARGET_HOST-gcc"
-TARGET_ESP_ARCH=${ESP_CHIP_ARCHITECTURE} DESTDIR="${GDB_DIST}" PLATFORM=$PLATFORM make install
+TARGET_ESP_ARCH=${ESP_CHIP_ARCHITECTURE} DESTDIR="${GDB_DIST}" PLATFORM=$PLATFORM make --trace install
 popd
 # Install xtensa-config libs
 mkdir -p "$TARGET_PREFIX"/lib
