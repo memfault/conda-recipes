@@ -21,9 +21,8 @@ To build any of the following packages (macOS and Linux Ubuntu 18.04 tested):
 
 ```bash
 # Create build environment
-$ conda create -n build
+$ conda create --name build --file environment.yml
 $ conda activate build
-$ conda install conda-build anaconda-client
 
 # Build specific recipe
 $ cd <some_recipe_dir>
@@ -96,7 +95,7 @@ and download the "packages" artifact.
 Unzip the packages.zip and then run:
 
 ```shell
-PACKAGE=<package_name> anaconda upload **/$PACKAGE*.tar.bz2 --user memfault
+PACKAGE=<package_name>; anaconda upload **/$PACKAGE*.tar.bz2 --user memfault
 ```
 
 > Note: [Github actions cannot be run on Apple ARM VMs](https://github.com/actions/virtual-environments/issues/2187)
