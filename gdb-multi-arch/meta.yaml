@@ -23,7 +23,7 @@ requirements:
     - {{ compiler('c') }}  # [linux]
     - {{ compiler('cxx') }}  # [linux]
     - make
-    - bison # [linux]
+    - bison
   host:
     - python {{ python }}
     - texinfo
