@@ -1,0 +1,30 @@
+{% set name = "colorized-logs" %}
+{% set version = "2.6" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}.memfault0
+
+source:
+  url: https://github.com/kilobyte/colorized-logs/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: d209d9fb45f5332ba4792624746f2bbbbcf425e6539fa69657e9602e2bee6570
+
+build:
+  number: "0"
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - cmake
+    - make
+  # commands:
+  #   -
+
+about:
+  home: https://github.com/kilobyte/colorized-logs
+  dev_url: https://github.com/kilobyte/colorized-logs
+  doc_url: https://github.com/kilobyte/colorized-logs
+  license: MIT
+  license_file: LICENSE
+  summary: tools for logs with ANSI color
