@@ -1,0 +1,32 @@
+{% set name = "clickhouse" %}
+{% set version = "23.4.2.11" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}.memfault0
+
+source:
+  - url: https://github.com/ClickHouse/ClickHouse/releases/download/v{{ version }}-stable/clickhouse-macos # [osx and x86_64]
+    sha256: 0fdb19eda6dc4ef6b6b324b4d0ee8d1bb2da9fc35ebfb661b6156a7391d56b5d # [osx and x86_64]
+  - url: https://github.com/ClickHouse/ClickHouse/releases/download/v{{ version }}-stable/clickhouse-macos-aarch64 # [osx and arm64]
+    sha256: 5ec2f9f06c8858b9d920f9a3ef912b0d11592ae3b6f585d5149726cc36bb9207 # [osx and arm64]
+  - url: https://github.com/ClickHouse/ClickHouse/releases/download/v{{ version }}-stable/clickhouse-common-static-{{ version }}-amd64.tgz # [linux64]
+    sha256: 63ef3f1e65e4bda4d7dccbe41f295bed952e69e31c3f22f95175c0876488de1f # [linux64]
+
+build:
+  number: 0
+  binary_relocation: False
+
+test:
+  commands:
+    - clickhouse client --version
+
+about:
+  home: https://clickhouse.com/
+  license: Apache 2.0
+  summary: ClickHouse® is a free analytics DBMS for big data
+  description: |
+    ClickHouse® is an open-source column-oriented database management system
+    that allows generating analytical data reports in real-time.
+  doc_url: https://clickhouse.com/docs
+  dev_url: https://github.com/ClickHouse/ClickHouse
