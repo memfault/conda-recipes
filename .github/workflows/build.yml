@@ -44,7 +44,7 @@ jobs:
       - name: Install mambabuild
         run: |
           # install mambabuild for faster builds
-          mamba install --yes --channel conda-forge boa==0.14.0
+          mamba install --yes --channel conda-forge boa==0.14.0 conda-package-handling==2.0.2
 
       # Conda build relies on using the 'file' protocol when manipulating
       # submodules that use a _relative_ ref (eg `../foo`), but this breaks due
@@ -70,9 +70,10 @@ jobs:
           # store the output in an out of tree location
           mkdir -p ${{ github.event.inputs.PACKAGE_DIR }}.output
           conda mambabuild -c conda-forge --output-folder ${{ github.event.inputs.PACKAGE_DIR }}.output ${{ github.event.inputs.PACKAGE_DIR }}
+          cph transmute '*.tar.bz2' ${{ github.event.inputs.PACKAGE_DIR }}.output
 
       # upload-artifact to save the output files
       - uses: actions/upload-artifact@v2
         with:
-          name: ${{ github.event.inputs.PACKAGE_DIR }}.packages
+          name: ${{ github.event.inputs.PACKAGE_DIR }}.${{ matrix.platform }}.packages
           path: ${{ github.event.inputs.PACKAGE_DIR }}.output
