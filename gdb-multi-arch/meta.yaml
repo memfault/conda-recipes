@@ -1,6 +1,6 @@
 {% set name = "multi-arch-gdb" %}
-{% set version = "13.1" %}
-{% set sha256 = "b3a38dd18b39d162f2731532d21ad2c22d8ba633659a14ab2c1b62e88ab7faaf" %}
+{% set version = "13.2" %}
+{% set sha256 = "14f3ebf8fe6ce0156b217dc62de0ce373d7b42520c647befdab48f377de31e31" %}
 
 package:
   name: {{ name }}
