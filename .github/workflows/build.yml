@@ -53,13 +53,13 @@ jobs:
           micromamba shell hook --shell bash | sudo tee -a /etc/profile
           echo 'micromamba activate base' | sudo tee -a /etc/profile
 
-      - name: Mamba info
-        run: mamba info
-
       - name: Install mambabuild
         run: |
           # install mambabuild for faster builds
           micromamba install --yes --channel conda-forge boa==0.14.0 conda-package-handling==2.0.2
+
+      - name: Mamba info
+        run: mamba info
 
       # Conda build relies on using the 'file' protocol when manipulating
       # submodules that use a _relative_ ref (eg `../foo`), but this breaks due
@@ -77,7 +77,10 @@ jobs:
           # https://github.com/actions/runner-images/blob/main/images/macos/macos-11-Readme.md
           if command -v xcode-select; then
             export MACOSX_DEPLOYMENT_TARGET="10.15"
-            export CONDA_BUILD_SYSROOT="$(xcode-select -p)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX${MACOSX_DEPLOYMENT_TARGET}.sdk"
+            wget https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX10.15.sdk.tar.xz
+            tar -xf MacOSX10.15.sdk.tar.xz
+            sudo mv MacOSX10.15.sdk /opt/MacOSX10.15.sdk
+            export CONDA_BUILD_SYSROOT="/opt/MacOSX10.15.sdk"
 
             echo mac sysroot: ${CONDA_BUILD_SYSROOT}
           fi
