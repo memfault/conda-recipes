@@ -45,6 +45,7 @@ jobs:
             tar -xjOf - bin/micromamba > /usr/local/bin/micromamba
           chmod +x /usr/local/bin/micromamba
 
+          echo Creating base environment...
           micromamba create base
 
           # very trashy- shove in the conda init crap into /etc/profile.
