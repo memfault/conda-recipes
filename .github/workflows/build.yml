@@ -1,4 +1,9 @@
 on:
+  # temp for defbug, build on pr
+  pull_request:
+    branches:
+      - main
+
   workflow_dispatch:
     inputs:
       PACKAGE_DIR:
@@ -24,19 +29,29 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # it might be worth switching to micromamba instead someday
-      # https://mamba.readthedocs.io/en/latest/installation.html#micromamba
-      - name: Install mambaforge
+      - name: Install micromamba
         run: |
-          wget -q -O Mambaforge.sh  "https://github.com/conda-forge/miniforge/releases/download/22.9.0-3/Mambaforge-$(uname)-$(uname -m).sh"
-          bash Mambaforge.sh -b -p "${HOME}/mambaforge" > /dev/null
+          if [[ "$(uname)" == "Linux" ]]; then
+              PLATFORM="linux-64"
+          elif [[ "$(uname)" == "Darwin" ]]; then
+              PLATFORM="osx-64"
+          else
+              echo "Unsupported operating system"
+              exit 1
+          fi
+
+          μMAMBA_VERSION=1.4.8-0
+          curl -sSL https://github.com/mamba-org/micromamba-releases/releases/download/${μMAMBA_VERSION}/micromamba-${PLATFORM}.tar.bz2 | \
+            tar -xjOf - bin/micromamba > /usr/local/bin/micromamba
+          chmod +x /usr/local/bin/micromamba
+
+          micromamba create base
 
           # very trashy- shove in the conda init crap into /etc/profile.
           # /etc/profile on mac doesn't auto-source /etc/profile.d files, so add
           # them explicitly
-          echo source "${HOME}/mambaforge/etc/profile.d/conda.sh" | sudo tee -a /etc/profile
-          echo source "${HOME}/mambaforge/etc/profile.d/mamba.sh" | sudo tee -a /etc/profile
-          echo 'mamba activate base' | sudo tee -a /etc/profile
+          micromamba shell hook --shell bash | sudo tee -a /etc/profile
+          echo 'micromamba activate base' | sudo tee -a /etc/profile
 
       - name: Mamba info
         run: mamba info
@@ -44,7 +59,7 @@ jobs:
       - name: Install mambabuild
         run: |
           # install mambabuild for faster builds
-          mamba install --yes --channel conda-forge boa==0.14.0 conda-package-handling==2.0.2
+          micromamba install --yes --channel conda-forge boa==0.14.0 conda-package-handling==2.0.2
 
       # Conda build relies on using the 'file' protocol when manipulating
       # submodules that use a _relative_ ref (eg `../foo`), but this breaks due
