@@ -46,7 +46,7 @@ jobs:
           chmod +x /usr/local/bin/micromamba
 
           echo Creating base environment...
-          micromamba create base
+          micromamba create --name base
 
           # very trashy- shove in the conda init crap into /etc/profile.
           # /etc/profile on mac doesn't auto-source /etc/profile.d files, so add
