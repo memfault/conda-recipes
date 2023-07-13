@@ -40,8 +40,8 @@ jobs:
               exit 1
           fi
 
-          μMAMBA_VERSION=1.4.8-0
-          curl -sSL https://github.com/mamba-org/micromamba-releases/releases/download/${μMAMBA_VERSION}/micromamba-${PLATFORM}.tar.bz2 | \
+          UMAMBA_VERSION="1.4.8-0"
+          curl -sSL https://github.com/mamba-org/micromamba-releases/releases/download/${UMAMBA_VERSION}/micromamba-${PLATFORM}.tar.bz2 | \
             tar -xjOf - bin/micromamba > /usr/local/bin/micromamba
           chmod +x /usr/local/bin/micromamba
 
