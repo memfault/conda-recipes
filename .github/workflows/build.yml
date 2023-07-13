@@ -8,6 +8,7 @@ on:
     inputs:
       PACKAGE_DIR:
         description: "set package dir to build and archive your package"
+        default: "gdb-xtensa-esp32-elf"
         required: true
 
 jobs:
