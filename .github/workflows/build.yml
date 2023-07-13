@@ -2,7 +2,7 @@ on:
   # temp for defbug, build on pr
   pull_request:
     branches:
-      - main
+      - master
 
   workflow_dispatch:
     inputs:
