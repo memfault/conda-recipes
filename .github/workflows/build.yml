@@ -8,8 +8,11 @@ on:
     inputs:
       PACKAGE_DIR:
         description: "set package dir to build and archive your package"
-        default: "gdb-xtensa-esp32-elf"
         required: true
+
+env:
+  # env variable so non-workflow_dispatch-triggered builds can set a package dir
+  PACKAGE_DIR: ${{ inputs.PACKAGE_DIR || 'gdb-xtensa-esp32-elf' }}
 
 jobs:
   build:
@@ -88,12 +91,12 @@ jobs:
           fi
 
           # store the output in an out of tree location
-          mkdir -p ${{ github.event.inputs.PACKAGE_DIR }}.output
-          conda mambabuild -c conda-forge --output-folder ${{ github.event.inputs.PACKAGE_DIR }}.output ${{ github.event.inputs.PACKAGE_DIR }}
-          cph transmute '*.tar.bz2' ${{ github.event.inputs.PACKAGE_DIR }}.output
+          mkdir -p ${PACKAGE_DIR}.output
+          conda mambabuild -c conda-forge --output-folder ${PACKAGE_DIR}.output ${PACKAGE_DIR}
+          cph transmute '*.tar.bz2' ${PACKAGE_DIR}.output
 
       # upload-artifact to save the output files
       - uses: actions/upload-artifact@v2
         with:
-          name: ${{ github.event.inputs.PACKAGE_DIR }}.${{ matrix.platform }}.packages
-          path: ${{ github.event.inputs.PACKAGE_DIR }}.output
+          name: ${PACKAGE_DIR}.${{ matrix.platform }}.packages
+          path: ${PACKAGE_DIR}.output
