@@ -1,49 +1,22 @@
 {% set name = "xtensa-esp32-elf-gdb" %}
 {% set version = "12.1_20221002" %}
+{% set url = "https://github.com/espressif/binutils-gdb/releases/download" %}
 
 package:
   name: {{ name }}
-  version: {{ version }}.memfault1
+  version: {{ version }}.memfault2
 
 source:
-  - git_url: https://github.com/espressif/binutils-gdb.git
-    git_rev: esp-gdb-v{{ version }}
-
-  # wrapper scripts for esp32 variants
-  - path: xtensa-esp32-elf-gdb
-  - path: xtensa-esp32s2-elf-gdb
-  - path: xtensa-esp32s3-elf-gdb
+  url: {{ url }}/esp-gdb-v{{ version }}/xtensa-esp-elf-gdb-{{ version }}-x86_64-apple-darwin14.tar.gz # [osx and x86_64]
+  sha256: 417fcf8d1b596b9481603d6987def1d6cfcebdb9739f53940887334a7de855fa # [osx and x86_64]
+  url: {{ url }}/esp-gdb-v{{ version }}/xtensa-esp-elf-gdb-{{ version }}-aarch64-apple-darwin21.1.tar.gz # [osx and arm64]
+  sha256: 95d6ed2311d6a72bf349e152d096aeeb151f9c5989bfa3120facb1c99e879196 # [osx and arm64]
+  url: {{ url }}/esp-gdb-v{{ version }}/xtensa-esp-elf-gdb-{{ version }}-x86_64-linux-gnu.tar.gz # [linux64]
+  sha256: d056f2435ef05cccadac5d8fcefa3efd8f8c456c3d853f5eba1edb501acfe4f7 # [linux64]
 
 build:
   number: '0'
   skip: True  # [win]
-
-requirements:
-  build:
-    - {{ compiler('fortran') }}
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
-    - make
-    - bison # [linux]
-  host:
-    - python {{ python }}
-    - texinfo
-    - ncurses {{ ncurses }}
-    - xz {{ xz }}
-    - zlib {{ zlib }}
-    - libiconv {{ libiconv }}
-    - mpfr {{ mpfr }}
-    - gmp {{ gmp }}
-    - expat {{ expat }}
-  run:
-    - python {{ python }}
-    - ncurses {{ ncurses }}
-    - xz {{ xz }}
-    - zlib {{ zlib }}
-    - libiconv {{ libiconv }}
-    - mpfr {{ mpfr }}
-    - gmp {{ gmp }}
-    - expat {{ expat }}
 
 test:
   commands:
@@ -56,7 +29,6 @@ about:
   home: https://www.gnu.org/software/gdb/
   license: GPL-2.0
   license_family: GPL
-  license_file: COPYING
   summary: GDB, the GNU Project debugger, allows you to see what is going on inside another program while it executes -- or what another program was doing at the moment it crashed.
   description: |
     GDB, the GNU Project debugger, allows you to see what is going on `inside'
