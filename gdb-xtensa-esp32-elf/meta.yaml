@@ -18,12 +18,26 @@ build:
   number: '0'
   skip: True  # [win]
 
+requirements:
+  host:
+    # this forces the package to be python-specific:
+    - python {{ python }}
+  run:
+    - python {{ python }}
+    - ncurses {{ ncurses }}
+    - xz {{ xz }}
+    - zlib {{ zlib }}
+    - libiconv {{ libiconv }}
+    - mpfr {{ mpfr }}
+    - gmp {{ gmp }}
+    - expat {{ expat }}
+
 test:
   commands:
     # test the wrapper scripts, which call the actual xtensa-esp-elf-gdb bin
-    - xtensa-esp32-elf-gdb -ex "print 1" --batch
-    - xtensa-esp32s2-elf-gdb -ex "print 1" --batch
-    - xtensa-esp32s3-elf-gdb -ex "print 1" --batch
+    - xtensa-esp32-elf-gdb -nx -ex "print 1" --batch
+    - xtensa-esp32s2-elf-gdb -nx -ex "print 1" --batch
+    - xtensa-esp32s3-elf-gdb -nx -ex "print 1" --batch
 
 about:
   home: https://www.gnu.org/software/gdb/

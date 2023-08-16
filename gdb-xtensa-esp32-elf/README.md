@@ -1,1 +1,3 @@
-This builds the `xtensa-esp32-elf-gdb` binaries and binutil extras.
+This repackages release artifacts from the official Espressif ones:
+
+https://github.com/espressif/binutils-gdb/releases
