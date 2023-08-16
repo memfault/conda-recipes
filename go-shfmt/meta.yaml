@@ -1,0 +1,33 @@
+# conda package: 
+# https://anaconda.org/conda-forge/go-shfmt  
+# https://github.com/conda-forge/go-shfmt-feedstock
+# we have our own recipe because that does not currently (2023-08) have macOS ARM64 support
+
+{% set version = "3.7.0" %}
+
+package:
+  name: go-shfmt
+  version: {{ version }}.memfault0
+
+source:
+  - url: https://github.com/mvdan/sh/archive/refs/tags/v{{ version }}.tar.gz
+    sha256: 89eafc8790df93305dfa42233e262fb25e1c96726a3db420a7555abadf3111ed
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - go-nocgo=1.20.7
+
+test:
+  commands:
+    - shfmt --version
+
+about:
+  home: https://github.com/mvdan/sh
+  license_family: BSD
+  license: BSD-3-Clause
+  summary: A shell parser, formatter, and interpreter with bash support; includes shfmt
+  doc_url: https://github.com/mvdan/sh
+  dev_url: https://github.com/mvdan/sh
