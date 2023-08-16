@@ -72,6 +72,24 @@ To download and install this SDK, you can find the package here: https://github.
 $ sudo mv <10.9 SDK> /opt/MacOSX10.9.sdk
 ```
 
+#### Apple Silicon
+
+If you're on Apple Silicon, you can build for both ARM64 and X86_64 via Rosetta. The default environment is `osx-arm64`, but you can explicitly create them with `CONDA_SUBDIR`:
+
+```sh
+# create an Apple Silicon environment
+CONDA_SUBDIR=osx-arm64 conda create -n build-silicon conda-build anaconda-client
+conda activate build-silicon
+conda config --env --set subdir osx-arm64
+
+# create a Rosetta environment
+CONDA_SUBDIR=osx-64 conda create -n build-rosetta conda-build anaconda-client
+conda activate build-rosetta
+conda config --env --set subdir osx-64
+```
+
+Then follow the *Building Locally* instructions at the top.
+
 ## Building via GitHub Action
 
 Not heavily tested, but it's possible to build packages from github actions, see
