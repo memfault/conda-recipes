@@ -44,9 +44,12 @@ It can significantly speed up package dependency resolution during the build.
 So you don't want to build on your native machine? That's fine!
 
 ```bash
-$ docker run -ti -v <path_to_conda-recipes>:/conda-recipes condaforge/miniforge3  /bin/bash
+$ docker run -ti -v $(pwd):/conda-recipes condaforge/miniforge3  /bin/bash
+# force an architecture, e.g. building linux amd64 on macOS Apple Silicon
+$ docker run --platform=linux/amd64 -ti -v $(pwd):/conda-recipes condaforge/miniforge3  /bin/bash
+
 $ apt update && apt install -y build-essential
-$ conda create -n build conda-build anaconda-client python=3.8
+$ conda create -n build conda-build anaconda-client
 $ conda activate build
 $ cd /conda-recipes/<recipe>
 $ conda build -c conda-forge .
