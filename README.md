@@ -4,7 +4,7 @@ The packages can be found on the [Anaconda Package Repository](https://anaconda.
 
 ## Using
 
-To use any of thesee packages in your own Conda environments, just add `memfault` to the top of the `environment.yml` in your project:
+To use any of these packages in your own Conda environments, just add `memfault` to the top of the `environment.yml` in your project:
 
 ```yaml
 channels:
