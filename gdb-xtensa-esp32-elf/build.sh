@@ -38,7 +38,11 @@ mkdir -p "${GDB_DIST}"/lib
 pushd xtensaconfig
 make clean
 # AR="$TARGET_HOST-ar" CC="$TARGET_HOST-gcc"
-TARGET_ESP_ARCH=${ESP_CHIP_ARCHITECTURE} DESTDIR="${GDB_DIST}" PLATFORM=$PLATFORM make install
+if [ -z "$MACOSX_DEPLOYMENT_TARGET" ]; then
+  TARGET_ESP_ARCH=${ESP_CHIP_ARCHITECTURE} DESTDIR="${GDB_DIST}" PLATFORM=$PLATFORM make install
+else
+  TARGET_ESP_ARCH=${ESP_CHIP_ARCHITECTURE} DESTDIR="${GDB_DIST}" PLATFORM=$PLATFORM make install CFLAGS="-Wl,-L,$(xcode-select -p)/SDKs/MacOSX.sdk/usr/lib -Wl,-lSystem"
+fi
 popd
 # Install xtensa-config libs
 mkdir -p "$TARGET_PREFIX"/lib
