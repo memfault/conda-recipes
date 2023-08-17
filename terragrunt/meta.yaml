@@ -1,0 +1,37 @@
+# https://github.com/conda-forge/terragrunt-feedstock/blob/3b1f849303bf26182786bdb7daceafafecaf779a/recipe/meta.yaml
+
+{% set goname = "github.com/gruntwork-io/terragrunt" %}
+{% set version = "0.50.3" %}
+
+{% set name = goname.split('/')[-1] %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}.memfault0
+
+source:
+  url: https://{{ goname }}/archive/v{{ version }}.tar.gz
+  sha256: 13764e6d48a30ac06132079ce457061afa6bd6d4dabc3953c9b286be93598912
+
+build:
+  number: 0
+  script:
+    - go install -v -ldflags "-X main.VERSION={{ version }}" .
+
+requirements:
+  build:
+    - {{ compiler('go') }}
+  run:
+    - terraform
+
+test:
+  commands:
+    - {{ name|lower }} --version
+    - {{ name|lower }} --help
+
+about:
+  home: https://www.gruntwork.io/
+  license: MIT
+  license_file: LICENSE.txt
+  summary: Terragrunt is a thin wrapper for Terraform that provides extra tools for working with multiple Terraform modules.
+  dev_url: https://github.com/gruntwork-io/terragrunt.git
