@@ -39,11 +39,11 @@ requirements:
     - python {{ python }}
     - ncurses {{ ncurses }}
     - xz {{ xz }}
-    - zlib {{ zlib }}
+    - zlib {{ zlib }} # [not osx]
     - libiconv {{ libiconv }}
     - mpfr {{ mpfr }}
-    - gmp {{ gmp }}
-    - expat {{ expat }}
+    - gmp {{ gmp }} # [not osx]
+    - expat {{ expat }} # [not osx]
 
 test:
   commands:
