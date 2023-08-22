@@ -3,7 +3,7 @@
 
 package:
   name: {{ name }}
-  version: {{ version }}.memfault1
+  version: {{ version }}.memfault2
 
 source:
   - git_url: https://github.com/espressif/binutils-gdb.git
@@ -39,11 +39,11 @@ requirements:
     - python {{ python }}
     - ncurses {{ ncurses }}
     - xz {{ xz }}
-    - zlib {{ zlib }}
+    - zlib {{ zlib }} # [not osx]
     - libiconv {{ libiconv }}
     - mpfr {{ mpfr }}
-    - gmp {{ gmp }}
-    - expat {{ expat }}
+    - gmp {{ gmp }} # [not osx]
+    - expat {{ expat }} # [not osx]
 
 test:
   commands:
