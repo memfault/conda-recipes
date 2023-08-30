@@ -1,0 +1,29 @@
+{% set name = "please" %}
+{% set version = "17.3.0" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  # bash for getting the sigs:
+  # > (PLEASE_VER=17.3.0; for _arch in darwin_amd64 darwin_arm64 linux_amd64; do curl -sSL https://get.please.build/${_arch}/${PLEASE_VER}/please_${PLEASE_VER}.tar.gz | sha256sum; done)
+  url: https://get.please.build/darwin_amd64/{{ version }}/please_{{ version }}.tar.gz    # [osx and x86_64]
+  sha256: 3523249e86678e3e384d60abab21e6efc5c53949e5770b908d7bd3e0fc960528                # [osx and x86_64]
+  url: https://get.please.build/darwin_arm64/{{ version }}/please_{{ version }}.tar.gz    # [osx and arm64]
+  sha256: 0b00a429ac5aadf33d1905f540f6fefeda73c184bc4a7a87f727e8c15729dcfc                # [osx and arm64]
+  url: https://get.please.build/linux_amd64/{{ version }}/please_{{ version }}.tar.gz     # [linux64]
+  sha256: 0358286445446d4ba79b0e56b74949329f747fe070c1ee023e768a32deb77b30                # [linux64]
+
+build:
+  string: '1'
+  binary_relocation: False
+
+test:
+  commands:
+    - plz --version
+
+about:
+  home: https://please.build/
+  license: APL 2.0
+  summary: High-performance extensible build system for reproducible multi-language builds.
