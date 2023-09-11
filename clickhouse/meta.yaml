@@ -3,7 +3,7 @@
 
 package:
   name: {{ name|lower }}
-  version: {{ version }}.memfault0
+  version: {{ version }}.memfault1
 
 source:
   - url: https://github.com/ClickHouse/ClickHouse/releases/download/v{{ version }}-lts/clickhouse-macos # [osx and x86_64]
