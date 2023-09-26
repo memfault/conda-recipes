@@ -3,7 +3,7 @@
 
 package:
   name: {{ name }}
-  version: {{ version }}.memfault0
+  version: {{ version }}.memfault1
 
 source:
   # bash for getting the sigs:
