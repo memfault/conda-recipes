@@ -46,6 +46,13 @@ jobs:
           # install mambabuild for faster builds
           mamba install --yes --channel conda-forge boa==0.14.0
 
+      - name: Set conda config values
+        run: |
+          conda config --set conda_build.pkg_format 2
+          conda config --set conda_build.zstd_compression_level 19
+
+          conda config --show
+
       # Conda build relies on using the 'file' protocol when manipulating
       # submodules that use a _relative_ ref (eg `../foo`), but this breaks due
       # to a recent patch to git for a CVE. This workaround is required right
