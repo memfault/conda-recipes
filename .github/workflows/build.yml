@@ -44,7 +44,7 @@ jobs:
       - name: Install mambabuild
         run: |
           # install mambabuild for faster builds
-          mamba install --yes --channel conda-forge boa==0.14.0
+          mamba install --yes --channel conda-forge boa==0.15.1
 
       - name: Set conda config values
         run: |
