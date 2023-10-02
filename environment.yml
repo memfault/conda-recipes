@@ -3,3 +3,4 @@ channels:
 dependencies:
   - conda-build
   - anaconda-client
+  - boa

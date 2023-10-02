@@ -91,7 +91,7 @@ conda activate build-rosetta
 conda config --env --set subdir osx-64
 ```
 
-Then follow the *Building Locally* instructions at the top.
+Then follow the _Building Locally_ instructions at the top.
 
 ## Building via GitHub Action
 
@@ -132,6 +132,26 @@ https://docs.anaconda.com/free/anacondaorg/user-guide/tasks/work-with-packages/#
 
 Only the `.conda` package needs to be uploaded (conda clients 4.7 (2019-05-17)
 and later support the `.conda` package format).
+
+You can make this the default package format by adding the following to your
+`~/.condarc`:
+
+```yaml
+conda_build:
+  pkg_format: 2
+  zstd_compression_level: 19
+```
+
+Or using the `conda config` command:
+
+```bash
+conda config --set conda_build.pkg_format 2
+conda config --set conda_build.zstd_compression_level 19
+```
+
+Reference:
+
+https://github.com/conda/conda-docs/issues/796#issuecomment-1494822219
 
 ## Useful Resources
 
