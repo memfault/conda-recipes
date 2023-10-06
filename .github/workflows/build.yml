@@ -81,5 +81,5 @@ jobs:
       # upload-artifact to save the output files
       - uses: actions/upload-artifact@v3
         with:
-          name: ${{ github.event.inputs.PACKAGE_DIR }}.${{ matrix.platform }}.package.zip
+          name: ${{ github.event.inputs.PACKAGE_DIR }}.${{ matrix.platform }}.package
           path: ${{ github.event.inputs.PACKAGE_DIR }}.${{ matrix.platform }}.output
