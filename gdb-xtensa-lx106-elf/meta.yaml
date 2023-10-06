@@ -1,5 +1,5 @@
 {% set name = "xtensa-lx106-elf-gdb" %}
-{% set version = "11.1_20220318.memfault0" %}
+{% set version = "11.1_20220318.memfault1" %}
 
 package:
   name: {{ name }}
