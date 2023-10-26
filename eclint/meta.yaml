@@ -1,0 +1,25 @@
+{% set version = "0.5.0" %}
+
+package:
+  name: eclint
+  version: {{ version }}
+
+source:
+  - url: https://gitlab.com/greut/eclint/-/archive/v{{ version }}/eclint-v{{ version }}.tar.gz
+    sha256: 3fd05da7d1c17b05468867dd812a28595461b6ec627c4d806de72b2b3386850b
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - go-nocgo=1.20.7
+
+test:
+  commands:
+    - eclint --version
+
+about:
+  home: https://gitlab.com/greut/eclint
+  license: MIT
+  summary: A faster alternative to the JavaScript eclint written in Go.
