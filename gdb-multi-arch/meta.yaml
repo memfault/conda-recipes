@@ -4,7 +4,7 @@
 
 package:
   name: {{ name }}
-  version: {{ version }}.memfault0
+  version: {{ version }}.memfault1
 
 source:
   - url: https://github.com/bminor/binutils-gdb/archive/gdb-{{ version }}-release.tar.gz

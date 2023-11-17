@@ -327,7 +327,7 @@ dcap:
 eclib:
   - '20230424'
 elfutils:
-  - 0.189
+  - 0.189.memfault1
 exiv2:
   - 0.27
 expat:

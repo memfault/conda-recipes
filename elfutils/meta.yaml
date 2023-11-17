@@ -2,7 +2,7 @@
 
 package:
   name: elfutils
-  version: {{ version }}.memfault0_libdebuginfod
+  version: {{ version }}.memfault1
 
 source:
   fn: elfutils-{{ version }}.tar.bz2
