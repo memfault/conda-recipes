@@ -35,6 +35,8 @@ requirements:
     - mpfr {{ mpfr }}
     - gmp {{ gmp }}
     - expat {{ expat }} # [linux]
+    # For libdebuginfod:
+    - elfutils
   run:
     - python {{ python }}
     - ncurses {{ ncurses }}
@@ -44,6 +46,8 @@ requirements:
     - mpfr {{ mpfr }}
     - gmp {{ gmp }}
     - expat {{ expat }} # [linux]
+    # For libdebuginfod:
+    - elfutils
 
 test:
   commands:

@@ -27,6 +27,7 @@ export CFLAGS="$CFLAGS -Wno-constant-logical-operand -Wno-format-nonliteral -Wno
     --with-zlib \
     --without-babeltrace \
     --with-python="$PREFIX" \
+    --with-debuginfod \
     --disable-ld \
     --disable-gprof \
     --disable-gas \
