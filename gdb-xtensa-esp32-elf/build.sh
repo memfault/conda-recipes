@@ -51,6 +51,12 @@ cp -R "${GDB_DIST}"/lib "$TARGET_PREFIX"/
 # Restore PREFIX variable
 PREFIX=${_PREFIX}
 
+if [ `uname` == Darwin ]; then
+  EXTRA_CONFIGURE_FLAGS=""
+else
+  EXTRA_CONFIGURE_FLAGS="--with-debuginfod"
+fi
+
 # Configure, build, and install gdb
 ./configure \
     --prefix="${TARGET_PREFIX}" \
@@ -67,6 +73,7 @@ PREFIX=${_PREFIX}
     --with-zlib \
     --without-babeltrace \
     --with-python="$PREFIX" \
+    $EXTRA_CONFIGURE_FLAGS \
     --disable-threads \
     --disable-sim \
     --disable-nls \

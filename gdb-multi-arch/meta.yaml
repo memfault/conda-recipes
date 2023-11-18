@@ -4,7 +4,7 @@
 
 package:
   name: {{ name }}
-  version: {{ version }}.memfault0
+  version: {{ version }}.memfault1
 
 source:
   - url: https://github.com/bminor/binutils-gdb/archive/gdb-{{ version }}-release.tar.gz
@@ -35,6 +35,8 @@ requirements:
     - mpfr {{ mpfr }}
     - gmp {{ gmp }}
     - expat {{ expat }} # [linux]
+    # For libdebuginfod:
+    - elfutils
   run:
     - python {{ python }}
     - ncurses {{ ncurses }}
@@ -44,6 +46,8 @@ requirements:
     - mpfr {{ mpfr }}
     - gmp {{ gmp }}
     - expat {{ expat }} # [linux]
+    # For libdebuginfod:
+    - elfutils
 
 test:
   commands:

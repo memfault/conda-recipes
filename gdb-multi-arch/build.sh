@@ -11,6 +11,13 @@ export REAL_TARGET_PREFIX="${PREFIX}/${REAL_TARGET}"
 
 export CPPFLAGS="$CPPFLAGS -fcommon -I$PREFIX/include -Wno-constant-logical-operand"
 export CFLAGS="$CFLAGS -Wno-constant-logical-operand -Wno-format-nonliteral -Wno-self-assign"
+
+if [ `uname` == Darwin ]; then
+  EXTRA_CONFIGURE_FLAGS=""
+else
+  EXTRA_CONFIGURE_FLAGS="--with-debuginfod"
+fi
+
 # Setting /usr/lib/debug as debug dir makes it possible to debug the system's
 # python on most Linux distributions
 ./configure \
@@ -27,6 +34,7 @@ export CFLAGS="$CFLAGS -Wno-constant-logical-operand -Wno-format-nonliteral -Wno
     --with-zlib \
     --without-babeltrace \
     --with-python="$PREFIX" \
+    $EXTRA_CONFIGURE_FLAGS \
     --disable-ld \
     --disable-gprof \
     --disable-gas \

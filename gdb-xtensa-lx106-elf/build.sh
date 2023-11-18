@@ -13,6 +13,12 @@ export CPPFLAGS="$CPPFLAGS -I$PREFIX/include"
 
 cd binutils-gdb-lx106-src
 
+if [ `uname` == Darwin ]; then
+  EXTRA_CONFIGURE_FLAGS=""
+else
+  EXTRA_CONFIGURE_FLAGS="--with-debuginfod"
+fi
+
 ./configure \
     --prefix="${TARGET_PREFIX}" \
     --target=$TARGET \
@@ -25,6 +31,7 @@ cd binutils-gdb-lx106-src
     --with-zlib \
     --without-babeltrace \
     --with-python="$PREFIX" \
+    $EXTRA_CONFIGURE_FLAGS \
     --disable-threads \
     --disable-sim \
     --disable-nls \
