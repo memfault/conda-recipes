@@ -3,7 +3,7 @@
 
 package:
   name: {{ name }}
-  version: {{ version }}.memfault1
+  version: {{ version }}.memfault4
 
 source:
   - git_url: https://github.com/espressif/binutils-gdb.git
@@ -35,15 +35,19 @@ requirements:
     - mpfr {{ mpfr }}
     - gmp {{ gmp }}
     - expat {{ expat }}
+    # For libdebuginfod:
+    - elfutils
   run:
     - python {{ python }}
     - ncurses {{ ncurses }}
     - xz {{ xz }}
-    - zlib {{ zlib }}
+    - zlib {{ zlib }} # [not osx]
     - libiconv {{ libiconv }}
     - mpfr {{ mpfr }}
-    - gmp {{ gmp }}
-    - expat {{ expat }}
+    - gmp {{ gmp }} # [not osx]
+    - expat {{ expat }} # [not osx]
+    # For libdebuginfod:
+    - elfutils
 
 test:
   commands:

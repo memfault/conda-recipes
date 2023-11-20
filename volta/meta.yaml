@@ -1,0 +1,29 @@
+{% set name = "volta" %}
+{% set version = "1.1.1" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}.memfault2
+
+source:
+  # bash for getting the sigs:
+  # ❯ (_VER=1.1.1; for _arch in macos macos-aarch64 linux; do curl -sSL https://github.com/volta-cli/volta/releases/download/v${_VER}/volta-${_VER}-${_arch}.tar.gz | sha256sum; done)
+  url: https://github.com/volta-cli/volta/releases/download/v{{ version }}/volta-{{ version }}-macos.tar.gz # [osx and x86_64]
+  sha256: 778ccaa943de8729d91e9df02a2767b470d97e8d5551faf6d89978db6f5f3c64 # [osx and x86_64]
+  url: https://github.com/volta-cli/volta/releases/download/v{{ version }}/volta-{{ version }}-macos-aarch64.tar.gz # [osx and arm64]
+  sha256: 013d419550525fa6a212c2693798f9e2e65737e887e3604b08bc15a6be737e01 # [osx and arm64]
+  url: https://github.com/volta-cli/volta/releases/download/v{{ version }}/volta-{{ version }}-linux.tar.gz # [linux64]
+  sha256: ab14e5d50ef836f8f43b56323cfbe7ba95a004bad05450b453c5b06a0b433d7b # [linux64]
+
+build:
+  string: '1'
+  binary_relocation: False
+
+test:
+  commands:
+    - volta --version
+
+about:
+  home: https://github.com/volta-cli/volta
+  license: BSD-2-Clause
+  summary: "The Hassle-Free JavaScript Tool Manager"

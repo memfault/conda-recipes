@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        platform: [ubuntu-20.04, macos-11,]  #  windows-2022] windows is a bit sad :'(
+        platform: [ubuntu-20.04, macos-11, macos-13-xlarge] #  windows-2022] windows is a bit sad :'(
     runs-on: ${{ matrix.platform }}
 
     # set bash to be a login shell, so that /etc/profile is sourced and conda
@@ -28,7 +28,7 @@ jobs:
       # https://mamba.readthedocs.io/en/latest/installation.html#micromamba
       - name: Install mambaforge
         run: |
-          wget -q -O Mambaforge.sh  "https://github.com/conda-forge/miniforge/releases/download/22.9.0-3/Mambaforge-$(uname)-$(uname -m).sh"
+          wget -q -O Mambaforge.sh  "https://github.com/conda-forge/miniforge/releases/download/23.3.1-1/Mambaforge-$(uname)-$(uname -m).sh"
           bash Mambaforge.sh -b -p "${HOME}/mambaforge" > /dev/null
 
           # very trashy- shove in the conda init crap into /etc/profile.
@@ -44,7 +44,14 @@ jobs:
       - name: Install mambabuild
         run: |
           # install mambabuild for faster builds
-          mamba install --yes --channel conda-forge boa==0.14.0
+          mamba install --yes --channel conda-forge boa==0.15.1
+
+      - name: Set conda config values
+        run: |
+          conda config --set conda_build.pkg_format 2
+          conda config --set conda_build.zstd_compression_level 19
+
+          conda config --show
 
       # Conda build relies on using the 'file' protocol when manipulating
       # submodules that use a _relative_ ref (eg `../foo`), but this breaks due
@@ -68,11 +75,11 @@ jobs:
           fi
 
           # store the output in an out of tree location
-          mkdir -p ${{ github.event.inputs.PACKAGE_DIR }}.output
-          conda mambabuild -c conda-forge --output-folder ${{ github.event.inputs.PACKAGE_DIR }}.output ${{ github.event.inputs.PACKAGE_DIR }}
+          mkdir -p ${{ github.event.inputs.PACKAGE_DIR }}.${{ matrix.platform }}.output
+          conda mambabuild -c conda-forge --output-folder ${{ github.event.inputs.PACKAGE_DIR }}.${{ matrix.platform }}.output ${{ github.event.inputs.PACKAGE_DIR }}
 
       # upload-artifact to save the output files
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
-          name: ${{ github.event.inputs.PACKAGE_DIR }}.packages
-          path: ${{ github.event.inputs.PACKAGE_DIR }}.output
+          name: ${{ github.event.inputs.PACKAGE_DIR }}.${{ matrix.platform }}.package
+          path: ${{ github.event.inputs.PACKAGE_DIR }}.${{ matrix.platform }}.output

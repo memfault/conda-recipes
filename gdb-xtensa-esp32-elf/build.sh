@@ -38,7 +38,11 @@ mkdir -p "${GDB_DIST}"/lib
 pushd xtensaconfig
 make clean
 # AR="$TARGET_HOST-ar" CC="$TARGET_HOST-gcc"
-TARGET_ESP_ARCH=${ESP_CHIP_ARCHITECTURE} DESTDIR="${GDB_DIST}" PLATFORM=$PLATFORM make install
+if [ -z "$MACOSX_DEPLOYMENT_TARGET" ]; then
+  TARGET_ESP_ARCH=${ESP_CHIP_ARCHITECTURE} DESTDIR="${GDB_DIST}" PLATFORM=$PLATFORM make install
+else
+  TARGET_ESP_ARCH=${ESP_CHIP_ARCHITECTURE} DESTDIR="${GDB_DIST}" PLATFORM=$PLATFORM make install CFLAGS="-Wl,-L,$(xcode-select -p)/SDKs/MacOSX.sdk/usr/lib -Wl,-lSystem"
+fi
 popd
 # Install xtensa-config libs
 mkdir -p "$TARGET_PREFIX"/lib
@@ -46,6 +50,12 @@ cp -R "${GDB_DIST}"/lib "$TARGET_PREFIX"/
 
 # Restore PREFIX variable
 PREFIX=${_PREFIX}
+
+if [ `uname` == Darwin ]; then
+  EXTRA_CONFIGURE_FLAGS=""
+else
+  EXTRA_CONFIGURE_FLAGS="--with-debuginfod"
+fi
 
 # Configure, build, and install gdb
 ./configure \
@@ -63,6 +73,7 @@ PREFIX=${_PREFIX}
     --with-zlib \
     --without-babeltrace \
     --with-python="$PREFIX" \
+    $EXTRA_CONFIGURE_FLAGS \
     --disable-threads \
     --disable-sim \
     --disable-nls \

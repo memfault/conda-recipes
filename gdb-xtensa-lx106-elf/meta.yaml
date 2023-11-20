@@ -1,5 +1,5 @@
 {% set name = "xtensa-lx106-elf-gdb" %}
-{% set version = "11.1_20220318.memfault0" %}
+{% set version = "11.1_20220318.memfault2" %}
 
 package:
   name: {{ name }}
@@ -37,6 +37,8 @@ requirements:
     - mpfr {{ mpfr }}
     - gmp {{ gmp }}
     - expat {{ expat }} # [linux]
+    # For libdebuginfod:
+    - elfutils
   run:
     - python {{ python }}
     - ncurses {{ ncurses }}
@@ -46,6 +48,8 @@ requirements:
     - mpfr {{ mpfr }}
     - gmp {{ gmp }}
     - expat {{ expat }} # [linux]
+    # For libdebuginfod:
+    - elfutils
 
 test:
   commands:

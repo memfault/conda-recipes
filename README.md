@@ -4,7 +4,7 @@ The packages can be found on the [Anaconda Package Repository](https://anaconda.
 
 ## Using
 
-To use any of thesee packages in your own Conda environments, just add `memfault` to the top of the `environment.yml` in your project:
+To use any of these packages in your own Conda environments, just add `memfault` to the top of the `environment.yml` in your project:
 
 ```yaml
 channels:
@@ -43,9 +43,12 @@ It can significantly speed up package dependency resolution during the build.
 So you don't want to build on your native machine? That's fine!
 
 ```bash
-$ docker run -ti -v <path_to_conda-recipes>:/conda-recipes condaforge/miniforge3  /bin/bash
+$ docker run -ti -v $(pwd):/conda-recipes condaforge/miniforge3  /bin/bash
+# force an architecture, e.g. building linux amd64 on macOS Apple Silicon
+$ docker run --platform=linux/amd64 -ti -v $(pwd):/conda-recipes condaforge/miniforge3  /bin/bash
+
 $ apt update && apt install -y build-essential
-$ conda create -n build conda-build anaconda-client python=3.8
+$ conda create -n build conda-build anaconda-client
 $ conda activate build
 $ cd /conda-recipes/<recipe>
 $ conda build -c conda-forge .
@@ -70,6 +73,24 @@ To download and install this SDK, you can find the package here: https://github.
 ```bash
 $ sudo mv <10.9 SDK> /opt/MacOSX10.9.sdk
 ```
+
+#### Apple Silicon
+
+If you're on Apple Silicon, you can build for both ARM64 and X86_64 via Rosetta. The default environment is `osx-arm64`, but you can explicitly create them with `CONDA_SUBDIR`:
+
+```sh
+# create an Apple Silicon environment
+CONDA_SUBDIR=osx-arm64 conda create -n build-silicon conda-build anaconda-client
+conda activate build-silicon
+conda config --env --set subdir osx-arm64
+
+# create a Rosetta environment
+CONDA_SUBDIR=osx-64 conda create -n build-rosetta conda-build anaconda-client
+conda activate build-rosetta
+conda config --env --set subdir osx-64
+```
+
+Then follow the _Building Locally_ instructions at the top.
 
 ## Building via GitHub Action
 
@@ -110,6 +131,26 @@ https://docs.anaconda.com/free/anacondaorg/user-guide/tasks/work-with-packages/#
 
 Only the `.conda` package needs to be uploaded (conda clients 4.7 (2019-05-17)
 and later support the `.conda` package format).
+
+You can make this the default package format by adding the following to your
+`~/.condarc`:
+
+```yaml
+conda_build:
+  pkg_format: 2
+  zstd_compression_level: 19
+```
+
+Or using the `conda config` command:
+
+```bash
+conda config --set conda_build.pkg_format 2
+conda config --set conda_build.zstd_compression_level 19
+```
+
+Reference:
+
+https://github.com/conda/conda-docs/issues/796#issuecomment-1494822219
 
 ## Useful Resources
 
