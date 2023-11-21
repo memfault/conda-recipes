@@ -1,5 +1,5 @@
 {% set name = "ecs-cli" %}
-{% set version = "1.21.0.mflt" %}
+{% set version = "1.21.0.memfault0" %}
 
 package:
   name: {{ name }}
@@ -10,6 +10,7 @@ source:
   sha256: 13c631695ada3d14ecdeb6ea4896ab4e94bf9e3a6f574b2ed57596643f0db496 # [osx]
   url: https://github.com/memfault/memfault-ecs-cli/releases/download/{{ version }}/ecs-cli.linux-amd64 # [linux64]
   sha256: 80f7eee721e1b0268173c8a5a1400486ddae409d737b6c0f4b5fd58baa37e2bb # [linux64]
+  fn: ecs-cli
 
 build:
   string: '0'
