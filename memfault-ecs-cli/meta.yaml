@@ -1,9 +1,9 @@
 {% set name = "ecs-cli" %}
-{% set version = "1.21.0.memfault0" %}
+{% set version = "1.21.0" %}
 
 package:
   name: {{ name }}
-  version: {{ version }}
+  version: {{ version }}.memfault0
 
 source:
   url: https://github.com/memfault/memfault-ecs-cli/releases/download/{{ version }}/ecs-cli.darwin-amd64 # [osx]
