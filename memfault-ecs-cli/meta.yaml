@@ -6,9 +6,9 @@ package:
   version: {{ version }}.memfault1
 
 source:
-  url: https://github.com/memfault/memfault-ecs-cli/releases/download/{{ version }}/ecs-cli.darwin-amd64 # [osx]
+  url: https://github.com/memfault/memfault-ecs-cli/releases/download/{{ version }}.memfault1/ecs-cli.darwin-amd64 # [osx]
   sha256: 4050e9aad0bb32a6b5d868e3e4d67b874eb1adb598d7214778555611ca2c934b # [osx]
-  url: https://github.com/memfault/memfault-ecs-cli/releases/download/{{ version }}/ecs-cli.linux-amd64 # [linux64]
+  url: https://github.com/memfault/memfault-ecs-cli/releases/download/{{ version }}.memfault1/ecs-cli.linux-amd64 # [linux64]
   sha256: c5bf1f19b869db6e94f9b331541bd7fcf2a559df22dd41428857dd73a0aae878 # [linux64]
   fn: ecs-cli
 
