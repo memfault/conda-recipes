@@ -1,7 +1,7 @@
 # https://github.com/conda-forge/terragrunt-feedstock/blob/3b1f849303bf26182786bdb7daceafafecaf779a/recipe/meta.yaml
 
 {% set goname = "github.com/gruntwork-io/terragrunt" %}
-{% set version = "0.50.3" %}
+{% set version = "0.53.6" %}
 
 {% set name = goname.split('/')[-1] %}
 
@@ -11,7 +11,7 @@ package:
 
 source:
   url: https://{{ goname }}/archive/v{{ version }}.tar.gz
-  sha256: 13764e6d48a30ac06132079ce457061afa6bd6d4dabc3953c9b286be93598912
+  sha256: 7440e753be09725de9a8d2e775c41ff7bfe4ba2ca01a8d21444c1bbfd0a71bc9
 
 build:
   number: 0
