@@ -21,9 +21,8 @@ To build any of the following packages (macOS and Linux Ubuntu 18.04 tested):
 
 ```bash
 # Create build environment
-$ conda create -n build
+$ conda create -n build conda-build anaconda-client
 $ conda activate build
-$ conda install conda-build anaconda-client
 
 # Build specific recipe
 $ cd <some_recipe_dir>
@@ -128,7 +127,7 @@ PACKAGE=<package_name> anaconda upload **/$PACKAGE*.tar.bz2 --user memfault
 It's nice to convert packages to the new `.conda` archive format, see here for
 details:
 
-https://docs.anaconda.com/free/anacondaorg/user-guide/tasks/work-with-packages/#conda-compression-format
+https://docs.conda.io/projects/conda/en/latest/user-guide/concepts/packages.html
 
 Only the `.conda` package needs to be uploaded (conda clients 4.7 (2019-05-17)
 and later support the `.conda` package format).
@@ -152,6 +151,12 @@ conda config --set conda_build.zstd_compression_level 19
 Reference:
 
 https://github.com/conda/conda-docs/issues/796#issuecomment-1494822219
+
+If you built a package as a `.tar.bz2` but want to convert it to a `.conda` package, you can do so with:
+
+```bash
+cph transmute /path/to/package.tar.bz2 .conda
+```
 
 ## Useful Resources
 
