@@ -1,0 +1,33 @@
+From cd2ab203497ae93a4642d119d1e1d528c41b7ff5 Mon Sep 17 00:00:00 2001
+From: Noah Pendleton <2538614+noahp@users.noreply.github.com>
+Date: Wed, 6 Dec 2023 09:32:30 -0500
+Subject: [PATCH] Compilation unit sets multiple DW_AT_language
+
+GDB will try to set a fallback language if the DW_AT_language field is
+missing from the DWARF CU, but will crash if it's already been set to a
+different value for this CU :/ Not super ideal. This only occurs on
+pathalogical ELFs but does occur in real life, so replace the crash with
+a warning and continue processing.
+---
+ gdb/dwarf2/read.h | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/gdb/dwarf2/read.h b/gdb/dwarf2/read.h
+index 9dfc435e861..f75cfc52dfd 100644
+--- a/gdb/dwarf2/read.h
++++ b/gdb/dwarf2/read.h
+@@ -369,6 +369,11 @@ struct dwarf2_per_cu_data
+     nope = lang;
+     if (m_lang.compare_exchange_strong (nope, lang))
+       return;
++    /* unfortunately the below warning is captured in the output for gdb.execute, so leave it off*/
++    /* log a warning, including the expected nope vs desired lang*/
++    /* warning(_("DWARF error: conflicting language information in compilation unit header: %d/%d"),
++	    nope, lang); */
++    return;
+     gdb_assert_not_reached ();
+   }
+ 
+-- 
+2.40.1
+
