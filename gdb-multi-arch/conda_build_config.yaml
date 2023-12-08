@@ -1,3 +1,6 @@
+CONDA_BUILD_SYSROOT:
+  - /opt/MacOSX10.10.sdk       # [osx and x86_64]
+  - /opt/MacOSX11.3.sdk        # [osx and arm64]
 c_compiler:
   - gcc                        # [linux]
   - clang                      # [osx]
@@ -152,6 +155,7 @@ zip_keys:
   -
     - arrow_cpp
     - libarrow
+    - libarrow_all
   # as of 4.23.x, libprotobuf requires patch-level run-exports;
   # we couple it with grpc (which very roughly releases in sync)
   # to reduce the migration pain for these two libs a bit.
@@ -217,7 +221,7 @@ blas_impl:
 abseil_cpp:
   - '20220623.0'
 alsa_lib:
-  - 1.2.9
+  - 1.2.10
 antic:
   - 0.2
 aom:
@@ -225,23 +229,23 @@ aom:
 arb:
   - '2.23'
 arpack:
-  - 3.7
+  - '3.8'
 # keep in sync with libarrow
 arrow_cpp:
+  - 14  # does not exist; switch to libarrow
   - 13
   - 12
   - 11.0.0
-  - 10.0.1
 assimp:
-  - 5.2.5
+  - 5.3.1
 attr:
   - 2.5
 aws_c_auth:
-  - 0.7.4
+  - 0.7.8
 aws_c_cal:
-  - 0.6.2
+  - 0.6.9
 aws_c_common:
-  - 0.9.3
+  - 0.9.10
 aws_c_compression:
   - 0.2.17
 # coupled to aws_c_common version bump, see
@@ -249,27 +253,29 @@ aws_c_compression:
 aws_c_event_stream:
   - 0.3.2
 aws_c_http:
-  - 0.7.13
+  - 0.7.14
 # the builds got coupled because 0.2.4 landed before the this migrator finished
 aws_c_io:
-  - 0.13.32
+  - 0.13.36
 # the builds got coupled because 0.2.4 landed before the io migrator
 aws_c_mqtt:
-  - 0.9.6
+  - 0.9.10
 aws_c_s3:
-  - 0.3.17
+  - 0.4.3
 aws_c_sdkutils:
   - 0.1.12
 aws_checksums:
   - 0.1.17
 aws_crt_cpp:
-  - 0.24.2
+  - 0.24.9
 aws_sdk_cpp:
-  - 1.11.156
+  - 1.11.210
 boost:
   - 1.78.0
 boost_cpp:
   - 1.78.0
+bullet_cpp:
+  - 3.25
 bzip2:
   - 1
 c_ares:
@@ -281,7 +287,7 @@ capnproto:
 ccr:
   - 1.3
 cfitsio:
-  - 4.2.0
+  - 4.3.0
 coin_or_cbc:
   - 2.10
 coincbc:
@@ -339,7 +345,7 @@ gf2x:
 gdk_pixbuf:
   - 2
 gnuradio_core:
-  - 3.10.7
+  - 3.10.8
 gnutls:
   - 3.7
 gsl:
@@ -380,7 +386,7 @@ google_cloud_cpp_common:
 googleapis_cpp:
   - '0.10'
 graphviz:
-  - '8'
+  - '9'
 # this has been renamed to libgrpc as of 1.49; dropped as of 1.52.
 # IOW, this version is unavailable; makes the renaming more obvious
 grpc_cpp:
@@ -392,11 +398,11 @@ hdf4:
 hdf5:
   - 1.14.2
 icu:
-  - '72'
+  - '73'
 imath:
   - 3.1.9
 ipopt:
-  - 3.14.12
+  - 3.14.13
 isl:
   - '0.25'
 jasper:
@@ -419,6 +425,8 @@ kealib:
   - '1.5'
 krb5:
   - '1.20'
+ldas_tools_framecpp:
+  - '2.9'
 libabseil:
   - '20230802'
 libabseil_static:
@@ -430,10 +438,16 @@ libarchive:
 # keep in sync with arrow_cpp (libarrow exists only from 10.x,
 # but make sure we have same length for zip as arrow_cpp)
 libarrow:
+  - 14
   - 13
   - 12
   - 11.0.0
-  - 10.0.1
+# only exists as of arrow v14, but needs to have same length as libarrow
+libarrow_all:
+  - 14
+  - 13
+  - 12
+  - 11.0.0
 libavif:
   - '1.0.1'
 libblitz:
@@ -460,6 +474,8 @@ libflatsurf:
   - 3
 libflint:
   - '2.9'
+libframel:
+  - '8.41'
 libgdal:
   - '3.7'
 libgit2:
@@ -468,7 +484,7 @@ libgit2:
 libgoogle_cloud:
   - '2.12'
 libgrpc:
-  - '1.57'
+  - '1.58'
 libhugetlbfs:
   - 2
 libhwy:
@@ -484,13 +500,15 @@ libkml:
 libiio:
   - 0
 libmatio:
-  - 1.5.23
+  - 1.5.24
 libmicrohttpd:
   - 0.9
 libnetcdf:
   - 4.9.2
 libopencv:
-  - 4.8.0
+  - 4.8.1
+libopentelemetry_cpp:
+  - 1.12
 libosqp:
   - 0.6.3
 libpcap:
@@ -498,9 +516,9 @@ libpcap:
 libpng:
   - 1.6
 libprotobuf:
-  - 4.23.4
+  - 4.24.3
 libpq:
-  - 15
+  - '16'
 libraw:
   - '0.21'
 librdkafka:
@@ -524,6 +542,10 @@ libsvm:
 # keep libsqlite in sync with sqlite
 libsqlite:
   - 3
+libtensorflow:
+  - 2.14
+libtensorflow_cc:
+  - 2.14
 libthrift:
   - 0.18.1
 libtiff:
@@ -559,7 +581,7 @@ metis:
 mimalloc:
   - 2.1.2
 mkl:
-  - 2022
+  - '2023'
 mkl_devel:
   - 2022
 mpg123:
@@ -587,8 +609,8 @@ netcdf_fortran:
 nettle:
   - '3.8'
 nodejs:
+  - '20'
   - '18'
-  - '16'
 nss:
   - 3
 nspr:
@@ -612,17 +634,15 @@ openblas:
 openexr:
   - '3.2'
 openh264:
-  - '2.3.1'
+  - 2.4.0
 openjpeg:
   - '2'
 openmpi:
   - 4
 openssl:
   - '3'
-openturns:
-  - '1.20'
 orc:
-  - 1.9.0
+  - 1.9.2
 pango:
   - 1.50
 pari:
@@ -632,13 +652,15 @@ pcl:
 perl:
   - 5.32.1
 petsc:
-  - '3.18'
+  - '3.20'
 petsc4py:
-  - '3.18'
+  - '3.20'
+pugixml:
+  - '1.13'
 slepc:
-  - '3.18'
+  - '3.20'
 slepc4py:
-  - '3.18'
+  - '3.20'
 svt_av1:
   - 1.7.0
 p11_kit:
@@ -654,11 +676,11 @@ poco:
 poppler:
   - '23.07'
 postgresql:
-  - 15
+  - '16'
 postgresql_plpython:
-  - 15
+  - '16'
 proj:
-  - 9.2.1
+  - 9.3.0
 pulseaudio:
   - '16.1'
 pulseaudio_client:
@@ -695,26 +717,29 @@ qt6_main:
   - '6.5'
 qtkeychain:
   - '0.14'
+rdma_core:
+  - '48.0'
 re2:
-  - 2023.03.02
+  - 2023.06.02
 readline:
   - "8"
 rocksdb:
-  - '7.9'
+  - '8.0'
 root_base:
-  - 6.28.4
+  - 6.28.10
 ruby:
   - 2.5
   - 2.6
 r_base:
   - 4.1   # [win]
   - 4.2   # [not win]
+  - 4.3   # [not win]
 scotch:
   - 6.0.9
 ptscotch:
   - 6.0.9
 s2n:
-  - 1.3.54
+  - 1.3.56
 sdl2:
   - '2'
 sdl2_image:
@@ -750,6 +775,8 @@ tbb:
   - '2021'
 tbb_devel:
   - '2021'
+tensorflow:
+  - '2.14'
 thrift_cpp:
   - 0.18.1
 tinyxml2:
@@ -761,7 +788,7 @@ tiledb:
 ucx:
   - '1.15.0'
 uhd:
-  - 4.5.0
+  - 4.6.0
 urdfdom:
   - 3.1
 vc:                    # [win]
@@ -771,7 +798,7 @@ vlfeat:
 volk:
   - '3.0'
 vtk:
-  - 9.2.5
+  - 9.2.6
 wcslib:
   - '8'
 wxwidgets:
@@ -787,7 +814,7 @@ xrootd:
 xz:
   - 5
 zeromq:
-  - 4.3.4
+  - '4.3.5'
 zfp:
   - 1.0
 zlib:

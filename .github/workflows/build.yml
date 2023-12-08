@@ -10,7 +10,9 @@ jobs:
     name: 🛠️ build on ${{ matrix.platform }}
 
     strategy:
-      fail-fast: true
+      # let all jobs run to completion. the linux one may succeed when the mac
+      # fails (taking a completely random example scenario 😑)
+      fail-fast: false
       matrix:
         platform: [ubuntu-20.04, macos-11, macos-13-xlarge] #  windows-2022] windows is a bit sad :'(
     runs-on: ${{ matrix.platform }}
