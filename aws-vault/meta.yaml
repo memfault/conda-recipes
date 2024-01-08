@@ -1,5 +1,5 @@
 {% set name = "aws-vault" %}
-{% set version = "6.6.0" %}
+{% set version = "7.2.0" %}
 
 package:
   name: {{ name }}
@@ -7,11 +7,11 @@ package:
 
 source:
   url: https://github.com/99designs/aws-vault/releases/download/v{{ version }}/aws-vault-darwin-amd64.dmg # [osx and x86_64]
-  sha256: eeb7b8dbdba7bb18fcf32e1c422683d5fd444c6c3b5eb41e760bbfcb2036df6c # [osx and x86_64]
+  sha256: c0642de33329eb6eade70532f0c9eb769d2a1b52dfa56b63196ef51c7dea6445 # [osx and x86_64]
   url: https://github.com/99designs/aws-vault/releases/download/v{{ version }}/aws-vault-darwin-arm64.dmg # [osx and arm64]
-  sha256: 7c624f16a60f6d48900d7aa7f17add991376f1d280e8a5168094e19098797c35 # [osx and arm64]
+  sha256: 9887eb8f6c2bd431e814b32b9ec8a6bd394dbeb0c60822d76ed9be3c84ca1cc5 # [osx and arm64]
   url: https://github.com/99designs/aws-vault/releases/download/v{{ version }}/aws-vault-linux-amd64 # [linux64 and x86_64]
-  sha256: f4571f90a4847ea42c239ebbef058d18baccfe9f28092ace84f348c7cd29aa19 # [linux64 and x86_64]
+  sha256: b92bcfc4a78aa8c547ae5920d196943268529c5dbc9c5aca80b797a18a5d0693 # [linux64 and x86_64]
 
 build:
   string: '1'
