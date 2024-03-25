@@ -1,21 +1,25 @@
 {% set name = "multi-arch-gdb" %}
-{% set version = "12.1" %}
-{% set sha256 = "417718b5348fe026f3e4d9c36bf4c6645083e58cb6ac2b8ffc467030be2d6b88" %}
+{% set version = "14.1" %}
+{% set sha256 = "98996527067a527ed99ad39f59dddfdb8ac1dbdc008b3c2eb0846756644e8fce" %}
 
 package:
   name: {{ name }}
-  version: {{ version }}.memfault1
+  version: {{ version }}.memfault0
 
 source:
   - url: https://github.com/bminor/binutils-gdb/archive/gdb-{{ version }}-release.tar.gz
     sha256: {{ sha256 }}
     patches:
-      - fix-disassemble-segfault.patch
       # mac doesn't build without this patch
       - mac-build-fix.patch  # [osx]
 
+      # work around a sad error in some really bad symbol files, where the
+      # language field in the DWARF unit can be present multiple times, with
+      # different values 🫠
+      - set-lang-workaround.patch
+
 build:
-  number: '3'
+  number: '0'
   skip: True  # [win]
 
 requirements:
@@ -24,7 +28,7 @@ requirements:
     - {{ compiler('c') }}  # [linux]
     - {{ compiler('cxx') }}  # [linux]
     - make
-    - bison # [linux]
+    - bison
   host:
     - python {{ python }}
     - texinfo
@@ -51,7 +55,7 @@ requirements:
 
 test:
   commands:
-    - gdb -ex "print 1" --batch
+    - multi-arch-gdb -ex "print 1" --batch
 
 about:
   home: https://www.gnu.org/software/gdb/
