@@ -1,0 +1,32 @@
+{% set name = "overmind" %}
+{% set version = "2.4.0" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  # > (OVERMIND_VER=2.4.0; for _arch in macos-amd64 macos-arm64 linux-arm64; do curl -sSL https://github.com/DarthSim/overmind/releases/download/v${OVERMIND_VER}/overmind-v${OVERMIND_VER}-${_arch}.gz | sha256sum; done)
+  url: https://github.com/DarthSim/overmind/releases/download/v{{ version }}/overmind-v{{ version}}-macos-amd64.gz    # [osx and x86_64]
+  sha256: d0258dba536dad639cd52be4f1a3fb5143cf6d550d1830853ed6dcaaa886a399                                            # [osx and x86_64]
+  url: https://github.com/DarthSim/overmind/releases/download/v{{ version }}/overmind-v{{ version }}-macos-arm64.gz   # [osx and arm64]
+  sha256: 6d1e4bd2ce5fa9ca7b3e8d400a7999dcd19cc17b2a4b8f5b8f649e0e91dc33b0                                            # [osx and arm64]
+  url: https://github.com/DarthSim/overmind/releases/download/v{{ version }}/overmind-v{{ version }}-linux-amd64.gz   # [linux64]
+  sha256: 1f7cac289b550a71bebf4a29139e58831b39003d9831be59eed3e39a9097311c                                            # [linux64]
+
+build:
+  string: '1'
+  binary_relocation: False
+
+requirements:
+  run:
+    - tmux 3.4
+
+test:
+  commands:
+    - overmind --version
+
+about:
+  home: https://github.com/DarthSim/overmind
+  license: MIT
+  summary: Overmind is a process manager for Procfile-based applications and tmux.
