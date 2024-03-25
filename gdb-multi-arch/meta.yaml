@@ -1,21 +1,24 @@
 {% set name = "multi-arch-gdb" %}
-{% set version = "12.1" %}
-{% set sha256 = "417718b5348fe026f3e4d9c36bf4c6645083e58cb6ac2b8ffc467030be2d6b88" %}
+{% set version = "13.2" %}
+{% set sha256 = "14f3ebf8fe6ce0156b217dc62de0ce373d7b42520c647befdab48f377de31e31" %}
 
 package:
   name: {{ name }}
-  version: {{ version }}.memfault1
+  version: {{ version }}.memfault0
 
 source:
   - url: https://github.com/bminor/binutils-gdb/archive/gdb-{{ version }}-release.tar.gz
     sha256: {{ sha256 }}
     patches:
-      - fix-disassemble-segfault.patch
       # mac doesn't build without this patch
       - mac-build-fix.patch  # [osx]
 
+      # work around some changes from gdb 12.1 -> 13.2 that cause undesirable
+      # output
+      - gdb-13.2.patch
+
 build:
-  number: '3'
+  number: '0'
   skip: True  # [win]
 
 requirements:
@@ -24,7 +27,7 @@ requirements:
     - {{ compiler('c') }}  # [linux]
     - {{ compiler('cxx') }}  # [linux]
     - make
-    - bison # [linux]
+    - bison
   host:
     - python {{ python }}
     - texinfo
@@ -35,8 +38,9 @@ requirements:
     - mpfr {{ mpfr }}
     - gmp {{ gmp }}
     - expat {{ expat }} # [linux]
+    - zstd {{ zstd }}
     # For libdebuginfod:
-    - elfutils
+    - elfutils {{ elfutils }}
   run:
     - python {{ python }}
     - ncurses {{ ncurses }}
@@ -46,12 +50,13 @@ requirements:
     - mpfr {{ mpfr }}
     - gmp {{ gmp }}
     - expat {{ expat }} # [linux]
+    - zstd {{ zstd }}
     # For libdebuginfod:
-    - elfutils
+    - elfutils {{ elfutils }}
 
 test:
   commands:
-    - gdb -ex "print 1" --batch
+    - multi-arch-gdb -ex "print 1" --batch
 
 about:
   home: https://www.gnu.org/software/gdb/
