@@ -1,17 +1,17 @@
 {% set name = "clickhouse" %}
-{% set version = "24.3.1.2672" %}
+{% set version = "24.1.8.22" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}.memfault1
 
 source:
-  - url: https://github.com/ClickHouse/ClickHouse/releases/download/v{{ version }}-lts/clickhouse-macos # [osx and x86_64]
-    sha256: 18bf141042a030a3472850f02f1c843d7a464650a75a6a695bccdb97e9c57164 # [osx and x86_64]
-  - url: https://github.com/ClickHouse/ClickHouse/releases/download/v{{ version }}-lts/clickhouse-macos-aarch64 # [osx and arm64]
-    sha256: 8c232c2ea479b88d838329e6aeba993b7974ed8acf67fa826da5a67bd40ddd37 # [osx and arm64]
-  - url: https://github.com/ClickHouse/ClickHouse/releases/download/v{{ version }}-lts/clickhouse-common-static-{{ version }}-amd64.tgz # [linux64]
-    sha256: 6ab8920bac7c5b222c4c657a42a9664db02f38cdfa5af4976964d369d861f19d # [linux64]
+  - url: https://github.com/ClickHouse/ClickHouse/releases/download/v{{ version }}-stable/clickhouse-macos # [osx and x86_64]
+    sha256: 1f171f23f32e41ee7b54a0720a3e524e39a56aab541bcc8b05026246f2b16375 # [osx and x86_64]
+  - url: https://github.com/ClickHouse/ClickHouse/releases/download/v{{ version }}-stable/clickhouse-macos-aarch64 # [osx and arm64]
+    sha256: acc16471f7f9b77580ef31dc5f6f22b4481e73565aa7b9b1bc5cbd5b54fc9c1d # [osx and arm64]
+  - url: https://github.com/ClickHouse/ClickHouse/releases/download/v{{ version }}-stable/clickhouse-common-static-{{ version }}-amd64.tgz # [linux64]
+    sha256: 9e1b654c3e255c730203ad8c0cd724a06c7d2b29a7f615ccca52d487936b3d44 # [linux64]
 
 build:
   number: 0
