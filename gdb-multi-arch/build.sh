@@ -41,7 +41,7 @@ fi
     --disable-sim \
     --disable-gold \
     --enable-64-bit-bfd
-make
+make -j${CPU_COUNT}
 make install
 
 # Move from the fake to real directory
