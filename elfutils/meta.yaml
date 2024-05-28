@@ -1,13 +1,13 @@
-{% set version = "0.189" %}
+{% set version = "0.191" %}
 
 package:
   name: elfutils
-  version: {{ version }}.memfault1
+  version: {{ version }}.memfault0
 
 source:
   fn: elfutils-{{ version }}.tar.bz2
   url: https://fedorahosted.org/releases/e/l/elfutils/{{ version }}/elfutils-{{ version }}.tar.bz2
-  sha256: 39bd8f1a338e2b7cd4abc3ff11a0eddc6e690f69578a57478d8179b4148708c8
+  sha256: df76db71366d1d708365fc7a6c60ca48398f14367eb2b8954efc8897147ad871
 
 build:
   number: 0

@@ -15,6 +15,7 @@ else
     export LIBS="$(pkg-config --libs-only-l zlib) $LIBS"
     export LDFLAGS="$(pkg-config --libs-only-L zlib) -lrt $LDFLAGS"
     export CFLAGS="$(pkg-config --cflags zlib) -Wno-unused-but-set-variable -Wno-unused-variable -Wno-null-dereference $CFLAGS"
+    export CXXFLAGS="-Wno-error=unused-parameter $CXXFLAGS"
     ./configure --prefix=$PREFIX --with-zlib || (cat config.log && exit 1)
     make -j${CPU_COUNT}
 
