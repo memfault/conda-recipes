@@ -51,7 +51,8 @@ requirements:
 
 test:
   commands:
-    - gdb -ex "print 1" --batch
+    - gdb --version
+    - gdb -nx --batch -ex "print 1"
 
 about:
   home: https://www.gnu.org/software/gdb/
