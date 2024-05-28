@@ -327,7 +327,7 @@ dcap:
 eclib:
   - '20230424'
 elfutils:
-  - 0.189.memfault1
+  - 0.189.memfault2
 exiv2:
   - 0.27
 expat:
@@ -611,6 +611,8 @@ numpy:
   - 1.21
   - 1.21
   - 1.21
+  - 1.23
+  - 1.25
 occt:
   - '7.7'
 openblas:
@@ -674,8 +676,12 @@ python:
   - 3.8.* *_cpython
   - 3.9.* *_cpython
   - 3.10.* *_cpython
+  - 3.11.* *_cpython
+  - 3.12.* *_cpython
 python_impl:
   # part of a zip_keys: python, python_impl, numpy
+  - cpython
+  - cpython
   - cpython
   - cpython
   - cpython
