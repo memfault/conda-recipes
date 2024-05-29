@@ -301,7 +301,7 @@ cudnn:
 cutensor:
   - 1
 curl:
-  - 8
+  - 8.8.0.memfault0
 dav1d:
   - 1.2.1
 davix:
@@ -313,7 +313,7 @@ dcap:
 eclib:
   - '20230424'
 elfutils:
-  - 0.189
+  - 0.191
 exiv2:
   - 0.27
 expat:
@@ -441,7 +441,7 @@ libblitz:
 libcint:
   - '5.5'
 libcurl:
-  - 8
+  - 8.8.0.memfault0
 libcrc32c:
   - 1.1
 libdap4:
@@ -518,7 +518,7 @@ libspatialindex:
 libssh:
   - 0.10
 libssh2:
-  - 1
+  - 1.11.0.memfault0
 libsvm:
   - '332'
 # keep libsqlite in sync with sqlite
@@ -605,6 +605,7 @@ numpy:
   - 1.22
   - 1.22
   - 1.23
+  - 1.25
 occt:
   - 7.7.2
 openblas:
@@ -673,8 +674,10 @@ python:
   - 3.9.* *_cpython
   - 3.10.* *_cpython
   - 3.11.* *_cpython
+  - 3.12.* *_cpython
 python_impl:
   # part of a zip_keys: python, python_impl, numpy
+  - cpython
   - cpython
   - cpython
   - cpython

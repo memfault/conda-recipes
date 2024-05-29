@@ -1,0 +1,23 @@
+libnghttp2:
+  - 1.62.0.memfault
+libssh2:
+  - 1.11.0.memfault0
+libzlib:
+  - 1.3.1
+zlib:
+  - 1.3.1
+build_platform:
+  osx_arm64: osx_64
+c_compiler:
+  - gcc   # [linux]
+  - clang # [osx]
+target_platform:
+  - osx-arm64 # [osx]
+c_stdlib:
+  - macosx_deployment_target # [osx]
+  - sysroot # [linux]
+c_stdlib_version:
+  - '11.0' # [osx]
+  - '2.12' # [linux]
+perl:
+  - 5.32.1
