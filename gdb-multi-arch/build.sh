@@ -14,6 +14,9 @@ export CFLAGS="$CFLAGS -Wno-constant-logical-operand -Wno-format-nonliteral -Wno
 
 if [ `uname` == Darwin ]; then
   EXTRA_CONFIGURE_FLAGS=""
+  # add '-fno-define-target-os-macros' to CFLAGS, very sad problem in older zlib
+  # https://gitlab.kitware.com/cmake/cmake/-/issues/25755
+  export CFLAGS="$CFLAGS -fno-define-target-os-macros"
 else
   EXTRA_CONFIGURE_FLAGS="--with-debuginfod"
 fi
