@@ -63,6 +63,15 @@ jobs:
         run: |
           git config --global protocol.file.allow always
 
+      # Explicitly override the xcode version for macos-11
+      - uses: maxim-lobanov/setup-xcode@v1
+        # only if matrix.platform == macos-11
+        if: matrix.platform == 'macos-11'
+        with:
+          # list from here:
+          # https://github.com/actions/runner-images/blob/main/images/macos/macos-11-Readme.md#installed-sdks
+          xcode-version: "11.7"
+
       - name: Build package
         run: |
           # mac-only, we need to inject the macos sdk so conda can link against it
