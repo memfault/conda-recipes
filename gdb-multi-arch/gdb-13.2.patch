@@ -1,0 +1,60 @@
+From 8c8c33795685e1a66ee17b0e232dbc85c8f236b6 Mon Sep 17 00:00:00 2001
+From: Noah Pendleton <2538614+noahp@users.noreply.github.com>
+Date: Wed, 6 Dec 2023 14:10:40 -0500
+Subject: [PATCH] Compilation unit sets multiple DW_AT_language
+
+GDB will try to set a fallback language if the DW_AT_language field is
+missing from the DWARF CU, but will crash if it's already been set to a
+different value for this CU :/ Not super ideal. This only occurs on
+pathalogical ELFs but does occur in real life, so replace the crash with
+a warning and continue processing.
+
+A second change is to disable warnings added in this change:
+
+https://github.com/bminor/binutils-gdb/commit/834eaf9201c18efc5b888f3cd116dd7856bec759
+
+They are inserted into the backtrace, for example:
+
+```
+ #2  0x01018bf0 in memfault_fault_handling_assert (pc=0x101885b <example_crash_function+8>, lr=warning: (Internal error: pc 0x0 in read in CU, but not in symtab.)
+warning: (Error: pc 0x0 in address map, but not in symtab.)
+```
+
+Which is not desirable.
+---
+ gdb/dwarf2/read.h | 5 +++++
+ gdb/symtab.c      | 2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/gdb/dwarf2/read.h b/gdb/dwarf2/read.h
+index 9dfc435e861..f75cfc52dfd 100644
+--- a/gdb/dwarf2/read.h
++++ b/gdb/dwarf2/read.h
+@@ -369,6 +369,11 @@ struct dwarf2_per_cu_data
+     nope = lang;
+     if (m_lang.compare_exchange_strong (nope, lang))
+       return;
++    /* unfortunately the below warning is captured in the output for gdb.execute, so leave it off*/
++    /* log a warning, including the expected nope vs desired lang*/
++    /* warning(_("DWARF error: conflicting language information in compilation unit header: %d/%d"),
++	    nope, lang); */
++    return;
+     gdb_assert_not_reached ();
+   }
+ 
+diff --git a/gdb/symtab.c b/gdb/symtab.c
+index e9bc7b2c933..46219035569 100644
+--- a/gdb/symtab.c
++++ b/gdb/symtab.c
+@@ -2930,7 +2930,7 @@ find_pc_sect_compunit_symtab (CORE_ADDR pc, struct obj_section *section)
+   for (objfile *objf : current_program_space->objfiles ())
+     {
+       struct compunit_symtab *result
+-	= objf->find_pc_sect_compunit_symtab (msymbol, pc, section, 1);
++	= objf->find_pc_sect_compunit_symtab (msymbol, pc, section, /* memfault changed from 1 */ 0);
+       if (result != NULL)
+ 	return result;
+     }
+-- 
+2.40.1
+
