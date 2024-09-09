@@ -1,5 +1,5 @@
 {% set name = "clickhouse" %}
-{% set version = "24.4.1.2088" %}
+{% set version = "24.6.6.6" %}
 
 package:
   name: {{ name|lower }}
@@ -7,11 +7,11 @@ package:
 
 source:
   - url: https://github.com/ClickHouse/ClickHouse/releases/download/v{{ version }}-stable/clickhouse-macos # [osx and x86_64]
-    sha256: ebbdda46725aaa81c2d79afcf0be3d67c53a28d1ad355117208b20b295044de3 # [osx and x86_64]
+    sha256: 7e7502767f81ae5acb112991db7b7abc121df027e45f34decaa5e2cd99e814f7 # [osx and x86_64]
   - url: https://github.com/ClickHouse/ClickHouse/releases/download/v{{ version }}-stable/clickhouse-macos-aarch64 # [osx and arm64]
-    sha256: df52242a6730612673fec254e30bc1cc7fe34c356bf06b52bc0dba3cf006aba0 # [osx and arm64]
+    sha256: 2ac1ad4b2a66c84634f569368d40bb26a1c1c5b5d252bb8f827a8acf7203d889 # [osx and arm64]
   - url: https://github.com/ClickHouse/ClickHouse/releases/download/v{{ version }}-stable/clickhouse-common-static-{{ version }}-amd64.tgz # [linux64]
-    sha256: 63e1ad946bf6b44acce896387afa02983518517bd629625f7e41fdf44cc8922f # [linux64]
+    sha256: 1628abfe7275488d3b7b192d8ddba2872d470077d6f4fca884a0941509e57867 # [linux64]
 
 build:
   number: 0
