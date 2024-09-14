@@ -2,7 +2,7 @@
 
 package:
   name: elfutils
-  version: {{ version }}.memfault1
+  version: {{ version }}.memfault2
 
 source:
   fn: elfutils-{{ version }}.tar.bz2
