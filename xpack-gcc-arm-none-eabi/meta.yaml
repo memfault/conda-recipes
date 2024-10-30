@@ -1,4 +1,4 @@
-{% set version = "11.2.1-1.2" %}
+{% set version = "13.3.1-1.1" %}
 
 package:
   name: xpack-gcc-arm-none-eabi
@@ -6,20 +6,22 @@ package:
   version: {{ version|replace('-', '.') }}
 
 source:
+  # (_VER=13.3.1-1.1; for _arch in darwin-x64 darwin-arm64 linux-x64 linux-arm64 win32-x64; do curl -sSL https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack/releases/download/v${_VER}/xpack-arm-none-eabi-gcc-${_VER}-${_arch}.tar.gz | sha256sum; done)
+
   - url: https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack/releases/download/v{{ version }}/xpack-arm-none-eabi-gcc-{{ version }}-darwin-x64.tar.gz # [osx and x86_64]
-    sha256: f2910d5ec4971baee9cd9cd3efe13fc8573b2f1c8185a6f18a7bb7fb3787a60d # [osx and x86_64]
+    sha256: afd69764478275ee3e5b9a12d61250ae348a79a4d1fa767e5fa2762ae8b77b2a # [osx and x86_64]
 
   - url: https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack/releases/download/v{{ version }}/xpack-arm-none-eabi-gcc-{{ version }}-darwin-arm64.tar.gz # [osx and arm64]
-    sha256: 85afae936d84b5ed94ad15300d2333d4b0af34b53bbf92283e558a96209d0dd7 # [osx and arm64]
+    sha256: e37c379cbc423353902aada84b2b4d5a9316c2c8746c9608e69c8ac23e654aa3 # [osx and arm64]
 
   - url: https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack/releases/download/v{{ version }}/xpack-arm-none-eabi-gcc-{{ version }}-linux-x64.tar.gz # [linux64]
-    sha256: 7479becc1ea98fbceecadf1f036ddaba8dc39c9cce5cb45f0a7a36e923d33c9a # [linux64]
+    sha256: 006c89337eced277fdf4c1c3bf3aebe55c85e8d52cba8d412009717fb781b959 # [linux64]
 
   - url: https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack/releases/download/v{{ version }}/xpack-arm-none-eabi-gcc-{{ version }}-linux-arm64.tar.gz # [linux and aarch64]
-    sha256: e5bd60f5aaaf498e01d7fa4e2d2bd64671330217f8c6b0437208be42eac4c837 # [linux and aarch64]
+    sha256: 34fa25d7dcd57bfdd3aeff5c595eac20dbf21a2d84b72e6c2db3bc67d556a1af # [linux and aarch64]
 
   - url: https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack/releases/download/v{{ version }}/xpack-arm-none-eabi-gcc-{{ version }}-win32-x64.zip # [win]
-    sha256: 4a45e1df1c621f0a97a2bcb63977a3745ffcff7afc0e31ad2f3d5cc1272acf4b # [win]
+    sha256: 0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5 # [win]
 
 build:
   string: '0'
