@@ -55,6 +55,10 @@ test:
     - xtensa-esp32-elf-gdb -ex "print 1" --batch
     - xtensa-esp32s2-elf-gdb -ex "print 1" --batch
     - xtensa-esp32s3-elf-gdb -ex "print 1" --batch
+    # test symlinks for objcopy triplets
+    - xtensa-esp32-elf-objcopy --version
+    - xtensa-esp32s2-elf-objcopy --version
+    - xtensa-esp32s3-elf-objcopy --version
 
 about:
   home: https://www.gnu.org/software/gdb/

@@ -77,7 +77,6 @@ fi
     --disable-threads \
     --disable-sim \
     --disable-nls \
-    --disable-binutils \
     --disable-ld \
     --disable-gas \
     --without-guile \
@@ -93,6 +92,24 @@ mkdir -p "$TARGET_PREFIX"/bin/
 # Wrapper scripts for esp32* variants
 cp "$SRC_DIR"/xtensa-esp32*-elf-gdb "$TARGET_PREFIX"/bin/
 chmod +x "$TARGET_PREFIX"/bin/*
+
+# Delete every binary except addr2line, gdb, gdb-add-index, objcopy, objdump, and size.
+pushd "${REAL_TARGET_PREFIX}"/bin/
+    rm !(xtensa-esp-elf-addr2line|xtensa-esp-elf-gdb|xtensa-esp-elf-gdb-add-index|xtensa-esp-elf-objdump|xtensa-esp-elf-objcopy|xtensa-esp-elf-size|xtensa-esp-elf-strings)
+    strip xtensa-esp-elf-addr2line
+    strip xtensa-esp-elf-gdb
+    strip xtensa-esp-elf-objdump
+    strip xtensa-esp-elf-objcopy
+    strip xtensa-esp-elf-size
+    strip xtensa-esp-elf-strings
+
+    # create symlinks for xtensa-esp32{,s2,s3}-elf-objcopy -> xtensa-esp-elf-objcopy
+    ln -s xtensa-esp-elf-objcopy xtensa-esp32-elf-objcopy
+    ln -s xtensa-esp-elf-objcopy xtensa-esp32s2-elf-objcopy
+    ln -s xtensa-esp-elf-objcopy xtensa-esp32s3-elf-objcopy
+popd
+
+
 
 # Symlink every binary from the build into /bin
 pushd "${PREFIX}"/bin
