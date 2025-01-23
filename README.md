@@ -39,7 +39,7 @@ and download the "packages" artifact.
 Unzip the packages.zip and then run:
 
 ```shell
-PACKAGE=<package_name> anaconda upload **/$PACKAGE*.tar.bz2 --user memfault
+PACKAGE=<package_name> anaconda upload **/$PACKAGE*.conda --user memfault
 ```
 
 ## Building Locally
