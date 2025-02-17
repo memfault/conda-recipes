@@ -20,7 +20,7 @@ build:
 
 requirements:
   run:
-    - tmux 3.4
+    - tmux 3.5
 
 test:
   commands:
