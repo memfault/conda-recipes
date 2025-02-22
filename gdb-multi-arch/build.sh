@@ -61,7 +61,7 @@ pushd "${REAL_TARGET_PREFIX}"/bin/
     mv arm-elf-linux-size size
     mv arm-elf-linux-strings strings
     strip addr2line
-    strip gdb
+    # strip gdb
     strip objdump
     strip objcopy
     strip size
