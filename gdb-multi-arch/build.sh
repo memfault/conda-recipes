@@ -31,7 +31,7 @@ fi
     --with-libiconv-prefix="$PREFIX" \
     --without-guile \
     --without-libunwind-ia64 \
-    --with-zlib \
+    --with-system-zlib \
     --without-babeltrace \
     --with-python="$PREFIX" \
     $EXTRA_CONFIGURE_FLAGS \
