@@ -27,6 +27,7 @@ requirements:
     - ncurses {{ ncurses }}
     - xz {{ xz }}
     - zlib {{ zlib }}
+    - zstd {{ zstd }}
     - libiconv {{ libiconv }}
     - mpfr {{ mpfr }}
     - gmp {{ gmp }}
