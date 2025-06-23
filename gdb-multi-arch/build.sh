@@ -12,8 +12,8 @@ export REAL_TARGET_PREFIX="${PREFIX}/${REAL_TARGET}"
 export CPPFLAGS="$CPPFLAGS -fcommon -I$PREFIX/include -Wno-constant-logical-operand"
 export CFLAGS="$CFLAGS -Wno-constant-logical-operand -Wno-format-nonliteral -Wno-self-assign"
 
-if [ `uname` == Darwin ]; then
-  EXTRA_CONFIGURE_FLAGS=""
+if [ "$(uname)" == "Darwin" ]; then
+  EXTRA_CONFIGURE_FLAGS="--with-libzstd-type=static"
 else
   EXTRA_CONFIGURE_FLAGS="--with-debuginfod"
 fi
