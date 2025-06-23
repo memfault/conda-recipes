@@ -1,6 +1,6 @@
 {% set name = "multi-arch-gdb" %}
-{% set version = "12.1" %}
-{% set sha256 = "417718b5348fe026f3e4d9c36bf4c6645083e58cb6ac2b8ffc467030be2d6b88" %}
+{% set version = "16.1" %}
+{% set sha256 = "5d260621a2c9ec25bd45f6869a316f487b4cf965fbc5cd66cad06c9222f2b336" %}
 
 package:
   name: {{ name }}
@@ -9,13 +9,9 @@ package:
 source:
   - url: https://github.com/bminor/binutils-gdb/archive/gdb-{{ version }}-release.tar.gz
     sha256: {{ sha256 }}
-    patches:
-      - fix-disassemble-segfault.patch
-      # mac doesn't build without this patch
-      - mac-build-fix.patch  # [osx]
 
 build:
-  number: '3'
+  number: '1'
   skip: True  # [win]
 
 requirements:
