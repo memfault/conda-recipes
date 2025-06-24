@@ -20,6 +20,7 @@ export CPPFLAGS="$CPPFLAGS -I$PREFIX/include"
 
 export ESP_CHIP_ARCHITECTURE=xtensa
 export GDB_DIST="$PWD"/dist
+GDB_REPO_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 # Disable PLATFORM selection for the xtensaconfig build. This disables the bin-wrapper script from being
 # included in the xtensaconfig output. We don't really want it- it's used to at
@@ -35,8 +36,9 @@ unset PREFIX
 
 # Build xtensa-config libs
 mkdir -p "${GDB_DIST}"/lib
-pushd xtensaconfig
+pushd xtensa-dynconfig
 make clean
+make CONF_DIR="${GDB_REPO_ROOT}/xtensa-overlays"
 # AR="$TARGET_HOST-ar" CC="$TARGET_HOST-gcc"
 if [ -z "$MACOSX_DEPLOYMENT_TARGET" ]; then
   TARGET_ESP_ARCH=${ESP_CHIP_ARCHITECTURE} DESTDIR="${GDB_DIST}" PLATFORM=$PLATFORM make install
@@ -51,7 +53,7 @@ cp -R "${GDB_DIST}"/lib "$TARGET_PREFIX"/
 # Restore PREFIX variable
 PREFIX=${_PREFIX}
 
-if [ `uname` == Darwin ]; then
+if [ "$(uname)" == "Darwin" ]; then
   EXTRA_CONFIGURE_FLAGS=""
 else
   EXTRA_CONFIGURE_FLAGS="--with-debuginfod"
