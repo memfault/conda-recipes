@@ -13,7 +13,7 @@ jobs:
       # run all targets to completion, even if one fails
       fail-fast: false
       matrix:
-        platform: [ubuntu-24.04, macos-15, macos-15-xlarge] #  windows-2022] windows is a bit sad :'(
+        platform: [ubuntu-24.04, macos-15-large, macos-15-xlarge] #  windows-2022] windows is a bit sad :'(
     runs-on: ${{ matrix.platform }}
 
     # set bash to be a login shell, so that /etc/profile is sourced and conda
