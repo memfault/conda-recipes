@@ -5,7 +5,7 @@ c_compiler:
   - vs2022                     # [win and arm64]
 c_compiler_version:            # [unix]
   - 12                         # [linux]
-  - 15                         # [osx]
+  - 16                         # [osx]
   - 7                          # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
   - 9                          # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
   - 10                         # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
@@ -17,13 +17,13 @@ cxx_compiler:
   - vs2022                     # [win and arm64]
 cxx_compiler_version:          # [unix]
   - 12                         # [linux]
-  - 15                         # [osx]
+  - 16                         # [osx]
   - 7                          # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
   - 9                          # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
   - 10                         # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
   - 10                         # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
 llvm_openmp:                   # [osx]
-  - 15                         # [osx]
+  - 16                         # [osx]
 fortran_compiler:              # [unix or win64]
   - gfortran                   # [linux64 or (osx and x86_64)]
   - gfortran                   # [aarch64 or ppc64le or armv7l or s390x]
@@ -111,7 +111,7 @@ macos_machine:                 # [osx]
   - arm64-apple-darwin20.0.0   # [osx and arm64]
 MACOSX_DEPLOYMENT_TARGET:      # [osx]
   - 11.0                       # [osx and arm64]
-  - 10.9                       # [osx and x86_64]
+  - 10.15                      # [osx and x86_64]
 VERBOSE_AT:
   - V=1
 VERBOSE_CM:
@@ -327,7 +327,7 @@ dcap:
 eclib:
   - '20230424'
 elfutils:
-  - 0.189.memfault1
+  - 0.189.memfault2
 exiv2:
   - 0.27
 expat:
@@ -608,9 +608,9 @@ ntl:
 # we build for the oldest version possible of numpy for forward compatibility
 numpy:
   # part of a zip_keys: python, python_impl, numpy
-  - 1.21
-  - 1.21
-  - 1.21
+  - 1.22
+  - 1.23
+  - 1.26
 occt:
   - '7.7'
 openblas:
@@ -671,9 +671,9 @@ pybind11_abi:
   - 4
 python:
   # part of a zip_keys: python, python_impl, numpy
-  - 3.8.* *_cpython
-  - 3.9.* *_cpython
   - 3.10.* *_cpython
+  - 3.11.* *_cpython
+  - 3.12.* *_cpython
 python_impl:
   # part of a zip_keys: python, python_impl, numpy
   - cpython
@@ -791,7 +791,7 @@ zeromq:
 zfp:
   - 1.0
 zlib:
-  - 1.2
+  - 1.3
 zlib_ng:
   - 2.0
 zstd:
