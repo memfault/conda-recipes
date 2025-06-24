@@ -313,7 +313,7 @@ dcap:
 eclib:
   - '20230424'
 elfutils:
-  - 0.189.memfault1
+  - 0.189.memfault2
 exiv2:
   - 0.27
 expat:
@@ -791,7 +791,7 @@ zeromq:
 zfp:
   - 1.0
 zlib:
-  - 1.2
+  - 1.3
 zlib_ng:
   - 2.0
 zstd:
