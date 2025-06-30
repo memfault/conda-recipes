@@ -77,7 +77,7 @@ jobs:
 
           # store the output in an out of tree location
           mkdir -p ${{ github.event.inputs.PACKAGE_DIR }}.${{ matrix.platform }}.output
-          conda mambabuild -c conda-forge --output-folder ${{ github.event.inputs.PACKAGE_DIR }}.${{ matrix.platform }}.output ${{ github.event.inputs.PACKAGE_DIR }}
+          conda mambabuild -c conda-forge -c memfault --output-folder ${{ github.event.inputs.PACKAGE_DIR }}.${{ matrix.platform }}.output ${{ github.event.inputs.PACKAGE_DIR }}
 
       # upload-artifact to save the output files
       - uses: actions/upload-artifact@v4
