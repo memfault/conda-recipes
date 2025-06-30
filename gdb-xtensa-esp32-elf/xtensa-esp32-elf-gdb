@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-XTENSA_GNU_CONFIG=lib/xtensa_esp32.so xtensa-esp-elf-gdb-no-python "$@"
