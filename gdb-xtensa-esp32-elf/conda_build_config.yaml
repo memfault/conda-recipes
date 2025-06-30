@@ -1,8 +1,12 @@
 elfutils:
   - 0.189.memfault2
+numpy:
+  - 1.26
 python:
   - 3.10.* *_cpython
   - 3.11.* *_cpython
   - 3.12.* *_cpython
+python_impl:
+  - cpython
 zlib:
   - 1.3
