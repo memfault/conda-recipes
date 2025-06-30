@@ -14,11 +14,6 @@ source:
   - url: https://github.com/espressif/binutils-gdb/releases/download/esp-gdb-v{{ version }}/xtensa-esp-elf-gdb-{{ version }}-x86_64-linux-gnu.tar.gz # [linux]
     sha256: 27b58ab12248e04277c4fdc74038cf0a001d5142df091ab94939ad35053738fd # [linux]
 
-  # wrapper scripts for esp32 variants
-  - path: xtensa-esp32-elf-gdb
-  - path: xtensa-esp32s2-elf-gdb
-  - path: xtensa-esp32s3-elf-gdb
-
 build:
   number: '0'
   skip: True  # [win]
