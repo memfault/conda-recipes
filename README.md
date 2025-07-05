@@ -53,7 +53,7 @@ $ conda activate build
 
 # Build specific recipe
 $ cd <some_recipe_dir>
-$ conda build -c conda-forge .
+$ conda build -c conda-forge -c memfault .
 
 # Successful build prints an upload command
 $ anaconda upload ...
