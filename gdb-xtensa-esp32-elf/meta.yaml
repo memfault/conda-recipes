@@ -14,6 +14,8 @@ source:
   - url: https://github.com/espressif/binutils-gdb/releases/download/esp-gdb-v{{ version }}/xtensa-esp-elf-gdb-{{ version }}-x86_64-linux-gnu.tar.gz # [linux]
     sha256: 27b58ab12248e04277c4fdc74038cf0a001d5142df091ab94939ad35053738fd # [linux]
 
+  - path: xtensa-lx106-elf-gdb
+
 build:
   number: '0'
   skip: True  # [win]
@@ -45,10 +47,11 @@ requirements:
 
 test:
   commands:
-    # test the wrapper scripts, which call the actual xtensa-esp-elf-gdb bin
+    # test the wrappers which call the actual xtensa-esp-elf-gdb bin
     - xtensa-esp32-elf-gdb -ex "print 1" --batch
     - xtensa-esp32s2-elf-gdb -ex "print 1" --batch
     - xtensa-esp32s3-elf-gdb -ex "print 1" --batch
+    - xtensa-lx106-elf-gdb -ex "print 1" --batch
 
 about:
   home: https://www.gnu.org/software/gdb/
