@@ -158,3 +158,8 @@ cph transmute /path/to/package.tar.bz2 .conda
 ## Useful Resources
 
 - Creating patch files for fixing builds: https://www.anaconda.com/blog/patching-source-code-to-conda-build-recipes
+
+## Removed Recipes
+
+Some recipes that we no longer intend to update have been removed. If you require details on them,
+the git history is your friend.
