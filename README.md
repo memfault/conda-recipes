@@ -44,7 +44,7 @@ PACKAGE=<package_name> anaconda upload **/$PACKAGE*.conda --user memfault
 
 ## Building Locally
 
-To build any of the following packages (macOS and Linux Ubuntu 18.04 tested):
+To build any of the following packages (macOS and Linux Ubuntu 24.04 tested):
 
 ```bash
 # Create build environment
@@ -53,7 +53,7 @@ $ conda activate build
 
 # Build specific recipe
 $ cd <some_recipe_dir>
-$ conda build -c conda-forge .
+$ conda build -c conda-forge -c memfault .
 
 # Successful build prints an upload command
 $ anaconda upload ...
