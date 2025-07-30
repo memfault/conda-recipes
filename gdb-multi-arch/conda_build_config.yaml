@@ -92,7 +92,7 @@ macos_machine:                 # [osx]
   - arm64-apple-darwin20.0.0   # [osx and arm64]
 MACOSX_DEPLOYMENT_TARGET:      # [osx]
   - 11.0                       # [osx and arm64]
-  - 10.9                       # [osx and x86_64]
+  - 10.15                      # [osx and x86_64]
 VERBOSE_AT:
   - V=1
 VERBOSE_CM:
@@ -313,7 +313,7 @@ dcap:
 eclib:
   - '20230424'
 elfutils:
-  - 0.189.memfault1
+  - 0.189.memfault2
 exiv2:
   - 0.27
 expat:
@@ -602,9 +602,8 @@ ntl:
 numpy:
   # part of a zip_keys: python, python_impl, numpy
   - 1.22
-  - 1.22
-  - 1.22
   - 1.23
+  - 1.26
 occt:
   - 7.7.2
 openblas:
@@ -669,13 +668,11 @@ pybind11_abi:
   - 4
 python:
   # part of a zip_keys: python, python_impl, numpy
-  - 3.8.* *_cpython
-  - 3.9.* *_cpython
   - 3.10.* *_cpython
   - 3.11.* *_cpython
+  - 3.12.* *_cpython
 python_impl:
   # part of a zip_keys: python, python_impl, numpy
-  - cpython
   - cpython
   - cpython
   - cpython
@@ -791,7 +788,7 @@ zeromq:
 zfp:
   - 1.0
 zlib:
-  - 1.2
+  - 1.3
 zlib_ng:
   - 2.0
 zstd:
