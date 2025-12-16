@@ -75,7 +75,7 @@ $ docker run -ti -v $(pwd):/conda-recipes condaforge/miniforge3  /bin/bash
 $ docker run --platform=linux/amd64 -ti -v $(pwd):/conda-recipes condaforge/miniforge3  /bin/bash
 
 $ apt update && apt install -y build-essential
-$ conda create -n build conda-build anaconda-client
+$ conda create -y -n build conda-build anaconda-client
 $ conda activate build
 $ cd /conda-recipes/<recipe>
 $ conda build -c conda-forge .
