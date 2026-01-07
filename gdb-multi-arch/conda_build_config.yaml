@@ -606,7 +606,6 @@ numpy:
   - 1.26
   - 1.26
   - 1.26
-  - 1.26
 occt:
   - 7.7.2
 openblas:
@@ -676,10 +675,8 @@ python:
   - 3.12.* *_cpython
   - 3.13.* *_cp313
   - 3.14.* *_cp314
-  - 3.14.* *_cp314t
 python_impl:
   # part of a zip_keys: python, python_impl, numpy
-  - cpython
   - cpython
   - cpython
   - cpython
