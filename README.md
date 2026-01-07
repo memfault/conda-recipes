@@ -88,33 +88,30 @@ $ anaconda upload ...
 
 We follow [Conda Build's (and Conda Forge's) strategy](https://docs.conda.io/projects/conda-build/en/latest/resources/compiler-tools.html#macos-sdk) for building macOS packages.
 
-As noted in the `conda_build_config.yaml` of each recipe, we use the MacOS 10.9 SDK.
+As noted in the `conda_build_config.yaml` of each recipe, we use the MacOS 11.0 SDK.
+
+We no longer build packages for older macOS targets, including macOS x86_64 targets.
 
 ```yaml
 CONDA_BUILD_SYSROOT:
-  - /opt/MacOSX10.9.sdk # [osx]
+  - /opt/MacOSX11.0.sdk # [osx and arm64]
 ```
 
 To download and install this SDK, you can find the package here: https://github.com/phracker/MacOSX-SDKs/releases
 
 ```bash
-$ sudo mv <10.9 SDK> /opt/MacOSX10.9.sdk
+$ sudo mv <11.0 SDK> /opt/MacOSX11.0.sdk
 ```
 
 #### Apple Silicon
 
-If you're on Apple Silicon, you can build for both ARM64 and X86_64 via Rosetta. The default environment is `osx-arm64`, but you can explicitly create them with `CONDA_SUBDIR`:
+If you're on Apple Silicon, it's possible to build for both ARM64 and x86_64 via Rosetta. The default environment is `osx-arm64`, but you should explicitly create set that with `CONDA_SUBDIR` to ensure Rosetta is not used.
 
 ```sh
 # create an Apple Silicon environment
 CONDA_SUBDIR=osx-arm64 conda create -n build-silicon conda-build anaconda-client
 conda activate build-silicon
 conda config --env --set subdir osx-arm64
-
-# create a Rosetta environment
-CONDA_SUBDIR=osx-64 conda create -n build-rosetta conda-build anaconda-client
-conda activate build-rosetta
-conda config --env --set subdir osx-64
 ```
 
 Then follow the _Building Locally_ instructions at the top.
