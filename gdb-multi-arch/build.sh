@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 # We keep arm-elf-linux here so that the order in which GDB attempts
 #  to match the architecture is consistent between hosts.
 # We'll rename the binaries later in the script
@@ -51,7 +53,7 @@ mv "${FAKE_TARGET_PREFIX}" "${REAL_TARGET_PREFIX}"
 shopt -s extglob
 
 # Delete every binary except addr2line, gdb, gdb-add-index, objcopy, objdump, and size.
-pushd "${REAL_TARGET_PREFIX}"/bin/
+pushd "${REAL_TARGET_PREFIX}"/bin/ || exit 1
     rm !(arm-elf-linux-addr2line|arm-elf-linux-gdb|arm-elf-linux-gdb-add-index|arm-elf-linux-objdump|arm-elf-linux-objcopy|arm-elf-linux-size|arm-elf-linux-strings)
     mv arm-elf-linux-addr2line addr2line
     mv arm-elf-linux-gdb gdb
