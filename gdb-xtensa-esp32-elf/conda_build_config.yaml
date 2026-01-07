@@ -1,8 +1,6 @@
 c_compiler:
   - gcc                        # [linux]
   - clang                      # [osx]
-  - vs2019                     # [win and x86_64]
-  - vs2022                     # [win and arm64]
 c_compiler_version:            # [unix]
   - 12                         # [linux]
   - 16                         # [osx]
@@ -36,12 +34,6 @@ fortran_compiler_version:      # [unix or win64]
   - 9                          # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
   - 10                         # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
   - 10                         # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
-m2w64_c_compiler:              # [win]
-  - m2w64-toolchain            # [win]
-m2w64_cxx_compiler:            # [win]
-  - m2w64-toolchain            # [win]
-m2w64_fortran_compiler:        # [win]
-  - m2w64-toolchain            # [win]
 
 cuda_compiler:
   - None
@@ -90,28 +82,23 @@ cgo_compiler:
 target_goos:
   - linux                      # [linux]
   - darwin                     # [osx]
-  - windows                    # [win]
 target_goarch:
   - amd64                      # [x86_64]
   - arm64                      # [arm64 or aarch64]
   - ppc64le                    # [ppc64le]
 target_goexe:
   -                            # [unix]
-  - .exe                       # [win]
 target_gobin:
   - '${PREFIX}/bin/'           # [unix]
-  - '%PREFIX%\bin\'            # [win]
 
 # Rust Compiler Options
 rust_compiler:
   - rust
 
 macos_machine:                 # [osx]
-  - x86_64-apple-darwin13.4.0  # [osx and x86_64]
   - arm64-apple-darwin20.0.0   # [osx and arm64]
 MACOSX_DEPLOYMENT_TARGET:      # [osx]
   - 11.0                       # [osx and arm64]
-  - 10.15                      # [osx and x86_64]
 VERBOSE_AT:
   - V=1
 VERBOSE_CM:
@@ -707,7 +694,6 @@ ruby:
   - 2.5
   - 2.6
 r_base:
-  - 4.1   # [win]
   - 4.2   # [not win]
 scotch:
   - 6.0.9
@@ -764,8 +750,6 @@ uhd:
   - 4.4.0
 urdfdom:
   - 3.1
-vc:                    # [win]
-  - 14                 # [win]
 vlfeat:
   - 0.9.21
 volk:

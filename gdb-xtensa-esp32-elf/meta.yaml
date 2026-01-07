@@ -9,11 +9,6 @@ source:
   - git_url: https://github.com/espressif/binutils-gdb.git
     git_rev: esp-gdb-v{{ version }}
 
-  # wrapper scripts for esp32 variants
-  - path: xtensa-esp32-elf-gdb
-  - path: xtensa-esp32s2-elf-gdb
-  - path: xtensa-esp32s3-elf-gdb
-
 build:
   number: '0'
   skip: True  # [win]
@@ -23,6 +18,7 @@ requirements:
     - {{ compiler('fortran') }}
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - rust
     - make
     - bison # [linux]
   host:
@@ -35,6 +31,7 @@ requirements:
     - mpfr {{ mpfr }}
     - gmp {{ gmp }}
     - expat {{ expat }}
+    - zstd {{ zstd }}
     # For libdebuginfod:
     - elfutils
   run:
@@ -42,6 +39,7 @@ requirements:
     - ncurses {{ ncurses }}
     - xz {{ xz }}
     - zlib {{ zlib }} # [not osx]
+    - zstd {{ zstd }}
     - libiconv {{ libiconv }}
     - mpfr {{ mpfr }}
     - gmp {{ gmp }} # [not osx]

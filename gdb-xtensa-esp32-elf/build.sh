@@ -5,6 +5,8 @@
 #
 # This script is partially based on:
 # https://github.com/espressif/binutils-gdb/blob/esp-gdb-v11.1_20220318/build_esp_gdb.sh
+# and
+# https://github.com/espressif/binutils-gdb/blob/esp-gdb-16.2/build_esp_gdb.sh
 ###
 
 # The tool name should be 'xtensa-esp-elf', the same as how Espressif names it
@@ -36,19 +38,30 @@ unset PREFIX
 
 # Build xtensa-config libs
 mkdir -p "${GDB_DIST}"/lib
-pushd xtensa-dynconfig
+pushd xtensa-dynconfig || exit 1
 make clean
 make CONF_DIR="${GDB_REPO_ROOT}/xtensa-overlays"
 # AR="$TARGET_HOST-ar" CC="$TARGET_HOST-gcc"
 if [ -z "$MACOSX_DEPLOYMENT_TARGET" ]; then
-  TARGET_ESP_ARCH=${ESP_CHIP_ARCHITECTURE} DESTDIR="${GDB_DIST}" PLATFORM=$PLATFORM make install
+  TARGET_ESP_ARCH=xtensa DESTDIR="${GDB_DIST}" PLATFORM=$PLATFORM make install
 else
-  TARGET_ESP_ARCH=${ESP_CHIP_ARCHITECTURE} DESTDIR="${GDB_DIST}" PLATFORM=$PLATFORM make install CFLAGS="-Wl,-L,$(xcode-select -p)/SDKs/MacOSX.sdk/usr/lib -Wl,-lSystem"
+  TARGET_ESP_ARCH=xtensa DESTDIR="${GDB_DIST}" PLATFORM=$PLATFORM make install CFLAGS="-Wl,-L,$(xcode-select -p)/SDKs/MacOSX.sdk/usr/lib -Wl,-lSystem"
 fi
-popd
+popd || exit 1
 # Install xtensa-config libs
 mkdir -p "$TARGET_PREFIX"/lib
 cp -R "${GDB_DIST}"/lib "$TARGET_PREFIX"/
+
+# Build wrappers
+pushd esp-toolchain-bin-wrappers/gnu-debugger/unix || exit 1
+if [ -z "$MACOSX_DEPLOYMENT_TARGET" ]; then
+  RUST_TARGET_TRIPLET="x86_64-unknown-linux-gnu"
+else
+  RUST_TARGET_TRIPLET="aarch64-apple-darwin"
+fi
+rustup target add "$RUST_TARGET_TRIPLET"
+cargo install --target=$RUST_TARGET_TRIPLET --no-track --path ./ --root $GDB_DIST
+popd || exit 1
 
 # Restore PREFIX variable
 PREFIX=${_PREFIX}
@@ -92,16 +105,23 @@ make install
 
 mkdir -p "$TARGET_PREFIX"/bin/
 
+echo "Renaming things..."
+# rename gdb to have python version in filename
+mv ${TARGET_PREFIX}/bin/xtensa-esp-elf-gdb ${TARGET_PREFIX}/bin/xtensa-esp-elf-gdb-${PY_VER}
+
 # Wrapper scripts for esp32* variants
-cp "$SRC_DIR"/xtensa-esp32*-elf-gdb "$TARGET_PREFIX"/bin/
+# Set up the wrappers
+cp $GDB_DIST/bin/esp-elf-gdb-wrapper $TARGET_PREFIX/bin/xtensa-esp32-elf-gdb 2> /dev/null || true
+cp $GDB_DIST/bin/esp-elf-gdb-wrapper $TARGET_PREFIX/bin/xtensa-esp32s2-elf-gdb 2> /dev/null || true
+mv $GDB_DIST/bin/esp-elf-gdb-wrapper $TARGET_PREFIX/bin/xtensa-esp32s3-elf-gdb 2> /dev/null || true
 chmod +x "$TARGET_PREFIX"/bin/*
 
 # Symlink every binary from the build into /bin
-pushd "${PREFIX}"/bin
+pushd "${PREFIX}"/bin || exit 1
     ln -s ../"${TARGET_DIR}"/bin/* ./
-popd
+popd || exit 1
 
 # Same for lib
-pushd "${PREFIX}"/lib
+pushd "${PREFIX}"/lib || exit 1
     ln -s ../"${TARGET_DIR}"/lib/* ./
-popd
+popd || exit 1
