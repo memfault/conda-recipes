@@ -2,7 +2,7 @@
 
 package:
   name: cmake
-  version: {{ version }}.memfault0
+  version: {{ version }}.memfault1
 
 source:
   url: https://github.com/Kitware/CMake/releases/download/v{{ version }}/cmake-{{ version }}.tar.gz
@@ -37,7 +37,7 @@ requirements:
     - expat           # [unix]
     - ncurses         # [unix]
     - xz              # [unix]
-    - zlib            # [unix]
+    - zlib {{ zlib }} # [unix]
     - libuv           # [unix]
     - rhash           # [unix]
     - zstd            # [unix]
@@ -48,7 +48,7 @@ requirements:
     - expat           # [unix]
     - ncurses         # [unix]
     - xz              # [unix]
-    - zlib            # [unix]
+    - zlib {{ zlib }} # [unix]
     - libuv           # [unix]
     - rhash           # [unix]
     - zstd            # [unix]

@@ -6,14 +6,14 @@ c_compiler:
   - gcc                        # [linux]
   - clang                      # [osx]
 c_compiler_version:            # [unix]
-  - 12                         # [osx]
-  - 10                         # [linux]
+  - 16                         # [osx]
+  - 12                         # [linux]
 cxx_compiler:
   - gxx                        # [linux]
   - clangxx                    # [osx]
 cxx_compiler_version:          # [unix]
-  - 12                         # [osx]
-  - 10                         # [linux]
+  - 16                         # [osx]
+  - 12                         # [linux]
 
 cdt_name: cos6
 channel_sources: conda-forge,defaults
@@ -37,7 +37,7 @@ ignore_build_only_deps:
 libcurl: '7'
 lua: '5'
 ncurses: '6.2'
-numpy: '1.16'
+numpy: '1.22'
 perl: 5.26.2
 pin_run_as_build:
   python:
@@ -56,7 +56,7 @@ pin_run_as_build:
     max_pin: x.x
   zlib:
     max_pin: x.x
-python: '3.8'
+python: '3.10'
 r_base: '3.5'
 xz: '5.2'
 zip_keys:
@@ -64,5 +64,7 @@ zip_keys:
   - docker_image
 - - c_compiler_version
   - cxx_compiler_version
-zlib: '1.2'
+zlib:
+- '1.2'
+- '1.3'
 zstd: '1.5'
