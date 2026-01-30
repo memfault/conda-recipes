@@ -42,18 +42,51 @@ Unzip the packages.zip and then run:
 PACKAGE=<package_name> anaconda upload **/$PACKAGE*.conda --user memfault
 ```
 
+<details>
+<summary>Using gh CLI to trigger, monitor, and download artifacts from your CLI</summary>
+
+If you have the [GitHub CLI (`gh`)](https://cli.github.com/) installed, you can automate the workflow trigger, monitoring, and artifact download:
+
+**1. Trigger the workflow:**
+```bash
+gh workflow run .github/workflows/build.yml -f PACKAGE_DIR=<package_name> --ref <branch_name>
+```
+
+**2. Get the run ID:**
+```bash
+sleep 5  # Wait for run to register
+RUN_ID=$(gh run list --workflow=build.yml --limit=1 --json databaseId --jq '.[0].databaseId')
+echo "Run ID: $RUN_ID"
+```
+
+**3. Watch the workflow in real-time:**
+```bash
+gh run watch $RUN_ID --exit-status
+```
+
+**4. Download artifacts when complete:**
+```bash
+gh run download $RUN_ID --dir ./artifacts
+```
+
+**5. Upload the packages:**
+```bash
+micromamba run -n build anaconda upload ./artifacts/**/*.conda --user memfault
+```
+
+</details>
+
 ## Building Locally
 
-To build any of the following packages (macOS and Linux Ubuntu 18.04 tested):
+To build any of the following packages (macOS and Linux Ubuntu tested):
 
 ```bash
 # Create build environment
-$ conda create -n build conda-build anaconda-client
-$ conda activate build
+$ micromamba create -n build conda-build anaconda-client -c conda-forge -y
 
 # Build specific recipe
 $ cd <some_recipe_dir>
-$ conda build -c conda-forge .
+$ micromamba run -n build conda-build -c conda-forge .
 
 # Successful build prints an upload command
 $ anaconda upload ...
@@ -105,13 +138,13 @@ $ sudo mv <11.0 SDK> /opt/MacOSX11.0.sdk
 
 #### Apple Silicon
 
-If you're on Apple Silicon, it's possible to build for both ARM64 and x86_64 via Rosetta. The default environment is `osx-arm64`, but you should explicitly create set that with `CONDA_SUBDIR` to ensure Rosetta is not used.
+If you're on Apple Silicon, it's possible to build for both ARM64 and x86_64 via Rosetta. The default environment is `osx-arm64`, but you should explicitly set that with `CONDA_SUBDIR` to ensure Rosetta is not used.
 
 ```sh
 # create an Apple Silicon environment
-CONDA_SUBDIR=osx-arm64 conda create -n build-silicon conda-build anaconda-client
-conda activate build-silicon
-conda config --env --set subdir osx-arm64
+CONDA_SUBDIR=osx-arm64 micromamba create -n build-silicon conda-build anaconda-client -c conda-forge -y
+micromamba activate build-silicon
+micromamba config --env --set subdir osx-arm64
 ```
 
 Then follow the _Building Locally_ instructions at the top.
@@ -135,11 +168,11 @@ conda_build:
   zstd_compression_level: 19
 ```
 
-Or using the `conda config` command:
+Or using the config command:
 
 ```bash
-conda config --set conda_build.pkg_format 2
-conda config --set conda_build.zstd_compression_level 19
+micromamba config set conda_build.pkg_format 2
+micromamba config set conda_build.zstd_compression_level 19
 ```
 
 Reference:
