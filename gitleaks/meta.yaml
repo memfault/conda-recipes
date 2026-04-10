@@ -1,5 +1,5 @@
 {% set name = "gitleaks" %}
-{% set version = "8.18.4" %}
+{% set version = "8.30.1" %}
 
 package:
   name: {{ name }}
@@ -8,11 +8,11 @@ package:
 source:
   # get the checksums from the checksum file, included in the release
   url: https://github.com/zricethezav/gitleaks/releases/download/v{{ version }}/gitleaks_{{ version }}_darwin_x64.tar.gz # [osx and x86_64]
-  sha256: 1a69e5666b13cd374889cbcb1939ed1573b63b551251283d5d2329a53cf58e2f # [osx and x86_64]
+  sha256: dfe101a4db2255fc85120ac7f3d25e4342c3c20cf749f2c20a18081af1952709 # [osx and x86_64]
   url: https://github.com/zricethezav/gitleaks/releases/download/v{{ version }}/gitleaks_{{ version }}_darwin_arm64.tar.gz # [osx and arm64]
-  sha256: a480d8593acd8215b22402cf0f3f88b01dcd3610c63b5391db640f7767e62104 # [osx and arm64]
+  sha256: b40ab0ae55c505963e365f271a8d3846efbc170aa17f2607f13df610a9aeb6a5 # [osx and arm64]
   url: https://github.com/zricethezav/gitleaks/releases/download/v{{ version }}/gitleaks_{{ version }}_linux_x64.tar.gz # [linux64]
-  sha256: ba6dbb656933921c775ee5a2d1c13a91046e7952e9d919f9bac4cec61d628e7d # [linux64]
+  sha256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb # [linux64]
 
 build:
   string: '1'
