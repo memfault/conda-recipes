@@ -11,8 +11,10 @@ source:
   sha256: d0258dba536dad639cd52be4f1a3fb5143cf6d550d1830853ed6dcaaa886a399                                            # [osx and x86_64]
   url: https://github.com/DarthSim/overmind/releases/download/v{{ version }}/overmind-v{{ version }}-macos-arm64.gz   # [osx and arm64]
   sha256: 6d1e4bd2ce5fa9ca7b3e8d400a7999dcd19cc17b2a4b8f5b8f649e0e91dc33b0                                            # [osx and arm64]
-  url: https://github.com/DarthSim/overmind/releases/download/v{{ version }}/overmind-v{{ version }}-linux-amd64.gz   # [linux64]
-  sha256: 1f7cac289b550a71bebf4a29139e58831b39003d9831be59eed3e39a9097311c                                            # [linux64]
+  url: https://github.com/DarthSim/overmind/releases/download/v{{ version }}/overmind-v{{ version }}-linux-amd64.gz   # [linux and x86_64]
+  sha256: 1f7cac289b550a71bebf4a29139e58831b39003d9831be59eed3e39a9097311c                                            # [linux and x86_64]
+  url: https://github.com/DarthSim/overmind/releases/download/v{{ version }}/overmind-v{{ version }}-linux-arm64.gz   # [linux and aarch64]
+  sha256: 94a3e8393bd718ae9ec1b6cc21740bffa52da20710eaf020a7aa679cdc926104                                            # [linux and aarch64]
 
 build:
   string: '1'
