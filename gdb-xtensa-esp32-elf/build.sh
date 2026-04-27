@@ -54,10 +54,22 @@ cp -R "${GDB_DIST}"/lib "$TARGET_PREFIX"/
 
 # Build wrappers
 pushd esp-toolchain-bin-wrappers/gnu-debugger/unix || exit 1
-if [ -z "$MACOSX_DEPLOYMENT_TARGET" ]; then
-  RUST_TARGET_TRIPLET="x86_64-unknown-linux-gnu"
-else
+OS=$(uname -s)
+ARCH=$(uname -m)
+if [ "${OS}" = "Darwin" ]; then
   RUST_TARGET_TRIPLET="aarch64-apple-darwin"
+elif [ "${OS}" = "Linux" ]; then
+  if [ "${ARCH}" = "x86_64" -o "${ARCH}" = "amd64" ]; then
+    RUST_TARGET_TRIPLET="x86_64-unknown-linux-gnu"
+  elif [ "${ARCH}" = "aarch64" -o "${ARCH}" = "arm64" ]; then
+    RUST_TARGET_TRIPLET="aarch64-unknown-linux-gnu"
+  else
+    echo "Unsupported Linux architecture: ${ARCH}" >&2
+    exit 1
+  fi
+else
+  echo "Unsupported OS: ${OS}" >&2
+  exit 1
 fi
 rustup target add "$RUST_TARGET_TRIPLET"
 cargo install --target=$RUST_TARGET_TRIPLET --no-track --path ./ --root $GDB_DIST
