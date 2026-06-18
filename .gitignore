@@ -1,1 +1,5 @@
 .idea
+
+
+# local Git Template override for Graphite
+.github/PULL_REQUEST_TEMPLATE/99_user_template.md
