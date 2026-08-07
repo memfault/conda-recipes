@@ -341,7 +341,7 @@ gdk_pixbuf:
 gnuradio_core:
   - 3.10.7
 gnutls:
-  - 3.7
+  - 3.8
 gsl:
   - 2.7
 gsoap:
@@ -392,7 +392,7 @@ hdf4:
 hdf5:
   - 1.14.2
 icu:
-  - '72'
+  - '75'
 imath:
   - 3.1.9
 ipopt:
@@ -426,7 +426,7 @@ libabseil_static:
 libaec:
   - '1'
 libarchive:
-  - '3.7'
+  - '3.8'
 # keep in sync with arrow_cpp (libarrow exists only from 10.x,
 # but make sure we have same length for zip as arrow_cpp)
 libarrow:
@@ -455,7 +455,7 @@ libevent:
 libexactreal:
   - '3'
 libffi:
-  - '3.4'
+  - '3.5'
 libflatsurf:
   - 3
 libflint:
@@ -486,7 +486,7 @@ libiio:
 libmatio:
   - 1.5.23
 libmicrohttpd:
-  - 0.9
+  - 1.0
 libnetcdf:
   - 4.9.2
 libopencv:
@@ -539,7 +539,7 @@ libwebp:
 libwebp_base:
   - 1
 libxml2:
-  - '2.11'
+  - '2.14'
 libxsmm:
   - 1
 libuuid:
@@ -585,7 +585,7 @@ netcdf_cxx4:
 netcdf_fortran:
   - '4.6'
 nettle:
-  - '3.8'
+  - '3.10'
 nodejs:
   - '18'
   - '16'
@@ -641,7 +641,7 @@ slepc4py:
 svt_av1:
   - 1.7.0
 p11_kit:
-  - '0.24'
+  - '0.26'
 pcre:
   - '8'
 pcre2:
