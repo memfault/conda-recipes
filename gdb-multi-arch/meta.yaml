@@ -1,13 +1,13 @@
 {% set name = "multi-arch-gdb" %}
-{% set version = "16.3" %}
-{% set sha256 = "fbeb90a8e94a631d19e61d97f59aa2cc1eba0f365963ca4f06772ffc9ba9af5e" %}
+{% set version = "17.2" %}
+{% set sha256 = "e26244bbf766af83440bc993f7e738368b55b2a3ff45a68d83f761c0f0cd6fc5" %}
 
 package:
   name: {{ name }}
   version: {{ version }}.memfault1
 
 source:
-  - url: https://github.com/bminor/binutils-gdb/archive/gdb-{{ version }}-release.tar.gz
+  - url: https://github.com/memfault/binutils-gdb/archive/gdb-{{ version }}-release.tar.gz
     sha256: {{ sha256 }}
 
 build:
