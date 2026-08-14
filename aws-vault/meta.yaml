@@ -8,8 +8,10 @@ package:
 source:
   url: https://github.com/ByteNess/aws-vault/releases/download/v{{ version }}/aws-vault-darwin-arm64 # [osx and arm64]
   sha256: 54c7a2cb4862b239b7795e6442e0853d7ba71c7a8403cdbfd6a76128a797fb00 # [osx and arm64]
-  url: https://github.com/ByteNess/aws-vault/releases/download/v{{ version }}/aws-vault-linux-amd64 # [linux64 and x86_64]
-  sha256: 5917c87f74bacbd4a639830adb75f27c180e75a65ad3d1faef02cf3935c4fd9b # [linux64 and x86_64]
+  url: https://github.com/ByteNess/aws-vault/releases/download/v{{ version }}/aws-vault-linux-amd64 # [linux and x86_64]
+  sha256: 5917c87f74bacbd4a639830adb75f27c180e75a65ad3d1faef02cf3935c4fd9b # [linux and x86_64]
+  url: https://github.com/ByteNess/aws-vault/releases/download/v{{ version }}/aws-vault-linux-arm64 # [linux and aarch64]
+  sha256: c73643cbf1429b9539bbcc1023b834066e0d5c5d7087c27139f3eaf950242431 # [linux and aarch64]
 
 build:
   string: '1'
