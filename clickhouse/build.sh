@@ -9,7 +9,7 @@ ARCH=$(uname -m)
 # copy the binary into the installation target
 if [ "${OS}" = "Linux" ]; then
 
-  if [ "${ARCH"} = "x86_64" -o "${ARCH}" = "am64" ]; then
+  if [ "${ARCH}" = "x86_64" -o "${ARCH}" = "amd64" ]; then
     UPX_ARCH="amd64"
   elif [ "${ARCH}" = "aarch64" -o "${ARCH}" = "arm64" ]; then
     UPX_ARCH="arm64"
