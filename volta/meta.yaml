@@ -7,11 +7,13 @@ package:
 
 source:
   # bash for getting the sigs:
-  # ❯ (_VER=2.0.2; for _arch in macos linux; do curl -sSL https://github.com/volta-cli/volta/releases/download/v${_VER}/volta-${_VER}-${_arch}.tar.gz | sha256sum; done)
+  # ❯ (_VER=2.0.2; for _arch in macos linux linux-arm; do curl -sSL https://github.com/volta-cli/volta/releases/download/v${_VER}/volta-${_VER}-${_arch}.tar.gz | sha256sum; done)
   url: https://github.com/volta-cli/volta/releases/download/v{{ version }}/volta-{{ version }}-macos.tar.gz # [osx]
   sha256: 57f7b51d6fb975f5c48b5ddf68f75103055e19fd822e3e2ce58d2be6ab78977d # [osx]
   url: https://github.com/volta-cli/volta/releases/download/v{{ version }}/volta-{{ version }}-linux.tar.gz # [linux and x86_64]
   sha256: 6cec054c911fb925b629a09455775af6e95dc0f5694a4c28b63979ab9ef18037 # [linux and x86_64]
+  url: https://github.com/volta-cli/volta/releases/download/v{{ version }}/volta-{{ version }}-linux-arm.tar.gz # [linux and aarch64]
+  sha256: 1eb92f8b711753aa576352b2e580b2f3fdadeab8664929ca1da3d0de65448517 # [linux and aarch64]
 
 build:
   string: '1'
