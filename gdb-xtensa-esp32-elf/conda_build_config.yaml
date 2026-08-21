@@ -344,7 +344,7 @@ eclib:
 eigen_abi_devel:
   - '5.0.1'
 elfutils:
-  - 0.189.memfault2
+  - 0.189.memfault3
 emela:
   - '1.0'
 exiv2:

@@ -3,13 +3,15 @@
 
 package:
   name: {{ name }}
-  version: {{ version }}.memfault1
+  version: {{ version }}.memfault2
 
 source:
-  url: https://github.com/memfault/memfault-ecs-cli/releases/download/{{ version }}.memfault1/ecs-cli.darwin-amd64 # [osx]
-  sha256: 4050e9aad0bb32a6b5d868e3e4d67b874eb1adb598d7214778555611ca2c934b # [osx]
-  url: https://github.com/memfault/memfault-ecs-cli/releases/download/{{ version }}.memfault1/ecs-cli.linux-amd64 # [linux64]
-  sha256: c5bf1f19b869db6e94f9b331541bd7fcf2a559df22dd41428857dd73a0aae878 # [linux64]
+  url: https://github.com/memfault/memfault-ecs-cli/releases/download/{{ version }}.memfault2/ecs-cli.darwin-amd64 # [osx]
+  sha256: 44cc90ceaaa792547380781747ab999b2dd3c9fb36a755d9ac5e3b468ab73326 # [osx]
+  url: https://github.com/memfault/memfault-ecs-cli/releases/download/{{ version }}.memfault2/ecs-cli.linux-amd64 # [linux and x86_64]
+  sha256: d272eb81279f834e6c205eec0dda0a581c8982b02cbc9e0b0493ca2bbb93dd6a # [linux and x86_64]
+  url: https://github.com/memfault/memfault-ecs-cli/releases/download/{{ version }}.memfault2/ecs-cli.linux-arm64 # [linux and aarch64]
+  sha256: d84fa6db6017351725f6545797281835d4388668b120998146aa9190006271c5 # [linux and aarch64]
   fn: ecs-cli
 
 build:

@@ -11,8 +11,10 @@ source:
   sha256: dfe101a4db2255fc85120ac7f3d25e4342c3c20cf749f2c20a18081af1952709 # [osx and x86_64]
   url: https://github.com/zricethezav/gitleaks/releases/download/v{{ version }}/gitleaks_{{ version }}_darwin_arm64.tar.gz # [osx and arm64]
   sha256: b40ab0ae55c505963e365f271a8d3846efbc170aa17f2607f13df610a9aeb6a5 # [osx and arm64]
-  url: https://github.com/zricethezav/gitleaks/releases/download/v{{ version }}/gitleaks_{{ version }}_linux_x64.tar.gz # [linux64]
-  sha256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb # [linux64]
+  url: https://github.com/zricethezav/gitleaks/releases/download/v{{ version }}/gitleaks_{{ version }}_linux_x64.tar.gz # [linux and x86_64]
+  sha256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb # [linux and x86_64]
+  url: https://github.com/zricethezav/gitleaks/releases/download/v{{ version }}/gitleaks_{{ version }}_linux_arm64.tar.gz # [linux and aarch64]
+  sha256: e4a487ee7ccd7d3a7f7ec08657610aa3606637dab924210b3aee62570fb4b080 # [linux and aarch64]
 
 build:
   string: '1'
