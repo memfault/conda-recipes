@@ -1,0 +1,64 @@
+From: Tom Tromey <tom@tromey.com>
+Subject: [PATCH] gdb/dwarf: don't assert when a unit's "pretend" language changes
+
+Backport of the dwarf2_per_cu::set_lang hunk from upstream commit
+329a53a6d590e2e90f590c89473990040a86c8e0 ("Some cleanups to 'pretend
+language' handling"), which is not in any gdb release as of 17.2.
+
+    Bug: https://sourceware.org/bugzilla/show_bug.cgi?id=33661
+
+A compilation unit that has no DW_AT_language of its own inherits the
+"pretend" language of whichever unit referenced it first
+(follow_die_offset passes source_cu->lang ()).  Because
+dw2_instantiate_symtab drops every cached dwarf2_cu via
+free_cached_comp_units, such a unit is re-read on each symtab
+expansion, and a later referrer can supply a different language.  The
+old code asserted that this never happens:
+
+  dwarf2/read.c:19295: internal-error: set_lang: Assertion
+  `old_value == language_unknown || old_value == language_minimal
+   || old_value == lang' failed.
+
+This reproduces with ELFs that link TI ARM Codegen objects, which emit
+cross-unit DW_FORM_ref4 references into a small shared unit carrying
+the base types and no DW_AT_language.
+
+Replace the assertions with compare-exchanges, so the first settled
+language wins and later "pretend" languages are ignored.
+
+diff --git a/gdb/dwarf2/read.c b/gdb/dwarf2/read.c
+index d43a6e1f343..a3a4df3345d 100644
+--- a/gdb/dwarf2/read.c
++++ b/gdb/dwarf2/read.c
+@@ -19288,17 +19288,23 @@ dwarf2_per_cu::set_lang (enum language lang, dwarf_source_language dw_lang)
+   if (unit_type () == DW_UT_partial)
+     return;
+ 
+-  /* Set if not set already.  */
++  /* A unit without DW_AT_language takes the "pretend" language of
++     whichever unit happened to reference it first, so the same unit can
++     legitimately be prepared more than once with different languages.
++     In practice that is fine, because DIEs shared across languages are
++     limited to constructs those languages agree on.  Once a language has
++     been settled on, keep it.  */
++  packed<language, LANGUAGE_BYTES> expected1 = language_unknown;
++  packed<language, LANGUAGE_BYTES> expected2 = language_minimal;
+   packed<language, LANGUAGE_BYTES> new_value = lang;
+-  packed<language, LANGUAGE_BYTES> old_value = m_lang.exchange (new_value);
+-  /* If already set, verify that it's the same value.  */
+-  gdb_assert (old_value == language_unknown
+-	      || old_value == language_minimal
+-	      || old_value == lang);
+ 
++  if (!m_lang.compare_exchange_strong (expected1, new_value))
++    m_lang.compare_exchange_strong (expected2, new_value);
++
++  /* Likewise for the DWARF language, which has a single unknown value.  */
++  packed<dwarf_source_language, 2> old_dw = (dwarf_source_language) 0;
+   packed<dwarf_source_language, 2> new_dw = dw_lang;
+-  packed<dwarf_source_language, 2> old_dw = m_dw_lang.exchange (new_dw);
+-  gdb_assert (old_dw == 0 || old_dw == dw_lang);
++  m_dw_lang.compare_exchange_strong (old_dw, new_dw);
+ }
+ 
+ /* See read.h.  */
