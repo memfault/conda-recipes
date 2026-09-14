@@ -4,14 +4,19 @@
 
 package:
   name: {{ name }}
-  version: {{ version }}.memfault1
+  version: {{ version }}.memfault2
 
 source:
   - url: https://github.com/memfault/binutils-gdb/archive/gdb-{{ version }}-release.tar.gz
     sha256: {{ sha256 }}
+    patches:
+      # Backport of upstream 329a53a6d59 (not in any release as of 17.2).
+      # Without it, ELFs carrying units with no DW_AT_language (eg TI ARM
+      # Codegen output) abort with a set_lang assertion failure.
+      - 0001-gdb-dwarf-set_lang-pretend-language.patch
 
 build:
-  number: '1'
+  number: '0'
   skip: True  # [win or (osx and x86_64)]
 
 requirements:
