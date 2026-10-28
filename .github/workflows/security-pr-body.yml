@@ -1,0 +1,48 @@
+name: Security checks (PR body)
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  gitleaks:
+    name: Run gitleaks on PR title and body
+    runs-on: ubuntu-slim
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout: gitleaks
+          persist-credentials: false
+
+      # the version and checksum come from this repo's gitleaks recipe
+      - name: Install gitleaks
+        run: |
+          ver=$(sed -n 's/^{% set version = "\(.*\)" %}$/\1/p' gitleaks/meta.yaml)
+          sha=$(sed -n 's/^ *sha256: \([0-9a-f]\{64\}\) # \[linux and x86_64\]$/\1/p' gitleaks/meta.yaml)
+          test -n "${ver}" && test -n "${sha}"
+
+          tarball="${RUNNER_TEMP}/gitleaks.tar.gz"
+          curl -fsSL "https://github.com/gitleaks/gitleaks/releases/download/v${ver}/gitleaks_${ver}_linux_x64.tar.gz" -o "${tarball}"
+          echo "${sha}  ${tarball}" | sha256sum -c -
+
+          mkdir -p "${RUNNER_TEMP}/bin"
+          tar -xzf "${tarball}" -C "${RUNNER_TEMP}/bin" gitleaks
+          echo "${RUNNER_TEMP}/bin" >> "${GITHUB_PATH}"
+
+      - name: Scan PR title and body
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: printf '%s\n\n%s\n' "${PR_TITLE}" "${PR_BODY}" | gitleaks stdin --no-banner --log-level warn --redact --verbose

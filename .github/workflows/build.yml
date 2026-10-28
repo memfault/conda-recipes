@@ -1,3 +1,5 @@
+name: Build conda package
+
 on:
   workflow_dispatch:
     inputs:
@@ -5,9 +7,18 @@ on:
         description: "set package dir to build and archive your package"
         required: true
 
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event.inputs.PACKAGE_DIR }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: 🛠️ build on ${{ matrix.platform }}
+
+    permissions:
+      contents: read
 
     strategy:
       # run all targets to completion, even if one fails
@@ -23,7 +34,9 @@ jobs:
         shell: bash -l {0}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       # it might be worth switching to micromamba instead someday
       # https://mamba.readthedocs.io/en/latest/installation.html#micromamba
@@ -65,6 +78,9 @@ jobs:
           git config --global protocol.file.allow always
 
       - name: Build package
+        env:
+          PACKAGE_DIR: ${{ github.event.inputs.PACKAGE_DIR }}
+          PLATFORM: ${{ matrix.platform }}
         run: |
           # mac-only, we need to inject the macos sdk so conda can link against it
           # https://github.com/actions/runner-images/blob/main/images/macos/macos-11-Readme.md
@@ -76,11 +92,12 @@ jobs:
           fi
 
           # store the output in an out of tree location
-          mkdir -p ${{ github.event.inputs.PACKAGE_DIR }}.${{ matrix.platform }}.output
-          conda mambabuild -c conda-forge -c memfault --output-folder ${{ github.event.inputs.PACKAGE_DIR }}.${{ matrix.platform }}.output ${{ github.event.inputs.PACKAGE_DIR }}
+          OUTPUT_DIR="${PACKAGE_DIR}.${PLATFORM}.output"
+          mkdir -p "${OUTPUT_DIR}"
+          conda mambabuild -c conda-forge -c memfault --output-folder "${OUTPUT_DIR}" "${PACKAGE_DIR}"
 
       # upload-artifact to save the output files
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: ${{ github.event.inputs.PACKAGE_DIR }}.${{ matrix.platform }}.package
           path: ${{ github.event.inputs.PACKAGE_DIR }}.${{ matrix.platform }}.output

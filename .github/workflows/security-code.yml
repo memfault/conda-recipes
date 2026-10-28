@@ -1,0 +1,67 @@
+name: Security checks (code)
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["**"]
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  zizmor:
+    name: Run Zizmor
+    runs-on: ubuntu-slim
+    permissions:
+      contents: read # only needed for private or internal repos
+      actions: read # only needed for private or internal repos
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Run zizmor 🌈
+        uses: zizmorcore/zizmor-action@53290badfa369cb0bf7ad16342cb62c2fa47ac7b # v0.8.0
+        with:
+          advanced-security: false
+          persona: "auditor"
+          annotations: true
+
+  gitleaks:
+    name: Run gitleaks
+    runs-on: ubuntu-slim
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      # the version and checksum come from this repo's gitleaks recipe
+      - name: Install gitleaks
+        run: |
+          ver=$(sed -n 's/^{% set version = "\(.*\)" %}$/\1/p' gitleaks/meta.yaml)
+          sha=$(sed -n 's/^ *sha256: \([0-9a-f]\{64\}\) # \[linux and x86_64\]$/\1/p' gitleaks/meta.yaml)
+          test -n "${ver}" && test -n "${sha}"
+
+          tarball="${RUNNER_TEMP}/gitleaks.tar.gz"
+          curl -fsSL "https://github.com/gitleaks/gitleaks/releases/download/v${ver}/gitleaks_${ver}_linux_x64.tar.gz" -o "${tarball}"
+          echo "${sha}  ${tarball}" | sha256sum -c -
+
+          mkdir -p "${RUNNER_TEMP}/bin"
+          tar -xzf "${tarball}" -C "${RUNNER_TEMP}/bin" gitleaks
+          echo "${RUNNER_TEMP}/bin" >> "${GITHUB_PATH}"
+
+      - name: Scan working tree
+        run: gitleaks dir --no-banner --log-level warn --redact --verbose .
+
+      - name: Scan new commits
+        env:
+          BASE_REF: ${{ github.base_ref || 'master' }}
+        run: gitleaks git --no-banner --redact --verbose --log-opts="origin/${BASE_REF}..HEAD" .
